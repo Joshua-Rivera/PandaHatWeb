@@ -7,6 +7,7 @@ import {
   Menu,
   X,
   Plus,
+  Users,
 } from "lucide-react";
 import {
   content,
@@ -17,6 +18,7 @@ import {
 import { PandaMark, TopicGraphic } from "./Graphics";
 import "./App.css";
 import StackSpread from "./components/ui/stack-spread";
+import { useCircularGallery } from "./components/ui/use-circular-gallery";
 const SECTIONS = [
   ["#description", "Description"],
   ["#problem-statement", "Problem statement"],
@@ -312,9 +314,11 @@ function Team() {
   const rail = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const [travel, setTravel] = useState(0);
-  const [fits, setFits] = useState(false);
+  const [stageOverflow, setStageOverflow] = useState(0);
   const [position, setPosition] = useState(0);
-  const pinned = !reduced && fits && travel > 0;
+  const pinned = !reduced && travel > 0;
+  useCircularGallery(rail, !reduced);
+  const drag = useRef<{ x: number; start: number } | null>(null);
 
   useEffect(() => {
     const element = rail.current;
@@ -322,7 +326,8 @@ function Team() {
     if (!element || !panel) return;
     const measure = () => {
       setTravel(Math.max(0, element.scrollWidth - element.clientWidth));
-      setFits(panel.scrollHeight <= window.innerHeight);
+      // Taller galleries scroll their heading away before pinning the cards.
+      setStageOverflow(Math.max(0, panel.offsetHeight - window.innerHeight));
     };
     const observer = new ResizeObserver(measure);
     observer.observe(element);
@@ -337,7 +342,7 @@ function Team() {
     if (!element) return;
     const update = () => {
       if (pinned && section.current) {
-        element.scrollLeft = Math.max(0, Math.min(travel, -section.current.getBoundingClientRect().top));
+        element.scrollLeft = Math.max(0, Math.min(travel, -section.current.getBoundingClientRect().top - stageOverflow));
       }
       const next = Math.round(element.scrollLeft);
       setPosition(previous => previous === next ? previous : next);
@@ -346,23 +351,23 @@ function Team() {
     element.addEventListener("scroll", update, { passive: true });
     update();
     return () => { window.removeEventListener("scroll", update); element.removeEventListener("scroll", update); };
-  }, [pinned, travel]);
+  }, [pinned, travel, stageOverflow]);
 
   const move = (direction: number) => {
     const element = rail.current;
     if (!element) return;
-    const distance = (element.firstElementChild as HTMLElement)?.offsetWidth + 24;
+    const distance = (element.firstElementChild as HTMLElement)?.offsetWidth + 40;
     const target = Math.max(0, Math.min(travel, element.scrollLeft + direction * distance));
     const behavior = reduced ? "instant" : "smooth";
     if (pinned && section.current) {
-      window.scrollTo({ top: window.scrollY + section.current.getBoundingClientRect().top + target, behavior });
+      window.scrollTo({ top: window.scrollY + section.current.getBoundingClientRect().top + stageOverflow + target, behavior });
     } else element.scrollTo({ left: target, behavior });
   };
 
   return (
     <section ref={section} id="members" className={`members-section${pinned ? " is-pinned" : ""}`} aria-label="Members"
-      style={pinned ? { height: `calc(100svh + ${travel}px)` } : undefined}>
-      <div ref={stage} className="members-stage container">
+      style={pinned ? { height: `calc(100vh + ${stageOverflow + travel}px)` } : undefined}>
+      <div ref={stage} className="members-stage container" style={pinned ? { top: -stageOverflow } : undefined}>
         <SectionHeading label="04 / MEMBERS" title={content.team.title} />
         <p className="team-note">{content.team.note}</p>
         <div className="rail-toolbar">
@@ -372,7 +377,21 @@ function Team() {
             <button aria-label="Next member profiles" disabled={position >= travel - 2} onClick={() => move(1)}><ArrowRight size={18} /></button>
           </div>
         </div>
-        <div ref={rail} className="horizontal-rail members-track" role="region" aria-label="Member profiles" tabIndex={0}
+        <div ref={rail} className="horizontal-rail members-track circular-members" role="region" aria-label="Member profiles" tabIndex={0}
+          onPointerDown={event => {
+            if (event.button !== 0) return;
+            drag.current = { x: event.clientX, start: event.currentTarget.scrollLeft };
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }}
+          onPointerMove={event => {
+            if (!drag.current || !rail.current) return;
+            const left = Math.max(0, Math.min(travel, drag.current.start + drag.current.x - event.clientX));
+            if (pinned && section.current) window.scrollTo({ top: window.scrollY + section.current.getBoundingClientRect().top + stageOverflow + left, behavior: "instant" });
+            else rail.current.scrollLeft = left;
+          }}
+          onPointerUp={() => { drag.current = null; }}
+          onPointerCancel={() => { drag.current = null; }}
+          onLostPointerCapture={() => { drag.current = null; }}
           onKeyDown={event => {
             if (event.target === event.currentTarget && ["ArrowLeft", "ArrowRight"].includes(event.key)) {
               event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1);
@@ -380,7 +399,6 @@ function Team() {
           }}>
           {members.map((member, index) => <TeamProfile key={member.name} member={member} index={index} />)}
         </div>
-        <div className="members-progress" aria-hidden="true"><span style={{ width: `${travel ? position / travel * 100 : 100}%` }} /></div>
       </div>
     </section>
   );
@@ -409,6 +427,18 @@ export default function App() {
       <main id="main" tabIndex={-1}>
         <Home />
         <Team />
+        <div className="container team-group-section">
+          <figure className="team-group-card">
+            <div className="team-group-photo" role="img" aria-label="Placeholder for the PandaHat team group photo">
+              <Users size={72} strokeWidth={1} aria-hidden="true" />
+              <span className="mono">GROUP PHOTO COMING SOON</span>
+            </div>
+            <figcaption>
+              <div><span className="eyebrow">THE PEOPLE BEHIND PANDAHAT</span><h2>One team. Shared curiosity.</h2></div>
+              <p>Our PandaHat team, together.</p>
+            </figcaption>
+          </figure>
+        </div>
         <ResearchPosters />
         <Supporters />
       </main>

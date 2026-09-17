@@ -1,39 +1,7 @@
 import { useId } from "react";
 export function PandaMark() {
   return (
-    <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-      <circle cx="11" cy="12" r="7" fill="currentColor" />
-      <circle cx="33" cy="12" r="7" fill="currentColor" />
-      <path
-        d="M6 24C6 12 38 12 38 24c0 10-7 15-16 15S6 34 6 24Z"
-        fill="currentColor"
-      />
-      <ellipse
-        cx="15"
-        cy="25"
-        rx="5"
-        ry="6"
-        transform="rotate(25 15 25)"
-        fill="var(--bg)"
-      />
-      <ellipse
-        cx="29"
-        cy="25"
-        rx="5"
-        ry="6"
-        transform="rotate(-25 29 25)"
-        fill="var(--bg)"
-      />
-      <circle cx="16" cy="24" r="1.4" fill="currentColor" />
-      <circle cx="28" cy="24" r="1.4" fill="currentColor" />
-      <path d="m19 32 3 3 3-3" fill="var(--bg)" />
-      <path
-        d="m8 12 14-9 14 9H8Z"
-        fill="var(--bg)"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-    </svg>
+    <img className="panda-logo" src="/images/pandahat-logo.jpg" alt="" width={200} height={200} />
   );
 }
 export function SignalArt({ compact = false }: { compact?: boolean }) {
