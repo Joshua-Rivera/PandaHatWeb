@@ -26,7 +26,7 @@ for (const width of [375, 768, 1024, 1440]) {
 test("section links, horizontal controls, keyboard, and legacy bookmarks", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await page.getByRole("link", { name: "Explore the research" }).click();
+  await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Research posters" }).click();
   await expect(page).toHaveURL(/\/#research-posters$/);
   await expect(page.locator("#research-posters .section-heading")).toBeInViewport();
   const research = page.locator("#research-posters .horizontal-rail");

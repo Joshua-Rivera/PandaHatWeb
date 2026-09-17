@@ -168,10 +168,6 @@ function Home() {
             {content.descriptionParagraphs.map(paragraph => (
               <p className="body-copy" key={paragraph}><SpecialText>{paragraph}</SpecialText></p>
             ))}
-            <div className="hero-actions">
-              <a className="button button-primary" href="#research-posters">Explore the research <ArrowUpRight size={18} /></a>
-              <a className="text-link" href="#members">Meet the members <ArrowRight size={17} /></a>
-            </div>
           </div>
         </Reveal>
       </section>
@@ -276,7 +272,21 @@ function Supporters() {
       <section id="professors" className="container content-section" aria-label="Professors">
         <SectionHeading label="06 / PROFESSORS" title="Guidance behind the research." />
         <p className="section-note"><SpecialText>Faculty mentors and research advisors will be introduced here.</SpecialText></p>
-        <div className="support-placeholder"><span className="mono">FACULTY PROFILES</span><h3><SpecialText>Professors to be announced</SpecialText></h3><p><SpecialText>Names, affiliations, and areas of expertise will be added when confirmed.</SpecialText></p></div>
+        <div className="professor-grid">
+          {[1, 2].map(number => (
+            <figure className="professor-card" key={number}>
+              <div className="professor-photo" role="img" aria-label={`Professor ${number} portrait placeholder`}>
+                <Users size={64} strokeWidth={1} aria-hidden="true" />
+                <span className="mono">PHOTO COMING SOON</span>
+              </div>
+              <figcaption>
+                <span className="eyebrow">FACULTY ADVISOR / 0{number}</span>
+                <h3>Professor {number}</h3>
+                <p>Name and affiliation to be announced.</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </section>
       <section id="sponsors" className="container content-section" aria-label="Sponsors">
         <SectionHeading label="07 / SPONSORS" title="Supporting the next question." />
