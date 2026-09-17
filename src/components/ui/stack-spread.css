@@ -1,0 +1,77 @@
+.stack-spread {
+  --collage-bg: var(--bg);
+  position: relative;
+  height: 260svh;
+  background: var(--collage-bg);
+  color: #141414;
+}
+.stack-spread-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.stack-spread-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.stack-spread-copy {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  font-family: var(--heading);
+  font-size: clamp(32px, 5.4vw, 86px);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  pointer-events: none;
+}
+.stack-spread-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  font: 10px var(--mono);
+  letter-spacing: 3px;
+}
+.stack-spread-hint span { font-size: 22px; }
+.collage-accessible-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.stack-spread.is-reduced { height: 100svh; }
+.stack-spread.is-reduced .stack-spread-stage { position: relative; }
+.home-introduction {
+  padding-block: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  border-bottom: 1px solid var(--border);
+}
+.home-introduction p { max-width: 580px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.home-introduction .hero-actions { margin-top: 0; flex-shrink: 0; }
+@media (max-width: 767px) {
+  .stack-spread { height: 220svh; }
+  .stack-spread-copy { font-size: 10vw; }
+  .home-introduction { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .stack-spread-hint { bottom: 25px; font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stack-spread { height: 100svh; }
+  .stack-spread-stage { position: relative; }
+}
