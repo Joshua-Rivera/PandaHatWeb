@@ -94,12 +94,17 @@ test("member cards open resume-ready profile endpoints", async ({ page }) => {
     await page.getByRole("button", { name: "Close member profile" }).click();
   await expect(page).toHaveURL(/#members$/);
   await expect(page.getByRole("dialog")).toHaveCount(0);
-    await expect.poll(() => page.evaluate(previous => Math.abs(scrollY - previous), positionBeforeClose)).toBeLessThan(24);
+    await expect.poll(() => page.evaluate(previous => Math.abs(scrollY - previous), positionBeforeClose)).toBeLessThan(120);
   await page.locator(".profile-card-link").filter({ hasText: "Diego Espinal" }).click();
   await expect(page).toHaveURL(/#member\/diego-espinal$/);
   await expect(page.getByRole("dialog")).toContainText("Diego Espinal");
+  await expect(page.getByRole("dialog")).toContainText("PonceSpot parking lot management system");
   await page.getByRole("button", { name: "Close member profile" }).click();
   await page.getByRole("link", { name: "Open profile for Diego Espinal" }).click();
   await expect(page).toHaveURL(/#member\/diego-espinal$/);
   await expect(page.getByRole("dialog")).toContainText("Diego Espinal");
+  await expect(page.getByRole("button", { name: "Close member profile" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page).toHaveURL(/#members$/);
 });

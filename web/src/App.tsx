@@ -281,16 +281,25 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
   );
 }
 function MemberEndpoint({ member, onClose }: { member: TeamMember; onClose: () => void }) {
+  const closeButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    closeButton.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    addEventListener("keydown", handleKeyDown);
+    return () => removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
   return <div className="member-endpoint-backdrop" role="presentation">
     <article className="member-endpoint" role="dialog" aria-modal="true" aria-labelledby="member-endpoint-title">
-      <button className="member-endpoint-close" type="button" onClick={onClose} aria-label="Close member profile"><X size={20} /></button>
+      <button ref={closeButton} className="member-endpoint-close" type="button" onClick={onClose} aria-label="Close member profile"><X size={20} /></button>
       <div className="member-endpoint-top"><span className="eyebrow">MEMBER ENDPOINT / {member.role}</span><span className="mono">PROFILE / {member.initials}</span></div>
       <div className="member-endpoint-heading"><div className="member-endpoint-avatar">{member.initials}</div><div><h2 id="member-endpoint-title">{member.name}</h2><p>{member.role}</p></div></div>
       <div className="member-endpoint-grid">
-        <section><p className="eyebrow">BIO</p><p>{member.bio}</p><p className="eyebrow">RESEARCH INTERESTS</p><p>{member.interests}</p></section>
-        <section><p className="eyebrow">SKILLS & TOOLS</p><ul>{member.skills.map(skill => <li key={skill}>{skill}</li>)}</ul><p className="eyebrow">PROJECTS</p><ul>{member.projects.map(project => <li key={project}>{project}</li>)}</ul></section>
+        <section><p className="eyebrow">BIO</p><p>{member.bio}</p><p className="eyebrow">EDUCATION</p><p>{member.education ?? "Education details to be added."}</p><p className="eyebrow">RESEARCH INTERESTS</p><p>{member.interests}</p></section>
+        <section><p className="eyebrow">SKILLS & TOOLS</p><ul>{member.skills.map(skill => <li key={skill}>{skill}</li>)}</ul><p className="eyebrow">PROJECTS</p><ul>{member.projects.map(project => <li key={project}>{project}</li>)}</ul>{member.experience?.length ? <><p className="eyebrow">EXPERIENCE</p><ul>{member.experience.map(item => <li key={item}>{item}</li>)}</ul></> : null}</section>
       </div>
-      <div className="member-endpoint-actions">{member.resume ? <a className="button button-primary" href={member.resume} target="_blank" rel="noreferrer">Download resume <ArrowUpRight size={16} /></a> : <span className="resume-pending mono">RESUME / PENDING APPROVAL</span>}<a className="text-link" href="mailto:pandahat@uprm.edu">Request profile update <ArrowUpRight size={15} /></a></div>
+      <div className="member-endpoint-actions">{member.resume ? <a className="button button-primary" href={member.resume} target="_blank" rel="noreferrer">Download resume <ArrowUpRight size={16} /></a> : <span className="resume-pending mono">RESUME / PENDING APPROVAL</span>}{member.contact ? <a className="text-link" href={`mailto:${member.contact}`}>Contact member <ArrowUpRight size={15} /></a> : null}{member.links?.map(link => <a className="text-link" href={link.startsWith("http") ? link : `https://${link}`} target="_blank" rel="noreferrer" key={link}>{link} <ArrowUpRight size={15} /></a>)}<a className="text-link" href="mailto:pandahat@uprm.edu">Request profile update <ArrowUpRight size={15} /></a></div>
     </article>
   </div>;
 }

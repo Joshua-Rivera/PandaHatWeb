@@ -23,7 +23,7 @@ Unconfirmed member bios and research descriptions remain placeholders. Visuals a
 - Three hash-addressable research endpoints cover digital watermarking, deepfake analysis, and media authenticity.
 - The team view distinguishes 7 full-time researchers from 16 new members in the learning-path onboarding process.
 - Advisors are listed as Dr. Nayda Santiago and Dr. Alcibiades Bustillo.
-- Member cards open hash endpoints such as `#member/joshua-rivera` with resume-ready fields. Resume PDFs are optional and are not loaded until a member-approved path is added to that profile.
+- Member cards open hash endpoints such as `#member/joshua-rivera` with resume-derived education, experience, skills, projects, and approved public links. Resume PDFs are optional and are not loaded until a member-approved path is added to that profile.
 
 ## Static hosting
 
