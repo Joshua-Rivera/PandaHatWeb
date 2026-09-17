@@ -18,6 +18,7 @@ import {
 import { PandaMark, TopicGraphic } from "./Graphics";
 import "./App.css";
 import StackSpread from "./components/ui/stack-spread";
+import { SpecialText } from "./components/ui/special-text";
 import { useCircularGallery } from "./components/ui/use-circular-gallery";
 const SECTIONS = [
   ["#description", "Description"],
@@ -139,7 +140,7 @@ function SectionHeading({
     <div className="section-heading">
       <div>
         <p className="eyebrow">{label}</p>
-        <h2>{title}</h2>
+        <h2><SpecialText>{title}</SpecialText></h2>
       </div>
       {children}
     </div>
@@ -163,9 +164,10 @@ function Home() {
         <Reveal className="about-grid">
           <p className="eyebrow">01 / DESCRIPTION</p>
           <div>
-            <h2 id="description-title">Exploring trust in synthetic media.</h2>
-            <p className="body-copy">{content.home.about}</p>
-            <p className="body-copy">{content.research.about}</p>
+            <h2 id="description-title"><SpecialText>Understanding machine learning. Empowering students.</SpecialText></h2>
+            {content.descriptionParagraphs.map(paragraph => (
+              <p className="body-copy" key={paragraph}><SpecialText>{paragraph}</SpecialText></p>
+            ))}
             <div className="hero-actions">
               <a className="button button-primary" href="#research-posters">Explore the research <ArrowUpRight size={18} /></a>
               <a className="text-link" href="#members">Meet the members <ArrowRight size={17} /></a>
@@ -177,23 +179,23 @@ function Home() {
         <Reveal className="about-grid">
           <p className="eyebrow">02 / PROBLEM STATEMENT</p>
           <div>
-            <h2 id="problem-title">{content.home.aboutTitle}</h2>
-            <p className="body-copy">AI-generated images make it harder to determine where media comes from and whether it has been altered. Watermarks and detection methods can provide evidence, but that evidence may change when an image is edited, compressed, or deliberately manipulated.</p>
-            <p className="body-copy">Our central question is how to evaluate these signals under realistic transformations and communicate their limitations clearly.</p>
+            <h2 id="problem-title"><SpecialText>{content.home.aboutTitle}</SpecialText></h2>
+            <p className="body-copy"><SpecialText>AI-generated images make it harder to determine where media comes from and whether it has been altered. Watermarks and detection methods can provide evidence, but that evidence may change when an image is edited, compressed, or deliberately manipulated.</SpecialText></p>
+            <p className="body-copy"><SpecialText>Our central question is how to evaluate these signals under realistic transformations and communicate their limitations clearly.</SpecialText></p>
           </div>
         </Reveal>
       </section>
       <section id="objective" className="container content-section" aria-labelledby="objective-title">
         <Reveal>
           <p className="eyebrow">03 / OBJECTIVE</p>
-          <h2 id="objective-title">Understand the signals. Test their limits.</h2>
-          <p className="body-copy objective-copy">Explore the robustness of digital watermarking and deepfake analysis through reproducible experiments, documenting when these approaches succeed, when they fail, and what their results can tell us about media authenticity.</p>
+          <h2 id="objective-title"><SpecialText>Understand the signals. Test their limits.</SpecialText></h2>
+          <p className="body-copy objective-copy"><SpecialText>Explore the robustness of digital watermarking and deepfake analysis through reproducible experiments, documenting when these approaches succeed, when they fail, and what their results can tell us about media authenticity.</SpecialText></p>
         </Reveal>
         <div className="method-grid">
           {content.research.steps.map((step, index) => (
             <Reveal key={step.title}>
               <span className="method-number mono">0{index + 1}<ArrowRight size={18} /></span>
-              <h3>{step.title}</h3><p>{step.description}</p>
+              <h3><SpecialText>{step.title}</SpecialText></h3><p><SpecialText>{step.description}</SpecialText></p>
             </Reveal>
           ))}
         </div>
@@ -251,17 +253,17 @@ function ResearchPosters() {
   return (
     <section id="research-posters" className="container content-section" aria-label="Research posters">
       <SectionHeading label="05 / RESEARCH POSTERS" title="Our research, at a glance." />
-      <p className="section-note">Poster previews will appear here when available. These cards are placeholders for future research posters.</p>
+      <p className="section-note"><SpecialText>Poster previews will appear here when available. These cards are placeholders for future research posters.</SpecialText></p>
       <HorizontalRail label="Research posters" className="poster-rail">
         {topics.map((topic, index) => (
           <article className="poster-card" key={topic.id} id={`topic-${topic.id}`}>
             <div className="poster-preview" aria-label={`Placeholder for ${topic.title} poster`}>
               <span className="mono">PANDAHAT / RESEARCH {topic.id}</span>
-              <h3>{topic.title}</h3>
+              <h3><SpecialText>{topic.title}</SpecialText></h3>
               <TopicGraphic variant={index % 2} />
               <span className="poster-status">POSTER COMING SOON</span>
             </div>
-            <p>{topic.description}</p>
+            <p><SpecialText>{topic.description}</SpecialText></p>
           </article>
         ))}
       </HorizontalRail>
@@ -273,13 +275,13 @@ function Supporters() {
     <>
       <section id="professors" className="container content-section" aria-label="Professors">
         <SectionHeading label="06 / PROFESSORS" title="Guidance behind the research." />
-        <p className="section-note">Faculty mentors and research advisors will be introduced here.</p>
-        <div className="support-placeholder"><span className="mono">FACULTY PROFILES</span><h3>Professors to be announced</h3><p>Names, affiliations, and areas of expertise will be added when confirmed.</p></div>
+        <p className="section-note"><SpecialText>Faculty mentors and research advisors will be introduced here.</SpecialText></p>
+        <div className="support-placeholder"><span className="mono">FACULTY PROFILES</span><h3><SpecialText>Professors to be announced</SpecialText></h3><p><SpecialText>Names, affiliations, and areas of expertise will be added when confirmed.</SpecialText></p></div>
       </section>
       <section id="sponsors" className="container content-section" aria-label="Sponsors">
         <SectionHeading label="07 / SPONSORS" title="Supporting the next question." />
-        <p className="section-note">A space to recognize the organizations supporting PandaHat’s research.</p>
-        <div className="support-placeholder"><span className="mono">PARTNERS & SUPPORTERS</span><h3>Sponsors to be announced</h3><p>Confirmed sponsor names and logos will appear here.</p></div>
+        <p className="section-note"><SpecialText>A space to recognize the organizations supporting PandaHat’s research.</SpecialText></p>
+        <div className="support-placeholder"><span className="mono">PARTNERS & SUPPORTERS</span><h3><SpecialText>Sponsors to be announced</SpecialText></h3><p><SpecialText>Confirmed sponsor names and logos will appear here.</SpecialText></p></div>
         <Notice />
       </section>
     </>
@@ -369,7 +371,7 @@ function Team() {
       style={pinned ? { height: `calc(100vh + ${stageOverflow + travel}px)` } : undefined}>
       <div ref={stage} className="members-stage container" style={pinned ? { top: -stageOverflow } : undefined}>
         <SectionHeading label="04 / MEMBERS" title={content.team.title} />
-        <p className="team-note">{content.team.note}</p>
+        <p className="team-note"><SpecialText>{content.team.note}</SpecialText></p>
         <div className="rail-toolbar">
           <span className="mono">{pinned ? "SCROLL DOWN TO MEET THE TEAM →" : "SCROLL TO EXPLORE →"}</span>
           <div className="rail-controls">
@@ -434,8 +436,8 @@ export default function App() {
               <span className="mono">GROUP PHOTO COMING SOON</span>
             </div>
             <figcaption>
-              <div><span className="eyebrow">THE PEOPLE BEHIND PANDAHAT</span><h2>One team. Shared curiosity.</h2></div>
-              <p>Our PandaHat team, together.</p>
+              <div><span className="eyebrow">THE PEOPLE BEHIND PANDAHAT</span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2></div>
+              <p><SpecialText>Our PandaHat team, together.</SpecialText></p>
             </figcaption>
           </figure>
         </div>

@@ -17,6 +17,11 @@ export const content = {
   subbrand: "ADVERSARIAL",
   notice:
     "An early look at our lab. Research descriptions and team profiles are illustrative placeholders.",
+  descriptionParagraphs: [
+    "Machine Learning (ML) models are nowadays more accessible than ever [2] in today’s technological landscape, bringing a new era of possibilities, opportunities, and difficulties. Nevertheless, these models are susceptible to cyber-attacks.",
+    "Machine Learning models are vulnerable to Adversarial attacks, in which the algorithm of a model can be affected by an attacker with the desire to cause the model to behave contrary to expected, i.e. causing the model to misclassify a certain image when it correctly classified it previously.",
+    "The goal of Pandahat Adversarial is to teach and empower students in the complexities of Machine Learning, as a response to the dynamically changing technological landscape. Additionally, our objective is for these students to use that empowerment and knowledge in ML to actively participate in the construction and understanding of adversarial attacks within complicated models and data, in addition to enabling them to fight against adversarial attacks by developing, or improving existing defenses.",
+  ],
   home: {
     eyebrow: "AT THE INTERSECTION OF AI & TRUST",
     heading: ["Seeing isn’t", "believing.", "Not anymore."],
