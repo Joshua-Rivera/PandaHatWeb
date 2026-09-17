@@ -11,11 +11,10 @@ import {
 } from "lucide-react";
 import {
   content,
-  topics,
   members,
   type TeamMember,
 } from "./content";
-import { PandaMark, TopicGraphic } from "./Graphics";
+import { PandaMark } from "./Graphics";
 import "./App.css";
 import StackSpread from "./components/ui/stack-spread";
 import { SpecialText } from "./components/ui/special-text";
@@ -90,7 +89,6 @@ function Footer() {
     <footer className="container footer">
       <div className="footer-top">
         <Brand />
-        <p>{content.footer.tagline}</p>
         <a href="#top" className="back-top">
           Back to top <ArrowUpRight size={16} />
         </a>
@@ -100,7 +98,6 @@ function Footer() {
         <nav aria-label="Footer navigation">
           {SECTIONS.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
         </nav>
-        <span>{content.footer.note}</span>
       </div>
     </footer>
   );
@@ -146,15 +143,6 @@ function SectionHeading({
     </div>
   );
 }
-function Notice() {
-  return (
-    <div className="placeholder-notice">
-      <span className="tiny-dot" />
-      <p>{content.notice}</p>
-      <span className="mono">ITERATION 01</span>
-    </div>
-  );
-}
 function Home() {
   return (
     <>
@@ -175,94 +163,48 @@ function Home() {
         <Reveal className="about-grid">
           <p className="eyebrow">02 / PROBLEM STATEMENT</p>
           <div>
-            <h2 id="problem-title"><SpecialText>{content.home.aboutTitle}</SpecialText></h2>
-            <p className="body-copy"><SpecialText>AI-generated images make it harder to determine where media comes from and whether it has been altered. Watermarks and detection methods can provide evidence, but that evidence may change when an image is edited, compressed, or deliberately manipulated.</SpecialText></p>
-            <p className="body-copy"><SpecialText>Our central question is how to evaluate these signals under realistic transformations and communicate their limitations clearly.</SpecialText></p>
+            <h2 id="problem-title"><SpecialText>{content.semester.title}</SpecialText></h2>
+            {content.semester.problem.map(paragraph => (
+              <p className="body-copy" key={paragraph}><SpecialText>{paragraph}</SpecialText></p>
+            ))}
+            <h3 className="evaluation-title">Performance will be assessed in terms of:</h3>
+            <ul className="evaluation-criteria">
+              {content.semester.criteria.map(criterion => <li key={criterion}><SpecialText>{criterion}</SpecialText></li>)}
+            </ul>
           </div>
         </Reveal>
       </section>
       <section id="objective" className="container content-section" aria-labelledby="objective-title">
         <Reveal>
           <p className="eyebrow">03 / OBJECTIVE</p>
-          <h2 id="objective-title"><SpecialText>Understand the signals. Test their limits.</SpecialText></h2>
-          <p className="body-copy objective-copy"><SpecialText>Explore the robustness of digital watermarking and deepfake analysis through reproducible experiments, documenting when these approaches succeed, when they fail, and what their results can tell us about media authenticity.</SpecialText></p>
+          <h2 id="objective-title"><SpecialText>Compare techniques. Build stronger defenses.</SpecialText></h2>
+          <p className="body-copy objective-copy"><SpecialText>{content.semester.objective}</SpecialText></p>
+          <p className="body-copy objective-copy"><SpecialText>{content.semester.experience}</SpecialText></p>
         </Reveal>
-        <div className="method-grid">
-          {content.research.steps.map((step, index) => (
-            <Reveal key={step.title}>
-              <span className="method-number mono">0{index + 1}<ArrowRight size={18} /></span>
-              <h3><SpecialText>{step.title}</SpecialText></h3><p><SpecialText>{step.description}</SpecialText></p>
-            </Reveal>
+        <h3 className="research-questions-title">Three main research questions</h3>
+        <div className="research-questions">
+          {content.semester.questions.map(question => (
+            <article className="research-question" key={question.group}>
+              <span className="eyebrow">{question.group}</span>
+              <h3><SpecialText>{question.title}</SpecialText></h3>
+              <p><SpecialText>{question.question}</SpecialText></p>
+            </article>
           ))}
         </div>
       </section>
     </>
   );
 }
-function HorizontalRail({ children, label, className }: {
-  children: ReactNode; label: string; className: string;
-}) {
-  const rail = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const [edges, setEdges] = useState({ start: true, end: false });
-  useEffect(() => {
-    const element = rail.current;
-    if (!element) return;
-    const update = () => setEdges({
-      start: element.scrollLeft <= 2,
-      end: element.scrollLeft + element.clientWidth >= element.scrollWidth - 2,
-    });
-    const observer = new ResizeObserver(update);
-    observer.observe(element);
-    element.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => { observer.disconnect(); element.removeEventListener("scroll", update); };
-  }, []);
-  const move = (direction: number) => {
-    const element = rail.current;
-    if (!element) return;
-    const card = element.firstElementChild as HTMLElement | null;
-    element.scrollBy({ left: direction * ((card?.offsetWidth ?? element.clientWidth) + 24), behavior: reduced ? "instant" : "smooth" });
-  };
-  return (
-    <div className={className}>
-      <div className="rail-toolbar">
-        <span className="mono">SCROLL TO EXPLORE →</span>
-        <div className="rail-controls">
-          <button aria-label={`Previous ${label.toLowerCase()}`} disabled={edges.start} onClick={() => move(-1)}><ArrowLeft size={18} /></button>
-          <button aria-label={`Next ${label.toLowerCase()}`} disabled={edges.end} onClick={() => move(1)}><ArrowRight size={18} /></button>
-        </div>
-      </div>
-      <div ref={rail} className="horizontal-rail" role="region" aria-label={label} tabIndex={0}
-        onKeyDown={(event) => {
-          if (event.target !== event.currentTarget) return;
-          if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-            event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1);
-          }
-        }}>
-        {children}
-      </div>
-    </div>
-  );
-}
 function ResearchPosters() {
   return (
     <section id="research-posters" className="container content-section" aria-label="Research posters">
       <SectionHeading label="05 / RESEARCH POSTERS" title="Our research, at a glance." />
-      <p className="section-note"><SpecialText>Poster previews will appear here when available. These cards are placeholders for future research posters.</SpecialText></p>
-      <HorizontalRail label="Research posters" className="poster-rail">
-        {topics.map((topic, index) => (
-          <article className="poster-card" key={topic.id} id={`topic-${topic.id}`}>
-            <div className="poster-preview" aria-label={`Placeholder for ${topic.title} poster`}>
-              <span className="mono">PANDAHAT / RESEARCH {topic.id}</span>
-              <h3><SpecialText>{topic.title}</SpecialText></h3>
-              <TopicGraphic variant={index % 2} />
-              <span className="poster-status">POSTER COMING SOON</span>
-            </div>
-            <p><SpecialText>{topic.description}</SpecialText></p>
-          </article>
-        ))}
-      </HorizontalRail>
+      <figure className="featured-poster">
+        <a href="/images/posters/pandahat-2023.png" target="_blank" rel="noreferrer" aria-label="Open the 2023 PandaHat research poster at full size">
+          <img src="/images/posters/pandahat-2023.png" width={1666} height={2500} loading="lazy" alt="2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline." />
+        </a>
+        <figcaption><span className="eyebrow">PREVIOUS PROJECT / 2023</span><h3>Recreating Adversarial Attacks in Multimodal Architecture</h3><p>Select the poster to view it at full size.</p></figcaption>
+      </figure>
     </section>
   );
 }
@@ -271,18 +213,17 @@ function Supporters() {
     <>
       <section id="professors" className="container content-section" aria-label="Professors">
         <SectionHeading label="06 / PROFESSORS" title="Guidance behind the research." />
-        <p className="section-note"><SpecialText>Faculty mentors and research advisors will be introduced here.</SpecialText></p>
+        <p className="section-note"><SpecialText>Meet the professors guiding and supporting our research.</SpecialText></p>
         <div className="professor-grid">
-          {[1, 2].map(number => (
-            <figure className="professor-card" key={number}>
-              <div className="professor-photo" role="img" aria-label={`Professor ${number} portrait placeholder`}>
-                <Users size={64} strokeWidth={1} aria-hidden="true" />
-                <span className="mono">PHOTO COMING SOON</span>
-              </div>
+          {[
+            { name: "Nayda Santiago", photo: "/images/professors/nayda-santiago.png" },
+            { name: "Alcibiades Bustillo", photo: "/images/professors/alcibiades-bustillo.png" },
+          ].map(professor => (
+            <figure className="professor-card" key={professor.name}>
+              <img className="professor-photo professor-portrait" src={professor.photo} alt={professor.name} width={594} height={596} loading="lazy" />
               <figcaption>
-                <span className="eyebrow">FACULTY ADVISOR / 0{number}</span>
-                <h3>Professor {number}</h3>
-                <p>Name and affiliation to be announced.</p>
+                <span className="eyebrow">Professor</span>
+                <h3>{professor.name}</h3>
               </figcaption>
             </figure>
           ))}
@@ -290,9 +231,14 @@ function Supporters() {
       </section>
       <section id="sponsors" className="container content-section" aria-label="Sponsors">
         <SectionHeading label="07 / SPONSORS" title="Supporting the next question." />
-        <p className="section-note"><SpecialText>A space to recognize the organizations supporting PandaHat’s research.</SpecialText></p>
-        <div className="support-placeholder"><span className="mono">PARTNERS & SUPPORTERS</span><h3><SpecialText>Sponsors to be announced</SpecialText></h3><p><SpecialText>Confirmed sponsor names and logos will appear here.</SpecialText></p></div>
-        <Notice />
+        <div className="sponsor-logos">
+          <div className="sponsor-logo-card sponsor-academic">
+            <img src="/images/sponsors/academic-partners.png" alt="IAP, Universidad de Puerto Rico Recinto Universitario de Mayagüez, and CPS IoT Laboratory" width={1120} height={290} loading="lazy" />
+          </div>
+          <div className="sponsor-logo-card sponsor-mit">
+            <img src="/images/sponsors/mit-lincoln-laboratory-clean.png" alt="MIT Lincoln Laboratory" width={860} height={381} loading="lazy" />
+          </div>
+        </div>
       </section>
     </>
   );
@@ -423,7 +369,7 @@ export default function App() {
       const hash = window.location.hash || (legacy === "/team" ? "#members" : "#research-posters");
       history.replaceState(null, "", `/${hash}`);
     }
-    const aliases: Record<string, string> = { "#team": "#members", "#research": "#research-posters" };
+    const aliases: Record<string, string> = { "#team": "#members", "#research": "#research-posters", "#topic-01": "#research-posters", "#topic-02": "#research-posters", "#topic-03": "#research-posters" };
     if (aliases[window.location.hash]) history.replaceState(null, "", `/${aliases[window.location.hash]}`);
     const hash = window.location.hash.slice(1);
     if (!hash) return;
@@ -447,7 +393,6 @@ export default function App() {
             </div>
             <figcaption>
               <div><span className="eyebrow">THE PEOPLE BEHIND PANDAHAT</span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2></div>
-              <p><SpecialText>Our PandaHat team, together.</SpecialText></p>
             </figcaption>
           </figure>
         </div>

@@ -1402,3 +1402,55 @@ h2 {
 @media (max-width: 600px) {
   .professor-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 }
+
+
+.evaluation-title { margin-top: 32px; font-size: 18px; }
+.evaluation-criteria { padding-left: 22px; color: var(--muted); font-size: 15px; line-height: 1.85; }
+.evaluation-criteria li { padding: 5px 0 5px 6px; }
+.evaluation-criteria li::marker { color: var(--accent); }
+.research-questions-title { font-size: 24px; margin: 48px 0 24px; }
+.research-questions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.research-question { border-radius: 20px; padding: 32px; background: #e0e9e8; border: 1px solid #b8cdca; }
+.research-question:nth-child(2) { background: #eee8d9; border-color: #d7c9a9; }
+.research-question:nth-child(3) { background: #e7e3ed; border-color: #cbc1d8; }
+.research-question h3 { font-size: 26px; margin: 28px 0 14px; }
+.research-question p { font-size: 19px; line-height: 1.5; }
+@media (max-width: 767px) { .research-questions { grid-template-columns: minmax(0, 1fr); } }
+
+.members-track .profile-role,
+.members-track .team-profile h3 { text-align: center; }
+
+/* Consistent rounded surfaces throughout the site. */
+.poster-card,
+.support-placeholder,
+.focus-card,
+.research-entry {
+  border-radius: 22px;
+  overflow: hidden;
+}
+.button,
+.semester-pill,
+.tags span,
+.status,
+.skip-link { border-radius: 999px; }
+.header .navigation a { border-radius: 12px; }
+.sheet-back,
+.sheet-front { border-radius: 12px; }
+.sheet-front i { border-radius: 3px; }
+
+.featured-poster { max-width: 800px; margin: 40px auto 0; border-radius: 22px; background: var(--surface); overflow: hidden; }
+.featured-poster > a { display: block; }
+.featured-poster > a:focus-visible { outline-offset: -6px; }
+.featured-poster img { display: block; width: 100%; height: auto; }
+.featured-poster figcaption { padding: 28px; }
+.featured-poster h3 { font-size: clamp(22px, 2.5vw, 28px); margin: 14px 0; }
+.featured-poster figcaption p { color: var(--muted); font-size: 14px; }
+
+.professor-portrait { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: center; }
+.professor-card figcaption { text-align: center; }
+
+
+.sponsor-logos { display: grid; gap: 24px; max-width: 1120px; margin: 36px auto 0; }
+.sponsor-logo-card { background: #fff; border-radius: 22px; padding: clamp(16px, 3vw, 40px); overflow: hidden; }
+.sponsor-logo-card img { display: block; width: 100%; height: auto; object-fit: contain; }
+.sponsor-mit { width: min(100%, 580px); justify-self: center; }
