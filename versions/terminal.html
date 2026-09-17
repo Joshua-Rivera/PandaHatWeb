@@ -4,11 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="PandaHat is a UPRM computer science research group exploring machine learning, computer vision, and trustworthy AI." />
-  <title>PandaHat / Research in public</title>
+  <base href="../" />
+  <title>PandaHat / Terminal option</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=motion-1" />
+  <link rel="stylesheet" href="versions/terminal.css" />
 </head>
 <body data-theme="fieldnotes">
   <a class="skip" href="#app">Skip to content</a>
@@ -34,8 +36,7 @@
     </section>
     <section class="view view-work" data-view="work" hidden>
       <div class="view-heading"><div><p class="kicker">01 / SELECTED WORK</p><h2>Questions first.<br><em>Projects second.</em></h2></div><p class="heading-note">A living index of experiments, baselines, and open questions. Select a row to inspect the thinking behind it.</p></div>
-      <div class="work-toolbar"><span id="projectCount">04 tracks</span><div class="filters" role="group" aria-label="Filter projects"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="vision">Vision</button><button class="filter" data-filter="robustness">Robustness</button><button class="filter" data-filter="systems">Systems</button></div></div><div class="connection-signal" aria-hidden="true"><span>QUESTION</span><i></i><b>METHODS</b><i></i><span>EVIDENCE</span></div>
-      <div id="projectList" class="project-list"></div><div id="projectDetail" class="project-detail" aria-live="polite"></div>
+      <div class="work-toolbar"><span id="projectCount">04 tracks</span><div class="filters" role="group" aria-label="Filter projects"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="vision">Vision</button><button class="filter" data-filter="robustness">Robustness</button><button class="filter" data-filter="systems">Systems</button></div><div class="connection-signal" aria-hidden="true"><span>QUESTION</span><i></i><b>METHODS</b><i></i><span>EVIDENCE</span></div><div id="projectList" class="project-list"></div><div id="projectDetail" class="project-detail" aria-live="polite"></div>
     </section>
     <section class="view view-lab" data-view="lab" hidden>
       <div class="view-heading"><div><p class="kicker">02 / LAB NOTES</p><h2>Make the process<br><em>inspectable.</em></h2></div><p class="heading-note">Research is more useful when the assumptions, dead ends, and small decisions stay attached to the result.</p></div>
