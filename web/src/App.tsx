@@ -1,5 +1,7 @@
+import * as m from "motion/react-m";
+import { ResponsiveImage } from "./ResponsiveImage";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { motion, MotionConfig, useReducedMotion } from "motion/react";
+import { MotionConfig, useReducedMotion } from "motion/react";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -7,13 +9,13 @@ import {
   Menu,
   X,
   Plus,
-  Users,
 } from "lucide-react";
 import {
   content,
   members,
   topics,
   advisors,
+  conferencePhotos,
   type TeamMember,
 } from "./content";
 import { PandaMark } from "./Graphics";
@@ -25,7 +27,7 @@ const SECTIONS = [
   ["#description", "Description"],
   ["#problem-statement", "Problem statement"],
   ["#objective", "Objective"],
-  ["#research-endpoints", "Research endpoints"],
+  ["#research-endpoints", "Research"],
   ["#members", "Members"],
   ["#research-posters", "Research posters"],
   ["#professors", "Professors"],
@@ -116,7 +118,7 @@ function Reveal({
 }) {
   const reduced = useReducedMotion();
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={reduced ? false : { opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -124,7 +126,7 @@ function Reveal({
       transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 function SectionHeading({
@@ -202,7 +204,7 @@ function Home() {
 function ResearchEndpoints() {
   return (
     <section id="research-endpoints" className="container content-section endpoint-section" aria-labelledby="endpoints-title">
-      <SectionHeading label="04 / RESEARCH ENDPOINTS" title="Follow a question to its evidence." />
+      <SectionHeading label="04 / RESEARCH" title="Follow a question to its evidence." />
       <p className="section-note" id="endpoints-title"><SpecialText>Each endpoint keeps the question, methods, evidence, and next direction together.</SpecialText></p>
       <div className="endpoint-grid">
         {topics.map(topic => (
@@ -231,8 +233,8 @@ function ResearchPosters() {
     <section id="research-posters" className="container content-section" aria-label="Research posters">
       <SectionHeading label="05 / RESEARCH POSTERS" title="Our research, at a glance." />
       <figure className="featured-poster">
-        <a href="/images/posters/pandahat-2023.png" target="_blank" rel="noreferrer" aria-label="Open the 2023 PandaHat research poster at full size">
-          <img src="/images/posters/pandahat-2023.png" width={1666} height={2500} loading="lazy" alt="2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline." />
+        <a href="/images/posters/pandahat-2023.webp" target="_blank" rel="noreferrer" aria-label="Open the 2023 PandaHat research poster at full size">
+          <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-2023-preview.webp" width={1666} height={2500} loading="lazy" alt="2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline." />
         </a>
         <figcaption><span className="eyebrow">PREVIOUS PROJECT / 2023</span><h3>Recreating Adversarial Attacks in Multimodal Architecture</h3><p>Select the poster to view it at full size.</p></figcaption>
       </figure>
@@ -245,10 +247,10 @@ function Supporters() {
         <SectionHeading label="07 / SPONSORS" title="Supporting the next question." />
         <div className="sponsor-logos">
           <div className="sponsor-logo-card sponsor-academic">
-            <img src="/images/sponsors/academic-partners.png" alt="IAP, Universidad de Puerto Rico Recinto Universitario de Mayagüez, and CPS IoT Laboratory" width={1120} height={290} loading="lazy" />
+            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 72px), (max-width: 1232px) calc(100vw - 192px), 1040px" src="/images/sponsors/academic-partners.webp" alt="IAP, Universidad de Puerto Rico Recinto Universitario de Mayagüez, and CPS IoT Laboratory" width={1120} height={290} loading="lazy" />
           </div>
           <div className="sponsor-logo-card sponsor-mit">
-            <img src="/images/sponsors/mit-lincoln-laboratory-clean.png" alt="MIT Lincoln Laboratory" width={860} height={381} loading="lazy" />
+            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 72px), 500px" src="/images/sponsors/mit-lincoln-laboratory-clean.webp" alt="MIT Lincoln Laboratory" width={860} height={381} loading="lazy" />
           </div>
         </div>
     </section>
@@ -264,13 +266,15 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
         <div
           className={`avatar avatar-${index % 4}`}
           role="img"
-          aria-label={`Abstract placeholder avatar for ${member.name}`}
+          aria-label={member.photo ? `Portrait of ${member.name}` : `Abstract placeholder avatar for ${member.name}`}
         >
+          {member.photo ? <ResponsiveImage sizes="(max-width: 767px) 280px, 360px" className="member-photo" src={member.photo} alt="" loading="lazy" /> : <>
           <div className="avatar-grid" />
           <span className="avatar-shape" />
           <span className="avatar-index mono">MEMBER / {String(index + 1).padStart(2, "0")}</span>
           <span className="avatar-initials">{member.initials}</span>
           <Plus className="avatar-plus" size={18} />
+          </>}
         </div>
         <p className="profile-role mono">{member.role}</p>
         <h3>{member.name}</h3>
@@ -294,7 +298,7 @@ function MemberEndpoint({ member, onClose }: { member: TeamMember; onClose: () =
     <article className="member-endpoint" role="dialog" aria-modal="true" aria-labelledby="member-endpoint-title">
       <button ref={closeButton} className="member-endpoint-close" type="button" onClick={onClose} aria-label="Close member profile"><X size={20} /></button>
       <div className="member-endpoint-top"><span className="eyebrow">MEMBER ENDPOINT / {member.role}</span><span className="mono">PROFILE / {member.initials}</span></div>
-      <div className="member-endpoint-heading"><div className="member-endpoint-avatar">{member.initials}</div><div><h2 id="member-endpoint-title">{member.name}</h2><p>{member.role}</p></div></div>
+      <div className="member-endpoint-heading"><div className="member-endpoint-avatar">{member.photo ? <ResponsiveImage sizes="(max-width: 767px) 76px, 104px" className="member-photo" src={member.photo} alt={`Portrait of ${member.name}`} /> : member.initials}</div><div><h2 id="member-endpoint-title">{member.name}</h2><p>{member.role}</p></div></div>
       <div className="member-endpoint-grid">
         <section><p className="eyebrow">BIO</p><p>{member.bio}</p><p className="eyebrow">EDUCATION</p><p>{member.education ?? "Education details to be added."}</p><p className="eyebrow">RESEARCH INTERESTS</p><p>{member.interests}</p></section>
         <section><p className="eyebrow">SKILLS & TOOLS</p><ul>{member.skills.map(skill => <li key={skill}>{skill}</li>)}</ul><p className="eyebrow">PROJECTS</p><ul>{member.projects.map(project => <li key={project}>{project}</li>)}</ul>{member.experience?.length ? <><p className="eyebrow">EXPERIENCE</p><ul>{member.experience.map(item => <li key={item}>{item}</li>)}</ul></> : null}</section>
@@ -413,7 +417,7 @@ function CohortAndOnboarding() {
   </>;
 }
 function Advisors() {
-  return <section id="professors" className="container content-section advisors-section" aria-label="Research advisors"><SectionHeading label="06 / ADVISORS" title="Guidance behind the questions." /><p className="section-note"><SpecialText>Meet Dr. Nayda Santiago and Dr. Alcibiades Bustillo, the advisors guiding the research group.</SpecialText></p><div className="advisor-grid">{advisors.map(advisor => <article className="advisor-card" key={advisor.name}><img src={advisor.photo} alt={advisor.name} width={594} height={596} loading="lazy" /><div><p className="eyebrow">{advisor.role}</p><h3>{advisor.name}</h3><p>{advisor.focus}</p></div></article>)}</div></section>;
+  return <section id="professors" className="container content-section advisors-section" aria-label="Research advisors"><SectionHeading label="06 / ADVISORS" title="Guidance behind the questions." /><p className="section-note"><SpecialText>Meet Dr. Nayda Santiago and Dr. Alcibiades Bustillo, the advisors guiding the research group.</SpecialText></p><div className="advisor-grid">{advisors.map(advisor => <article className="advisor-card" key={advisor.name}><ResponsiveImage sizes="(max-width: 767px) 90px, 150px" src={advisor.photo} alt={advisor.name} width={594} height={596} loading="lazy" /><div><p className="eyebrow">{advisor.role}</p><h3>{advisor.name}</h3><p>{advisor.focus}</p></div></article>)}</div></section>;
 }
 export default function App() {
   const [profileSlug, setProfileSlug] = useState(() => window.location.hash.startsWith("#member/") ? window.location.hash.slice(8) : "");
@@ -456,14 +460,15 @@ export default function App() {
         <Team />
         <div className="container team-group-section">
           <figure className="team-group-card">
-            <div className="team-group-photo" role="img" aria-label="Placeholder for the PandaHat team group photo">
-              <Users size={72} strokeWidth={1} aria-hidden="true" />
-              <span className="mono">GROUP PHOTO COMING SOON</span>
-            </div>
+            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1352px) calc(100vw - 112px), 1240px" className="team-group-image" src={conferencePhotos[2].src} width={1600} height={1200} loading="lazy" decoding="async" alt={conferencePhotos[2].alt} />
             <figcaption>
-              <div><span className="eyebrow">THE PEOPLE BEHIND PANDAHAT</span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2></div>
+              <div><span className="eyebrow">THE PEOPLE BEHIND PANDAHAT</span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2><p>Spring IAP · May 2026 · Mayagüez</p></div>
             </figcaption>
           </figure>
+          <section className="conference-gallery" aria-labelledby="conference-title">
+            <div className="conference-heading"><span className="eyebrow">FROM THE CONFERENCE</span><h2 id="conference-title">Spring IAP 2026</h2><p>May 2026 · Mayagüez</p></div>
+            <div className="conference-grid">{conferencePhotos.map((photo, index) => <a key={photo.src} href={photo.src} target="_blank" rel="noreferrer" aria-label={`Open conference photo ${index + 1}: ${photo.alt}`}><ResponsiveImage sizes="(max-width: 767px) calc((100vw - 50px) / 2), (max-width: 1352px) calc((100vw - 144px) / 3), 403px" src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" width={640} height={480} /></a>)}</div>
+          </section>
         </div>
         <CohortAndOnboarding />
         <ResearchPosters />

@@ -1,7 +1,7 @@
 import { useId } from "react";
 export function PandaMark() {
   return (
-    <img className="panda-logo" src="/images/pandahat-logo.jpg" alt="" width={200} height={200} />
+    <img className="panda-logo" src="/images/pandahat-logo.webp" alt="" width={200} height={200} />
   );
 }
 export function SignalArt({ compact = false }: { compact?: boolean }) {

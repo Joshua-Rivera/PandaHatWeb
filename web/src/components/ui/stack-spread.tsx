@@ -1,6 +1,7 @@
+import * as m from "motion/react-m";
 // Scroll composition adapted from the Hyperiux Vault stack-spread reference.
 import { useEffect, useId, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import "./stack-spread.css";
 
 type Card = {
@@ -13,7 +14,7 @@ type Card = {
   end: [number, number];
 };
 // Coordinates share one design space, so the lettering lines up across every card.
-// Swap the local placeholder files to change the photographs without changing masks.
+// Conference thumbnails keep the animated composition lightweight.
 const CARDS: Card[] = [
   { image: 1, w: 220, h: 155, x: 440, y: 270, angle: -18, end: [330, 110] },
   { image: 8, w: 220, h: 210, x: 765, y: 255, angle: 20, end: [1000, 130] },
@@ -48,7 +49,7 @@ function PhotoCard({ card, index, progress, small, id }: {
   const clip = `${id}-clip-${index}`;
   const mask = `${id}-mask-${index}`;
   return (
-    <motion.g style={{ transform, originX: 0, originY: 0, transformBox: "view-box" }} data-collage-card={index}>
+    <m.g style={{ transform, originX: 0, originY: 0, transformBox: "view-box" }} data-collage-card={index}>
       <defs>
         <clipPath id={clip}><rect x={-w / 2} y={-h / 2} width={w} height={h} rx="9" /></clipPath>
         {/* Keep only lettering actually visible on this card in the original stack.
@@ -63,14 +64,14 @@ function PhotoCard({ card, index, progress, small, id }: {
         </mask>
       </defs>
       <g clipPath={`url(#${clip})`}>
-        <image href={`/images/collage/placeholder-${card.image}.jpg`} x={-w / 2} y={-h / 2} width={w} height={h} preserveAspectRatio="xMidYMid slice" />
+        <image href={`/images/conference/spring-iap-2026-${String(card.image).padStart(2, "0")}-${small ? "small" : "thumb"}.webp`} x={-w / 2} y={-h / 2} width={w} height={h} preserveAspectRatio="xMidYMid slice" />
         {/* Invert the initial card transform: all text starts aligned in world space,
             then remains permanently attached to its own moving photograph. */}
         <g transform={`rotate(${-card.angle}) translate(${-card.x} ${-card.y})`}>
           <text x="600" y="422" textAnchor="middle" fontFamily="Arial, Helvetica, sans-serif" fontSize="142" fontWeight="900" letterSpacing="-7" fill="var(--collage-bg)" stroke="#141414" strokeWidth="1.5" strokeLinejoin="round" paintOrder="stroke fill" mask={`url(#${mask})`}>PandaHat</text>
         </g>
       </g>
-    </motion.g>
+    </m.g>
   );
 }
 
@@ -94,13 +95,13 @@ export default function StackSpread() {
     <section ref={ref} className={`stack-spread${reduced ? " is-reduced" : ""}`} aria-label="PandaHat introduction">
       <div className="stack-spread-stage">
         <h1 className="collage-accessible-title">PandaHat Adversarial</h1>
-        <motion.div className="stack-spread-copy" style={{ opacity: copyOpacity }} aria-hidden="true">
+        <m.div className="stack-spread-copy" style={{ opacity: copyOpacity }} aria-hidden="true">
           <span>Adversarial</span>
-        </motion.div>
+        </m.div>
         <svg className="stack-spread-art" viewBox={small ? "0 0 600 900" : "0 0 1200 740"} aria-hidden="true">
           {CARDS.map((card, index) => <PhotoCard key={card.image} card={card} index={index} progress={cardProgress} small={small} id={id} />)}
         </svg>
-        {!reduced && <motion.div className="stack-spread-hint" style={{ opacity: hintOpacity }} aria-hidden="true">SCROLL TO EXPLORE<span>↓</span></motion.div>}
+        {!reduced && <m.div className="stack-spread-hint" style={{ opacity: hintOpacity }} aria-hidden="true">SCROLL TO EXPLORE<span>↓</span></m.div>}
       </div>
     </section>
   );

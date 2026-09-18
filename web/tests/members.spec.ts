@@ -4,6 +4,8 @@ for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, hei
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto("/#members");
+    // Font loading can change the gallery height after its first layout.
+    await page.evaluate(() => document.fonts.ready);
     const section = page.locator("#members");
     const rail = page.getByRole("region", { name: "Member profiles" });
     await expect(section).toHaveClass(/is-pinned/);
@@ -19,7 +21,10 @@ for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, hei
     const overflow = await stage.evaluate(el => Math.max(0, (el as HTMLElement).offsetHeight - window.innerHeight));
     await page.mouse.wheel(0, 600 + overflow);
     await expect.poll(() => rail.evaluate(el => el.scrollLeft)).toBeGreaterThan(450);
-    expect((await stage.boundingBox())!.y).toBeCloseTo(-overflow, 0);
+    await expect.poll(() => stage.evaluate(el => {
+      const currentOverflow = Math.max(0, (el as HTMLElement).offsetHeight - innerHeight);
+      return Math.abs(el.getBoundingClientRect().y + currentOverflow);
+    })).toBeLessThan(0.5);
     await page.mouse.wheel(0, -300);
     await expect.poll(() => rail.evaluate(el => el.scrollLeft)).toBeLessThan(400);
     const remaining = await rail.evaluate(el => el.scrollWidth - el.clientWidth - el.scrollLeft);

@@ -1,14 +1,14 @@
 # PandaHat Adversarial
 
-A responsive, static research portfolio built with React, TypeScript, Vite, React Router, and Motion. Home, Research, and Team feature custom SVG illustrations and a dark research-studio aesthetic.
+A responsive, static research portfolio built with React, TypeScript, Vite, React Router, and Motion. A single-page layout brings together research, member profiles, posters, advisors, and sponsors in a dark research-studio aesthetic.
 
 ## Development
 
-Run `npm install`, then `npm run dev`.
+From this `web/` directory, run `npm ci`, then `npm run dev`. Use Node.js 24 (the repository root contains `.nvmrc`).
 
 ## Validation
 
-Run `npm run lint`, `npm run build` (includes type checking), and `npm run test:e2e`. Install the browser once with `npx playwright install chromium`.
+Install the browser once with `npx playwright install chromium`, then run `npm run check` for lint, production build (including type checking), and browser tests. Tests run against the built site on port 4173, so standalone `npm run test:e2e` requires a fresh `npm run build` first.
 
 ## Content and design
 
@@ -16,7 +16,7 @@ Run `npm run lint`, `npm run build` (includes type checking), and `npm run test:
 - `src/index.css`: typography and color tokens; `src/App.css`: responsive component styling.
 - `src/Graphics.tsx`: original SVG illustrations and temporary branding.
 
-Unconfirmed member bios and research descriptions remain placeholders. Visuals are illustrative, not detector outputs. No backend, data collection, performance claims, or external profile links are included. Fonts load from Google Fonts with system fallbacks.
+Unconfirmed member bios and research descriptions remain placeholders. Visuals are illustrative, not detector outputs. There is no backend or data collection. Supplied member profiles include contact and external profile links. Fonts load from Google Fonts with system fallbacks.
 
 ## Current research structure
 
@@ -27,6 +27,14 @@ Unconfirmed member bios and research descriptions remain placeholders. Visuals a
 
 ## Static hosting
 
-Run `npm run build` and publish `dist/`. The host must serve `index.html` for non-file routes such as `/research` and `/team`, preserving the URL (an SPA rewrite, not a redirect). Otherwise refreshing a nested URL will return the host's 404. Unknown client routes render the app's not-found page.
+See [deployment preparation](DEPLOYMENT.md) for build settings, routing, automated checks, caching, and remaining launch decisions. The deployable output is `web/dist/` from the repository root.
 
-For Netlify, add a `public/_redirects` file containing `/* /index.html 200`. For nginx, use `try_files $uri $uri/ /index.html;`. Configure equivalent rewrites on other hosts. Vite development and preview servers already support this fallback. Deployment is not configured for a specific provider.
+## Images
+
+Served raster images use WebP with generated width descriptors and responsive `sizes`. Conference photos are from Spring IAP, May 2026, Mayagüez. Mobile collage images are capped at 320 pixels wide; gallery thumbnails at 640 pixels on the long edge. Larger conference photos remain capped at 1600 pixels on the long edge and open on click. The group photo has intermediate responsive versions.
+
+The poster uses quality-85 WebP at its original 1666 × 2500 resolution, with 480- and 960-pixel-wide page previews. Sponsor logos remain lossless and are sized for their display areas; the MIT logo is capped at 1000 pixels wide. Portraits have smaller versions for profile dialogs and phones. Originals stay in `assets/image-originals/`, outside the deployment output.
+
+To regenerate images and `src/image-variants.json`, install Pillow in a Python environment and run `python scripts/optimize-images.py` from the repository root. Use `ResponsiveImage` with an accurate `sizes` value for new responsive image placements. New source files also require references in the relevant content/component.
+
+Animation components use `motion/react-m` and strict `LazyMotion` with `domAnimation`. Features load synchronously to preserve first-render and scroll animation behavior while excluding unused drag/layout features.

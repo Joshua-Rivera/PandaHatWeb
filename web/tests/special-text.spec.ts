@@ -3,6 +3,7 @@ import { test, expect } from "@playwright/test";
 test("section text decodes with scrolling, reverses, and respects reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
   const paragraph = page.locator("#description .body-copy").first();
   const text = await paragraph.locator(".special-text-accessible").textContent();
   const words = paragraph.locator(".special-text-decoded");
