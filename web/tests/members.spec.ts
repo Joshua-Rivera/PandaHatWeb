@@ -9,12 +9,12 @@ for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, hei
     const section = page.locator("#members");
     const rail = page.getByRole("region", { name: "Member profiles" });
     await expect(section).toHaveClass(/is-pinned/);
-    await expect(section.locator(".team-profile")).toHaveCount(23);
+    await expect(section.locator(".team-profile")).toHaveCount(22);
     const roles = await section.locator(".profile-role").allTextContents();
     expect(roles.filter(role => role === "PM")).toHaveLength(1);
     expect(roles.filter(role => role === "Co-PM")).toHaveLength(1);
     expect(roles.filter(role => role === "TL · Team Leader")).toHaveLength(5);
-    expect(roles.filter(role => role === "Learning path member")).toHaveLength(16);
+    expect(roles.filter(role => role === "Learning path member")).toHaveLength(15);
     await expect(section.locator(".members-progress")).toHaveCount(0);
     await expect(rail).toHaveCSS("scrollbar-width", "none");
     const stage = section.locator(".members-stage");

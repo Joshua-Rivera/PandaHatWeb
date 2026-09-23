@@ -441,7 +441,7 @@ function CohortAndOnboarding() {
   return <>
     <div className="container cohort-summary">
       <div className="cohort-heading"><p className="eyebrow">{content.team.fullTimeLabel}</p><p className="team-note">Seven full-time researchers anchor the active questions, mentoring, and project continuity.</p></div>
-      <div className="cohort-heading"><p className="eyebrow">{content.team.onboardingLabel}</p><p className="team-note">Sixteen new members move through a shared learning path from orientation to independent contribution.</p></div>
+      <div className="cohort-heading"><p className="eyebrow">{content.team.onboardingLabel}</p><p className="team-note">Fifteen new members move through a shared learning path from orientation to independent contribution.</p></div>
     </div>
     <div className="container onboarding-section" id="onboarding">
       <div className="onboarding-heading"><p className="eyebrow">LEARNING PATH / ONBOARDING</p><h2><SpecialText>Start curious. Leave capable.</SpecialText></h2></div>

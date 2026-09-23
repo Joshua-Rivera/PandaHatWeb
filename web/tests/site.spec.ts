@@ -73,7 +73,7 @@ test("research endpoints and cohort onboarding are discoverable", async ({ page 
   await expect(page.locator("#research-topic-deepfake-analysis")).toBeAttached();
   await expect(page.locator("#research-topic-media-authenticity")).toBeAttached();
   await expect(page.getByText("07 / FULL-TIME RESEARCHERS")).toBeAttached();
-  await expect(page.getByText("16 / LEARNING PATH MEMBERS")).toBeAttached();
+  await expect(page.getByText("15 / LEARNING PATH MEMBERS")).toBeAttached();
   await expect(page.locator("#onboarding article")).toHaveCount(4);
   await expect(page.getByRole("heading", { name: "Dr. Nayda Santiago" })).toBeAttached();
   await expect(page.getByRole("heading", { name: "Dr. Alcibiades Bustillo" })).toBeAttached();
@@ -81,8 +81,8 @@ test("research endpoints and cohort onboarding are discoverable", async ({ page 
 
 test("member cards open resume-ready profile endpoints", async ({ page }) => {
   await page.goto("/#members");
-  await expect(page.locator(".team-profile")).toHaveCount(23);
-  await expect(page.getByText("Diego Espinal")).toBeAttached();
+  await expect(page.locator(".team-profile")).toHaveCount(22);
+  await expect(page.getByText("Joshua Roman")).toBeAttached();
   await expect(page.getByText("Kevin Beltran")).toBeAttached();
   const profile = page.getByRole("link", { name: "Open profile for Joshua Rivera" });
   await expect(profile).toHaveAttribute("href", "#member/joshua-rivera");
@@ -95,14 +95,14 @@ test("member cards open resume-ready profile endpoints", async ({ page }) => {
   await expect(page).toHaveURL(/#members$/);
   await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect.poll(() => page.evaluate(previous => Math.abs(scrollY - previous), positionBeforeClose)).toBeLessThan(120);
-  await page.locator(".profile-card-link").filter({ hasText: "Diego Espinal" }).click();
-  await expect(page).toHaveURL(/#member\/diego-espinal$/);
-  await expect(page.getByRole("dialog")).toContainText("Diego Espinal");
-  await expect(page.getByRole("dialog")).toContainText("PonceSpot parking lot management system");
+  await page.locator(".profile-card-link").filter({ hasText: "Joshua Roman" }).click();
+  await expect(page).toHaveURL(/#member\/joshua-roman$/);
+  await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
+  await expect(page.getByRole("dialog")).toContainText("Parking Lot Reservation System");
   await page.getByRole("button", { name: "Close member profile" }).click();
-  await page.getByRole("link", { name: "Open profile for Diego Espinal" }).click();
-  await expect(page).toHaveURL(/#member\/diego-espinal$/);
-  await expect(page.getByRole("dialog")).toContainText("Diego Espinal");
+  await page.getByRole("link", { name: "Open profile for Joshua Roman" }).click();
+  await expect(page).toHaveURL(/#member\/joshua-roman$/);
+  await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
   await expect(page.getByRole("button", { name: "Close member profile" })).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
