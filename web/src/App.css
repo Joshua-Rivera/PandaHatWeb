@@ -1320,6 +1320,7 @@ h2 {
   white-space: nowrap;
   color: var(--text);
 }
+.header .navigation a.active,
 .header .navigation a:hover,
 .header .navigation a:focus-visible { color: var(--accent); }
 @media (max-width: 1100px) {
@@ -1544,3 +1545,9 @@ h2 {
 .sponsor-logo-card { background: #fff; border-radius: 22px; padding: clamp(16px, 3vw, 40px); overflow: hidden; }
 .sponsor-logo-card img { display: block; width: 100%; height: auto; object-fit: contain; }
 .sponsor-mit { width: min(100%, 580px); justify-self: center; }
+
+.header .navigation a.active::after { top: auto; bottom: 2px; left: 0; right: 0; width: auto; height: 2px; }
+@media (max-width: 1100px) {
+  .header .navigation a.active { background: var(--surface); }
+  .header .navigation a.active::after { left: 16px; right: 16px; }
+}

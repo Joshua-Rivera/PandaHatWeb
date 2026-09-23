@@ -46,9 +46,40 @@ function Brand() {
 }
 function Header() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const header = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const sections = SECTIONS.map(([path]) => ({ path, element: document.querySelector(path) }));
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      // Read below the sticky header, including throughout the pinned member gallery.
+      const threshold = (header.current?.getBoundingClientRect().bottom ?? 90) + 24;
+      let active = "";
+      for (const { path, element } of sections) {
+        if (element && element.getBoundingClientRect().top <= threshold) active = path;
+      }
+      setActiveSection(active);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    const observer = new ResizeObserver(schedule);
+    observer.observe(document.body);
+    schedule();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, []);
   const button = useRef<HTMLButtonElement>(null);
   return (
-    <header className="header">
+    <header ref={header} className="header">
       <div className="container header-inner">
         <Brand />
         <button
@@ -76,6 +107,8 @@ function Header() {
             <a
               key={path}
               href={path}
+              className={activeSection === path ? "active" : undefined}
+              aria-current={activeSection === path ? "location" : undefined}
               onClick={() => setOpen(false)}
             >
               {name}
