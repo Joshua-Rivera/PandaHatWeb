@@ -352,11 +352,11 @@ function Team() {
     return () => { window.removeEventListener("scroll", update); element.removeEventListener("scroll", update); };
   }, [pinned, travel, stageOverflow]);
 
-  const move = (direction: number) => {
+  const move = (direction: number, skip = false) => {
     const element = rail.current;
     if (!element) return;
     const distance = (element.firstElementChild as HTMLElement)?.offsetWidth + 40;
-    const target = Math.max(0, Math.min(travel, element.scrollLeft + direction * distance));
+    const target = skip ? (direction < 0 ? 0 : travel) : Math.max(0, Math.min(travel, element.scrollLeft + direction * distance));
     const behavior = reduced ? "instant" : "smooth";
     if (pinned && section.current) {
       window.scrollTo({ top: window.scrollY + section.current.getBoundingClientRect().top + stageOverflow + target, behavior });
@@ -373,8 +373,8 @@ function Team() {
         <div className="rail-toolbar">
           <span className="mono">{pinned ? "SCROLL DOWN TO MEET THE TEAM →" : "SCROLL TO EXPLORE →"}</span>
           <div className="rail-controls">
-            <button aria-label="Previous member profiles" disabled={position <= 2} onClick={() => move(-1)}><ArrowLeft size={18} /></button>
-            <button aria-label="Next member profiles" disabled={position >= travel - 2} onClick={() => move(1)}><ArrowRight size={18} /></button>
+            <button aria-label="Skip to first member" disabled={position <= 2} onClick={() => move(-1, true)}><ArrowLeft size={18} /></button>
+            <button aria-label="Skip to last member" disabled={position >= travel - 2} onClick={() => move(1, true)}><ArrowRight size={18} /></button>
           </div>
         </div>
         <div ref={rail} className="horizontal-rail members-track circular-members" role="region" aria-label="Member profiles" tabIndex={0}

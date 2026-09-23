@@ -360,5 +360,149 @@
         "height": 442
       }
     ]
+  },
+  "/images/members/sorimerlin-santos.webp": {
+    "width": 720,
+    "height": 1260,
+    "variants": [
+      {
+        "src": "/images/members/sorimerlin-santos-small.webp",
+        "width": 320,
+        "height": 560
+      },
+      {
+        "src": "/images/members/sorimerlin-santos.webp",
+        "width": 720,
+        "height": 1260
+      }
+    ]
+  },
+  "/images/members/adriana-vega.webp": {
+    "width": 264,
+    "height": 540,
+    "variants": [
+      {
+        "src": "/images/members/adriana-vega-small.webp",
+        "width": 264,
+        "height": 540
+      },
+      {
+        "src": "/images/members/adriana-vega.webp",
+        "width": 264,
+        "height": 540
+      }
+    ]
+  },
+  "/images/members/aliek-betancourt.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/aliek-betancourt-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/aliek-betancourt.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
+  },
+  "/images/members/kevin-beltran.webp": {
+    "width": 720,
+    "height": 901,
+    "variants": [
+      {
+        "src": "/images/members/kevin-beltran-small.webp",
+        "width": 320,
+        "height": 400
+      },
+      {
+        "src": "/images/members/kevin-beltran.webp",
+        "width": 720,
+        "height": 901
+      }
+    ]
+  },
+  "/images/members/jorge-luna.webp": {
+    "width": 720,
+    "height": 1558,
+    "variants": [
+      {
+        "src": "/images/members/jorge-luna-small.webp",
+        "width": 320,
+        "height": 692
+      },
+      {
+        "src": "/images/members/jorge-luna.webp",
+        "width": 720,
+        "height": 1558
+      }
+    ]
+  },
+  "/images/members/josue-lopez.webp": {
+    "width": 720,
+    "height": 1081,
+    "variants": [
+      {
+        "src": "/images/members/josue-lopez-small.webp",
+        "width": 320,
+        "height": 480
+      },
+      {
+        "src": "/images/members/josue-lopez.webp",
+        "width": 720,
+        "height": 1081
+      }
+    ]
+  },
+  "/images/members/daniel-munoz.webp": {
+    "width": 720,
+    "height": 480,
+    "variants": [
+      {
+        "src": "/images/members/daniel-munoz-small.webp",
+        "width": 320,
+        "height": 213
+      },
+      {
+        "src": "/images/members/daniel-munoz.webp",
+        "width": 720,
+        "height": 480
+      }
+    ]
+  },
+  "/images/members/daniel-reyes.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/daniel-reyes-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/daniel-reyes.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
+  },
+  "/images/members/revel-velazquez.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/revel-velazquez-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/revel-velazquez.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
   }
 }
