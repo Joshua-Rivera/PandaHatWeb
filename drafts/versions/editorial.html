@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PandaHat is a UPRM computer science research group exploring machine learning, computer vision, and trustworthy AI." />
+  <base href="../" />
+  <title>PandaHat / Editorial option</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=motion-1" />
+</head>
+<body data-theme="fieldnotes">
+  <a class="skip" href="#app">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="PandaHat home"><img src="assets/panda.png" alt="" /><span><strong>PandaHat</strong><small>UPRM / CS research group</small></span></a>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <a href="#home" data-view-link="home">Index</a>
+      <a href="#work" data-view-link="work">Work <sup>04</sup></a>
+      <a href="#lab" data-view-link="lab">Lab notes</a>
+      <a href="#people" data-view-link="people">People</a>
+      <a href="motion.html">Motion</a>
+    </nav>
+    <div class="header-actions"><button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch visual theme"><i></i><span id="themeLabel">Fieldnotes</span></button><button id="menuToggle" class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button></div>
+  </header>
+  <main id="app" tabindex="-1">
+    <section class="view view-home" data-view="home">
+      <div class="home-grid">
+        <div class="home-copy"><p class="kicker">PANDAHAT / 2026—27</p><h1><span>Research that</span><br><em><span>leaves a trace.</span></em></h1><p class="hero-lede">A student-led machine learning group at the University of Puerto Rico, Mayagüez. We study what models learn, where they fail, and what evidence makes a result worth trusting.</p><div class="hero-actions"><a class="button button-solid" href="#work">Browse the work <span>↗</span></a><a class="text-link" href="#lab">Read the lab notes <span>↘</span></a></div></div>
+        <div class="signal-board"><div class="board-header"><span>LIVE RESEARCH INDEX</span><span>18.204° N / 67.139° W</span></div><div class="board-main"><div class="board-stamp">PH<br><small>01</small></div><div class="board-line line-one"></div><div class="board-line line-two"></div><i class="scan-line" aria-hidden="true"></i><img src="assets/authenticity.png" alt="Abstract face made from digital particles" /><span class="board-caption">FIG. 01 / AUTHENTICITY</span><strong class="board-title">Look closer.</strong></div><div class="board-footer"><span>QUESTION / BUILD / CHALLENGE</span><span>SCROLL OR SELECT A VIEW</span></div></div>
+      </div>
+      <div class="home-foot"><p class="section-number">00 / THE INDEX</p><div class="ticker"><span>Machine learning</span><i>×</i><span>Computer vision</span><i>×</i><span>Adversarial research</span><i>×</i><span>Reproducibility</span></div></div>
+    </section>
+    <section class="view view-work" data-view="work" hidden>
+      <div class="view-heading"><div><p class="kicker">01 / SELECTED WORK</p><h2>Questions first.<br><em>Projects second.</em></h2></div><p class="heading-note">A living index of experiments, baselines, and open questions. Select a row to inspect the thinking behind it.</p></div>
+      <div class="work-toolbar"><span id="projectCount">04 tracks</span><div class="filters" role="group" aria-label="Filter projects"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="vision">Vision</button><button class="filter" data-filter="robustness">Robustness</button><button class="filter" data-filter="systems">Systems</button></div><div class="connection-signal" aria-hidden="true"><span>QUESTION</span><i></i><b>METHODS</b><i></i><span>EVIDENCE</span></div><div id="projectList" class="project-list"></div><div id="projectDetail" class="project-detail" aria-live="polite"></div>
+    </section>
+    <section class="view view-lab" data-view="lab" hidden>
+      <div class="view-heading"><div><p class="kicker">02 / LAB NOTES</p><h2>Make the process<br><em>inspectable.</em></h2></div><p class="heading-note">Research is more useful when the assumptions, dead ends, and small decisions stay attached to the result.</p></div>
+      <div class="lab-layout"><div class="lab-principles"><article><span>01</span><h3>Start with a sharp question.</h3><p>Define the uncertainty before selecting a benchmark, model, or metric.</p></article><article><span>02</span><h3>Build for the second run.</h3><p>Every experiment keeps its data split, configuration, and evaluation path visible.</p></article><article><span>03</span><h3>Interrogate the clean result.</h3><p>Stress inputs, inspect classes, and document what the average score hides.</p></article><article><span>04</span><h3>Publish the limits too.</h3><p>A useful finding includes its failure modes, not only its strongest chart.</p></article></div><aside class="field-note"><div class="note-top"><span>FIELD NOTE / 017</span><span>OPEN</span></div><h3>What breaks<br><em>first?</em></h3><p>“A model can be accurate and still be wrong in a way that matters.”</p><div class="note-bottom"><span>OBSERVE → TEST → REPEAT</span><span>— PH</span></div></aside></div>
+      <div class="lab-art"><div class="matrix-art"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>CONFUSION / MATRIX</b></div><div><p class="kicker">THE WORKING BELIEF</p><p class="lab-quote">Trust is not a feeling. It is a trail of decisions someone else can follow.</p></div></div>
+    </section>
+    <section class="view view-people" data-view="people" hidden>
+      <div class="view-heading"><div><p class="kicker">03 / THE COLLECTIVE</p><h2>Different questions.<br><em>Shared rigor.</em></h2></div><p class="heading-note">PandaHat is a student research group in the UPRM Computer Science community, shaped by collaboration and open-ended curiosity.</p></div>
+      <div class="people-layout"><div class="people-intro"><img src="assets/panda.png" alt="PandaHat panda mark" /><p>Based in Mayagüez, Puerto Rico.<br>Built around the next good question.</p><a class="text-link" href="mailto:pandahat@uprm.edu">Start a conversation ↗</a></div><div id="memberGrid" class="member-grid"></div></div>
+      <div class="people-footer"><span>JOIN THE RESEARCH</span><a href="mailto:pandahat@uprm.edu">pandahat@uprm.edu</a><span>UPRM / COMPUTER SCIENCE</span></div>
+    </section>
+  </main>
+  <footer><div class="footer-brand"><img src="assets/panda.png" alt=""><strong>PandaHat</strong></div><span>Research in public / UPR Mayagüez</span><a href="#home">Back to index ↑</a></footer>
+  <script src="app.js?v=motion-2"></script>
+</body>
+</html>

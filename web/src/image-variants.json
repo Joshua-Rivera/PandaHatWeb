@@ -1,0 +1,508 @@
+{
+  "/images/conference/spring-iap-2026-01-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-01-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-01-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-02-thumb.webp": {
+    "width": 640,
+    "height": 480,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-02-small.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-02-thumb.webp",
+        "width": 640,
+        "height": 480
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-03-thumb.webp": {
+    "width": 640,
+    "height": 480,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-03-small.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-03-thumb.webp",
+        "width": 640,
+        "height": 480
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-03.webp": {
+    "width": 1600,
+    "height": 1200,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-03-small.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-03-thumb.webp",
+        "width": 640,
+        "height": 480
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-03-960.webp",
+        "width": 960,
+        "height": 720
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-03.webp",
+        "width": 1600,
+        "height": 1200
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-04-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-04-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-04-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-05-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-05-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-05-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-06-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-06-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-06-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-07-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-07-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-07-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-08-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-08-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-08-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-09-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-09-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-09-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-10-thumb.webp": {
+    "width": 640,
+    "height": 480,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-10-small.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-10-thumb.webp",
+        "width": 640,
+        "height": 480
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-11-thumb.webp": {
+    "width": 640,
+    "height": 480,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-11-small.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-11-thumb.webp",
+        "width": 640,
+        "height": 480
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-12-thumb.webp": {
+    "width": 480,
+    "height": 640,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-12-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-12-thumb.webp",
+        "width": 480,
+        "height": 640
+      }
+    ]
+  },
+  "/images/conference/spring-iap-2026-13-thumb.webp": {
+    "width": 640,
+    "height": 480,
+    "variants": [
+      {
+        "src": "/images/conference/spring-iap-2026-13-small.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/images/conference/spring-iap-2026-13-thumb.webp",
+        "width": 640,
+        "height": 480
+      }
+    ]
+  },
+  "/images/members/gian-miranda.webp": {
+    "width": 720,
+    "height": 852,
+    "variants": [
+      {
+        "src": "/images/members/gian-miranda-small.webp",
+        "width": 320,
+        "height": 379
+      },
+      {
+        "src": "/images/members/gian-miranda.webp",
+        "width": 720,
+        "height": 852
+      }
+    ]
+  },
+  "/images/members/joshua-rivera.webp": {
+    "width": 720,
+    "height": 467,
+    "variants": [
+      {
+        "src": "/images/members/joshua-rivera-small.webp",
+        "width": 320,
+        "height": 207
+      },
+      {
+        "src": "/images/members/joshua-rivera.webp",
+        "width": 720,
+        "height": 467
+      }
+    ]
+  },
+  "/images/members/joshua-roman.webp": {
+    "width": 720,
+    "height": 726,
+    "variants": [
+      {
+        "src": "/images/members/joshua-roman-small.webp",
+        "width": 320,
+        "height": 323
+      },
+      {
+        "src": "/images/members/joshua-roman.webp",
+        "width": 720,
+        "height": 726
+      }
+    ]
+  },
+  "/images/posters/pandahat-2023-preview.webp": {
+    "width": 960,
+    "height": 1441,
+    "variants": [
+      {
+        "src": "/images/posters/pandahat-2023-480.webp",
+        "width": 480,
+        "height": 720
+      },
+      {
+        "src": "/images/posters/pandahat-2023-preview.webp",
+        "width": 960,
+        "height": 1441
+      }
+    ]
+  },
+  "/images/professors/alcibiades-bustillo.webp": {
+    "width": 300,
+    "height": 301,
+    "variants": [
+      {
+        "src": "/images/professors/alcibiades-bustillo-small.webp",
+        "width": 180,
+        "height": 181
+      },
+      {
+        "src": "/images/professors/alcibiades-bustillo.webp",
+        "width": 300,
+        "height": 301
+      }
+    ]
+  },
+  "/images/professors/nayda-santiago.webp": {
+    "width": 300,
+    "height": 301,
+    "variants": [
+      {
+        "src": "/images/professors/nayda-santiago-small.webp",
+        "width": 180,
+        "height": 181
+      },
+      {
+        "src": "/images/professors/nayda-santiago.webp",
+        "width": 300,
+        "height": 301
+      }
+    ]
+  },
+  "/images/sponsors/academic-partners.webp": {
+    "width": 1120,
+    "height": 290,
+    "variants": [
+      {
+        "src": "/images/sponsors/academic-partners-480.webp",
+        "width": 480,
+        "height": 124
+      },
+      {
+        "src": "/images/sponsors/academic-partners.webp",
+        "width": 1120,
+        "height": 290
+      }
+    ]
+  },
+  "/images/sponsors/mit-lincoln-laboratory-clean.webp": {
+    "width": 1000,
+    "height": 442,
+    "variants": [
+      {
+        "src": "/images/sponsors/mit-lincoln-laboratory-clean-480.webp",
+        "width": 480,
+        "height": 212
+      },
+      {
+        "src": "/images/sponsors/mit-lincoln-laboratory-clean.webp",
+        "width": 1000,
+        "height": 442
+      }
+    ]
+  },
+  "/images/members/sorimerlin-santos.webp": {
+    "width": 720,
+    "height": 1260,
+    "variants": [
+      {
+        "src": "/images/members/sorimerlin-santos-small.webp",
+        "width": 320,
+        "height": 560
+      },
+      {
+        "src": "/images/members/sorimerlin-santos.webp",
+        "width": 720,
+        "height": 1260
+      }
+    ]
+  },
+  "/images/members/adriana-vega.webp": {
+    "width": 264,
+    "height": 540,
+    "variants": [
+      {
+        "src": "/images/members/adriana-vega-small.webp",
+        "width": 264,
+        "height": 540
+      },
+      {
+        "src": "/images/members/adriana-vega.webp",
+        "width": 264,
+        "height": 540
+      }
+    ]
+  },
+  "/images/members/aliek-betancourt.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/aliek-betancourt-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/aliek-betancourt.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
+  },
+  "/images/members/kevin-beltran.webp": {
+    "width": 720,
+    "height": 901,
+    "variants": [
+      {
+        "src": "/images/members/kevin-beltran-small.webp",
+        "width": 320,
+        "height": 400
+      },
+      {
+        "src": "/images/members/kevin-beltran.webp",
+        "width": 720,
+        "height": 901
+      }
+    ]
+  },
+  "/images/members/jorge-luna.webp": {
+    "width": 720,
+    "height": 1558,
+    "variants": [
+      {
+        "src": "/images/members/jorge-luna-small.webp",
+        "width": 320,
+        "height": 692
+      },
+      {
+        "src": "/images/members/jorge-luna.webp",
+        "width": 720,
+        "height": 1558
+      }
+    ]
+  },
+  "/images/members/josue-lopez.webp": {
+    "width": 720,
+    "height": 1081,
+    "variants": [
+      {
+        "src": "/images/members/josue-lopez-small.webp",
+        "width": 320,
+        "height": 480
+      },
+      {
+        "src": "/images/members/josue-lopez.webp",
+        "width": 720,
+        "height": 1081
+      }
+    ]
+  },
+  "/images/members/daniel-munoz.webp": {
+    "width": 720,
+    "height": 480,
+    "variants": [
+      {
+        "src": "/images/members/daniel-munoz-small.webp",
+        "width": 320,
+        "height": 213
+      },
+      {
+        "src": "/images/members/daniel-munoz.webp",
+        "width": 720,
+        "height": 480
+      }
+    ]
+  },
+  "/images/members/daniel-reyes.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/daniel-reyes-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/daniel-reyes.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
+  },
+  "/images/members/revel-velazquez.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/revel-velazquez-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/revel-velazquez.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
+  }
+}
