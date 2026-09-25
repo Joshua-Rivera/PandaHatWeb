@@ -266,11 +266,20 @@ function ResearchPosters() {
     <section id="research-posters" className="container content-section" aria-label="Research posters">
       <SectionHeading label="05 / RESEARCH POSTERS" title="Our research, at a glance." />
       <figure className="featured-poster">
-        <a href="/images/posters/pandahat-2023.webp" target="_blank" rel="noreferrer" aria-label="Open the 2023 PandaHat research poster at full size">
-          <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-2023-preview.webp" width={1666} height={2500} loading="lazy" alt="2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline." />
+        <a href="/images/posters/pandahat-fall-2026.webp" target="_blank" rel="noreferrer" aria-label="Open the Fall 2026 PandaHat research poster at full size">
+          <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-fall-2026-preview.webp" width={2400} height={3600} loading="lazy" alt="Fall 2026 PandaHat poster: Digital Watermarking for Deepfake Detection, Authentication, and Localization. Research on watermark robustness, face-swap resilience, and manipulation localization." />
         </a>
-        <figcaption><span className="eyebrow">PREVIOUS PROJECT / 2023</span><h3>Recreating Adversarial Attacks in Multimodal Architecture</h3><p>Select the poster to view it at full size.</p></figcaption>
+        <figcaption><span className="eyebrow">CURRENT RESEARCH / FALL 2026</span><h3>Digital Watermarking for Deepfake Detection, Authentication, and Localization</h3><p>Select the poster to view it at full size, or <a href="/images/posters/pandahat-fall-2026.pdf" target="_blank" rel="noreferrer">open the original PDF</a>.</p></figcaption>
       </figure>
+      <details className="poster-archive">
+        <summary>Poster archive <span className="mono">2023</span></summary>
+        <figure className="archived-poster">
+          <a href="/images/posters/pandahat-2023.webp" target="_blank" rel="noreferrer" aria-label="Open the 2023 PandaHat research poster at full size">
+            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-2023-preview.webp" width={1666} height={2500} loading="lazy" alt="2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline." />
+          </a>
+          <figcaption><span className="eyebrow">ARCHIVE / 2023</span><h3>Recreating Adversarial Attacks in Multimodal Architecture</h3><p>Select the poster to view it at full size.</p></figcaption>
+        </figure>
+      </details>
     </section>
   );
 }

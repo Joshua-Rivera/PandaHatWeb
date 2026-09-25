@@ -7,18 +7,18 @@ for (const width of [375, 1440]) {
     const requests: string[] = [];
     page.on("request", request => requests.push(request.url()));
     await page.goto("/");
-    const fullPoster = "/images/posters/pandahat-2023.webp";
+    const fullPoster = "/images/posters/pandahat-fall-2026.webp";
     const poster = page.locator(".featured-poster img");
     await poster.scrollIntoViewIfNeeded();
     await expect.poll(() => poster.evaluate(el => (el as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
     await expect.poll(() => poster.evaluate(el => (el as HTMLImageElement).currentSrc)).toContain(width < 768 ? "-480.webp" : "-preview.webp");
     expect(requests.some(url => url.endsWith(fullPoster))).toBe(false);
     const popupPromise = page.waitForEvent("popup");
-    await page.locator(".featured-poster a").click();
+    await page.locator(".featured-poster > a").click();
     const popup = await popupPromise;
     await popup.waitForLoadState();
     await expect(popup).toHaveURL(new RegExp(`${fullPoster}$`));
-    await expect.poll(() => popup.locator("img").evaluate(el => (el as HTMLImageElement).naturalWidth)).toBe(1666);
+    await expect.poll(() => popup.locator("img").evaluate(el => (el as HTMLImageElement).naturalWidth)).toBe(2400);
     await popup.close();
 
     for (const img of await page.locator(".conference-grid img, .team-group-image, .sponsor-logo-card img, .advisor-card img").all()) {

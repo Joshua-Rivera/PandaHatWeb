@@ -504,5 +504,21 @@
         "height": 960
       }
     ]
+  },
+  "/images/posters/pandahat-fall-2026-preview.webp": {
+    "width": 960,
+    "height": 1440,
+    "variants": [
+      {
+        "src": "/images/posters/pandahat-fall-2026-480.webp",
+        "width": 480,
+        "height": 720
+      },
+      {
+        "src": "/images/posters/pandahat-fall-2026-preview.webp",
+        "width": 960,
+        "height": 1440
+      }
+    ]
   }
 }
