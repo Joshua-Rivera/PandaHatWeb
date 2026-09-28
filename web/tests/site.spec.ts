@@ -1,6 +1,28 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+for (const width of [375, 1440]) {
+  test(`active navigation follows anchor destinations and scrolling at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    await page.goto("/#problem-statement");
+    const nav = page.getByRole("navigation", { name: "Main navigation", includeHidden: true });
+    await expect(nav.locator('a[href="#problem-statement"]')).toHaveAttribute("aria-current", "location");
+    for (const id of ["objective", "research-endpoints", "members", "research-posters", "professors", "sponsors", "problem-statement", "description"]) {
+      if (width < 1000) await page.getByRole("button", { name: "Open navigation" }).click();
+      const link = nav.locator(`a[href="#${id}"]`);
+      await link.click();
+      await expect(link).toHaveAttribute("aria-current", "location");
+      await expect(link).toHaveClass("active");
+      await expect.poll(() => page.locator(`#${id}`).evaluate(el => Math.abs(el.getBoundingClientRect().top - (100 + parseFloat(getComputedStyle(el).scrollMarginTop))))).toBeLessThan(2);
+      await expect(nav.locator('[aria-current="location"]')).toHaveCount(1);
+    }
+    await page.evaluate(() => document.getElementById("objective")!.scrollIntoView({ behavior: "instant" }));
+    await expect(nav.locator('a[href="#objective"]')).toHaveAttribute("aria-current", "location");
+  });
+}
+
 for (const width of [375, 768, 1024, 1440]) {
   test(`single page layout and accessibility at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });

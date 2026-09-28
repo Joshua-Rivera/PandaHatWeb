@@ -56,9 +56,14 @@ function Header() {
       frame = 0;
       // Read below the sticky header, including throughout the pinned member gallery.
       const threshold = (header.current?.getBoundingClientRect().bottom ?? 90) + 24;
+      const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
       let active = "";
       for (const { path, element } of sections) {
-        if (element && element.getBoundingClientRect().top <= threshold) active = path;
+        if (!element) continue;
+        // Anchor scrolling stops at scroll-padding + scroll-margin, which can
+        // be below the header. Include that landing position and pixel rounding.
+        const scrollMargin = parseFloat(getComputedStyle(element).scrollMarginTop) || 0;
+        if (element.getBoundingClientRect().top <= Math.max(threshold, scrollPadding + scrollMargin) + 1) active = path;
       }
       setActiveSection(active);
     };
@@ -241,13 +246,12 @@ function ResearchEndpoints() {
       <p className="section-note" id="endpoints-title"><SpecialText>Each endpoint keeps the question, methods, evidence, and next direction together.</SpecialText></p>
       <div className="endpoint-grid">
         {topics.map(topic => (
-          <a className="endpoint-card" id={`research-topic-${topic.slug}`} href={`#research-topic-${topic.slug}`} key={topic.id}>
+          <div className="endpoint-card" id={`research-topic-${topic.slug}`} key={topic.id}>
             <span className="endpoint-number mono">{topic.id}</span>
             <span className="eyebrow">{topic.tags.join(" · ")}</span>
             <h3><SpecialText>{topic.title}</SpecialText></h3>
             <p><SpecialText>{topic.question}</SpecialText></p>
-            <span className="endpoint-cta">Open endpoint <ArrowUpRight size={15} /></span>
-          </a>
+          </div>
         ))}
       </div>
       <div className="endpoint-details">
