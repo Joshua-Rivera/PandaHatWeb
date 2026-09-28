@@ -42,7 +42,7 @@
   font: 10px var(--mono);
   letter-spacing: 3px;
 }
-.stack-spread-hint span { font-size: 22px; }
+.stack-spread-hint > .stack-spread-arrow { font-size: 22px; }
 .collage-accessible-title {
   position: absolute;
   width: 1px;
@@ -75,3 +75,5 @@
   .stack-spread { height: 100svh; }
   .stack-spread-stage { position: relative; }
 }
+
+.stack-spread-copy .special-text { pointer-events: auto; }

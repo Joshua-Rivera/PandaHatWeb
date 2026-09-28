@@ -38,8 +38,8 @@ function Brand() {
     <a className="brand" href="#top" aria-label="PandaHat Adversarial home">
       <PandaMark />
       <span>
-        {content.brand}
-        <small>{content.subbrand}</small>
+        <SpecialText hoverOnly>{content.brand}</SpecialText>
+        <small><SpecialText hoverOnly>{content.subbrand}</SpecialText></small>
       </span>
     </a>
   );
@@ -116,12 +116,12 @@ function Header() {
               aria-current={activeSection === path ? "location" : undefined}
               onClick={() => setOpen(false)}
             >
-              {name}
+              <SpecialText hoverOnly>{name}</SpecialText>
             </a>
           ))}
         </nav>
         <span className="header-note">
-          <i /> INQUIRY IN PROGRESS
+          <i /><SpecialText hoverOnly>INQUIRY IN PROGRESS</SpecialText>
         </span>
       </div>
     </header>
@@ -132,14 +132,13 @@ function Footer() {
     <footer className="container footer">
       <div className="footer-top">
         <Brand />
-        <a href="#top" className="back-top">
-          Back to top <ArrowUpRight size={16} />
+        <a href="#top" className="back-top"><SpecialText hoverOnly>Back to top</SpecialText> <ArrowUpRight size={16} />
         </a>
       </div>
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} PandaHat Adversarial</span>
+        <span><SpecialText hoverOnly>{`© ${new Date().getFullYear()} PandaHat Adversarial`}</SpecialText></span>
         <nav aria-label="Footer navigation">
-          {SECTIONS.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
+          {SECTIONS.map(([href, label]) => <a key={href} href={href}><SpecialText hoverOnly>{label}</SpecialText></a>)}
         </nav>
       </div>
     </footer>
@@ -179,7 +178,7 @@ function SectionHeading({
   return (
     <div className="section-heading">
       <div>
-        <p className="eyebrow">{label}</p>
+        <p className="eyebrow"><SpecialText hoverOnly>{label}</SpecialText></p>
         <h2><SpecialText>{title}</SpecialText></h2>
       </div>
       {children}
@@ -193,7 +192,7 @@ function Home() {
       <Header />
       <section id="description" className="container content-section" aria-labelledby="description-title">
         <Reveal className="about-grid">
-          <p className="eyebrow">01 / DESCRIPTION</p>
+          <p className="eyebrow"><SpecialText hoverOnly>01 / DESCRIPTION</SpecialText></p>
           <div>
             <h2 id="description-title"><SpecialText>Understanding machine learning. Empowering students.</SpecialText></h2>
             {content.descriptionParagraphs.map(paragraph => (
@@ -204,13 +203,13 @@ function Home() {
       </section>
       <section id="problem-statement" className="container content-section" aria-labelledby="problem-title">
         <Reveal className="about-grid">
-          <p className="eyebrow">02 / PROBLEM STATEMENT</p>
+          <p className="eyebrow"><SpecialText hoverOnly>02 / PROBLEM STATEMENT</SpecialText></p>
           <div>
             <h2 id="problem-title"><SpecialText>{content.semester.title}</SpecialText></h2>
             {content.semester.problem.map(paragraph => (
               <p className="body-copy" key={paragraph}><SpecialText>{paragraph}</SpecialText></p>
             ))}
-            <h3 className="evaluation-title">Performance will be assessed in terms of:</h3>
+            <h3 className="evaluation-title"><SpecialText hoverOnly>Performance will be assessed in terms of:</SpecialText></h3>
             <ul className="evaluation-criteria">
               {content.semester.criteria.map(criterion => <li key={criterion}><SpecialText>{criterion}</SpecialText></li>)}
             </ul>
@@ -219,16 +218,16 @@ function Home() {
       </section>
       <section id="objective" className="container content-section" aria-labelledby="objective-title">
         <Reveal>
-          <p className="eyebrow">03 / OBJECTIVE</p>
+          <p className="eyebrow"><SpecialText hoverOnly>03 / OBJECTIVE</SpecialText></p>
           <h2 id="objective-title"><SpecialText>Compare techniques. Build stronger defenses.</SpecialText></h2>
           <p className="body-copy objective-copy"><SpecialText>{content.semester.objective}</SpecialText></p>
           <p className="body-copy objective-copy"><SpecialText>{content.semester.experience}</SpecialText></p>
         </Reveal>
-        <h3 className="research-questions-title">Three main research questions</h3>
+        <h3 className="research-questions-title"><SpecialText hoverOnly>Three main research questions</SpecialText></h3>
         <div className="research-questions">
           {content.semester.questions.map(question => (
             <article className="research-question" key={question.group}>
-              <span className="eyebrow">{question.group}</span>
+              <span className="eyebrow"><SpecialText hoverOnly>{question.group}</SpecialText></span>
               <h3><SpecialText>{question.title}</SpecialText></h3>
               <p><SpecialText>{question.question}</SpecialText></p>
             </article>
@@ -247,8 +246,8 @@ function ResearchEndpoints() {
       <div className="endpoint-grid">
         {topics.map(topic => (
           <div className="endpoint-card" id={`research-topic-${topic.slug}`} key={topic.id}>
-            <span className="endpoint-number mono">{topic.id}</span>
-            <span className="eyebrow">{topic.tags.join(" · ")}</span>
+            <span className="endpoint-number mono"><SpecialText hoverOnly>{topic.id}</SpecialText></span>
+            <span className="eyebrow"><SpecialText hoverOnly>{topic.tags.join(" · ")}</SpecialText></span>
             <h3><SpecialText>{topic.title}</SpecialText></h3>
             <p><SpecialText>{topic.question}</SpecialText></p>
           </div>
@@ -257,8 +256,8 @@ function ResearchEndpoints() {
       <div className="endpoint-details">
         {topics.map(topic => (
           <article className="endpoint-detail" key={topic.slug} aria-labelledby={`${topic.slug}-title`}>
-            <div><p className="eyebrow">ENDPOINT / {topic.slug}</p><h3 id={`${topic.slug}-title`}><SpecialText>{topic.subtitle}</SpecialText></h3><p className="body-copy"><SpecialText>{topic.description}</SpecialText></p></div>
-            <div><p className="mono endpoint-label">METHODS</p><ul>{topic.methods.map(method => <li key={method}><SpecialText>{method}</SpecialText></li>)}</ul><p className="mono endpoint-label">EVIDENCE TRAIL</p><p className="body-copy"><SpecialText>{topic.evidence}</SpecialText></p></div>
+            <div><p className="eyebrow"><SpecialText hoverOnly>{`ENDPOINT / ${topic.slug}`}</SpecialText></p><h3 id={`${topic.slug}-title`}><SpecialText>{topic.subtitle}</SpecialText></h3><p className="body-copy"><SpecialText>{topic.description}</SpecialText></p></div>
+            <div><p className="mono endpoint-label"><SpecialText hoverOnly>METHODS</SpecialText></p><ul>{topic.methods.map(method => <li key={method}><SpecialText>{method}</SpecialText></li>)}</ul><p className="mono endpoint-label"><SpecialText hoverOnly>EVIDENCE TRAIL</SpecialText></p><p className="body-copy"><SpecialText>{topic.evidence}</SpecialText></p></div>
           </article>
         ))}
       </div>
@@ -273,15 +272,15 @@ function ResearchPosters() {
         <a href="/images/posters/pandahat-fall-2026.webp" target="_blank" rel="noreferrer" aria-label="Open the Fall 2026 PandaHat research poster at full size">
           <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-fall-2026-preview.webp" width={2400} height={3600} loading="lazy" alt="Fall 2026 PandaHat poster: Digital Watermarking for Deepfake Detection, Authentication, and Localization. Research on watermark robustness, face-swap resilience, and manipulation localization." />
         </a>
-        <figcaption><span className="eyebrow">CURRENT RESEARCH / FALL 2026</span><h3>Digital Watermarking for Deepfake Detection, Authentication, and Localization</h3><p>Select the poster to view it at full size, or <a href="/images/posters/pandahat-fall-2026.pdf" target="_blank" rel="noreferrer">open the original PDF</a>.</p></figcaption>
+        <figcaption><span className="eyebrow"><SpecialText hoverOnly>CURRENT RESEARCH / FALL 2026</SpecialText></span><h3><SpecialText hoverOnly>Digital Watermarking for Deepfake Detection, Authentication, and Localization</SpecialText></h3><p><SpecialText hoverOnly>Select the poster to view it at full size, or</SpecialText> <a href="/images/posters/pandahat-fall-2026.pdf" target="_blank" rel="noreferrer"><SpecialText hoverOnly>open the original PDF</SpecialText></a><SpecialText hoverOnly>.</SpecialText></p></figcaption>
       </figure>
       <details className="poster-archive">
-        <summary>Poster archive <span className="mono">2023</span></summary>
+        <summary><SpecialText hoverOnly>Poster archive</SpecialText> <span className="mono"><SpecialText hoverOnly>2023</SpecialText></span></summary>
         <figure className="archived-poster">
           <a href="/images/posters/pandahat-2023.webp" target="_blank" rel="noreferrer" aria-label="Open the 2023 PandaHat research poster at full size">
             <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-2023-preview.webp" width={1666} height={2500} loading="lazy" alt="2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline." />
           </a>
-          <figcaption><span className="eyebrow">ARCHIVE / 2023</span><h3>Recreating Adversarial Attacks in Multimodal Architecture</h3><p>Select the poster to view it at full size.</p></figcaption>
+          <figcaption><span className="eyebrow"><SpecialText hoverOnly>ARCHIVE / 2023</SpecialText></span><h3><SpecialText hoverOnly>Recreating Adversarial Attacks in Multimodal Architecture</SpecialText></h3><p><SpecialText hoverOnly>Select the poster to view it at full size.</SpecialText></p></figcaption>
         </figure>
       </details>
     </section>
@@ -293,10 +292,12 @@ function Supporters() {
         <SectionHeading label="07 / SPONSORS" title="Supporting the next question." />
         <div className="sponsor-logos">
           <div className="sponsor-logo-card sponsor-academic">
-            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 72px), (max-width: 1232px) calc(100vw - 192px), 1040px" src="/images/sponsors/academic-partners.webp" alt="IAP, Universidad de Puerto Rico Recinto Universitario de Mayagüez, and CPS IoT Laboratory" width={1120} height={290} loading="lazy" />
+            <img src="/images/sponsors/iap-transparent.webp" alt="IAP" width={1774} height={887} loading="lazy" decoding="async" />
+            <img src="/images/sponsors/uprm-transparent.webp" alt="Universidad de Puerto Rico Recinto Universitario de Mayagüez" width={1254} height={1254} loading="lazy" decoding="async" />
+            <img src="/images/sponsors/cps-iot-transparent.webp" alt="CPS IoT Laboratory" width={1173} height={1341} loading="lazy" decoding="async" />
           </div>
           <div className="sponsor-logo-card sponsor-mit">
-            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 72px), 500px" src="/images/sponsors/mit-lincoln-laboratory-clean.webp" alt="MIT Lincoln Laboratory" width={860} height={381} loading="lazy" />
+            <img src="/images/sponsors/mit-lincoln-transparent.webp" alt="MIT Lincoln Laboratory" width={1942} height={809} loading="lazy" decoding="async" />
           </div>
         </div>
     </section>
@@ -317,15 +318,15 @@ function TeamProfile({ member, index }: { member: TeamMember; index: number }) {
           {member.photo ? <ResponsiveImage sizes="(max-width: 767px) 280px, 360px" className="member-photo" src={member.photo} alt="" loading="lazy" /> : <>
           <div className="avatar-grid" />
           <span className="avatar-shape" />
-          <span className="avatar-index mono">MEMBER / {String(index + 1).padStart(2, "0")}</span>
-          <span className="avatar-initials">{member.initials}</span>
+          <span className="avatar-index mono"><SpecialText hoverOnly>{`MEMBER / ${String(index + 1).padStart(2, "0")}`}</SpecialText></span>
+          <span className="avatar-initials"><SpecialText hoverOnly>{member.initials}</SpecialText></span>
           <Plus className="avatar-plus" size={18} />
           </>}
         </div>
-        <p className="profile-role mono">{member.role}</p>
-        <h3>{member.name}</h3>
-        <p className="profile-bio">{member.bio}</p>
-        <p className="profile-interests">{member.interests}</p>
+        <p className="profile-role mono"><SpecialText hoverOnly>{member.role}</SpecialText></p>
+        <h3><a href={`#member/${member.slug}`}><SpecialText hoverOnly>{member.name}</SpecialText></a></h3>
+        <p className="profile-bio"><SpecialText hoverOnly>{member.bio}</SpecialText></p>
+        <p className="profile-interests"><SpecialText hoverOnly>{member.interests}</SpecialText></p>
       </article>
     </Reveal>
   );
@@ -343,13 +344,13 @@ function MemberEndpoint({ member, onClose }: { member: TeamMember; onClose: () =
   return <div className="member-endpoint-backdrop" role="presentation">
     <article className="member-endpoint" role="dialog" aria-modal="true" aria-labelledby="member-endpoint-title">
       <button ref={closeButton} className="member-endpoint-close" type="button" onClick={onClose} aria-label="Close member profile"><X size={20} /></button>
-      <div className="member-endpoint-top"><span className="eyebrow">MEMBER ENDPOINT / {member.role}</span><span className="mono">PROFILE / {member.initials}</span></div>
-      <div className="member-endpoint-heading"><div className="member-endpoint-avatar">{member.photo ? <ResponsiveImage sizes="(max-width: 767px) 76px, 104px" className="member-photo" src={member.photo} alt={`Portrait of ${member.name}`} /> : member.initials}</div><div><h2 id="member-endpoint-title">{member.name}</h2><p>{member.role}</p></div></div>
+      <div className="member-endpoint-top"><span className="eyebrow"><SpecialText hoverOnly>{`MEMBER ENDPOINT / ${member.role}`}</SpecialText></span><span className="mono"><SpecialText hoverOnly>{`PROFILE / ${member.initials}`}</SpecialText></span></div>
+      <div className="member-endpoint-heading"><div className="member-endpoint-avatar">{member.photo ? <ResponsiveImage sizes="(max-width: 767px) 76px, 104px" className="member-photo" src={member.photo} alt={`Portrait of ${member.name}`} /> : member.initials}</div><div><h2 id="member-endpoint-title"><SpecialText hoverOnly>{member.name}</SpecialText></h2><p><SpecialText hoverOnly>{member.role}</SpecialText></p></div></div>
       <div className="member-endpoint-grid">
-        <section><p className="eyebrow">BIO</p><p>{member.bio}</p><p className="eyebrow">EDUCATION</p><p>{member.education ?? "Education details to be added."}</p><p className="eyebrow">RESEARCH INTERESTS</p><p>{member.interests}</p></section>
-        <section><p className="eyebrow">SKILLS & TOOLS</p><ul>{member.skills.map(skill => <li key={skill}>{skill}</li>)}</ul><p className="eyebrow">PROJECTS</p><ul>{member.projects.map(project => <li key={project}>{project}</li>)}</ul>{member.experience?.length ? <><p className="eyebrow">EXPERIENCE</p><ul>{member.experience.map(item => <li key={item}>{item}</li>)}</ul></> : null}</section>
+        <section><p className="eyebrow"><SpecialText hoverOnly>BIO</SpecialText></p><p><SpecialText hoverOnly>{member.bio}</SpecialText></p><p className="eyebrow"><SpecialText hoverOnly>EDUCATION</SpecialText></p><p><SpecialText hoverOnly>{member.education ?? "Education details to be added."}</SpecialText></p><p className="eyebrow"><SpecialText hoverOnly>RESEARCH INTERESTS</SpecialText></p><p><SpecialText hoverOnly>{member.interests}</SpecialText></p></section>
+        <section><p className="eyebrow"><SpecialText hoverOnly>SKILLS & TOOLS</SpecialText></p><ul>{member.skills.map(skill => <li key={skill}><SpecialText hoverOnly>{skill}</SpecialText></li>)}</ul><p className="eyebrow"><SpecialText hoverOnly>PROJECTS</SpecialText></p><ul>{member.projects.map(project => <li key={project}><SpecialText hoverOnly>{project}</SpecialText></li>)}</ul>{member.experience?.length ? <><p className="eyebrow"><SpecialText hoverOnly>EXPERIENCE</SpecialText></p><ul>{member.experience.map(item => <li key={item}><SpecialText hoverOnly>{item}</SpecialText></li>)}</ul></> : null}</section>
       </div>
-      <div className="member-endpoint-actions">{member.resume ? <a className="button button-primary" href={member.resume} target="_blank" rel="noreferrer">Download resume <ArrowUpRight size={16} /></a> : <span className="resume-pending mono">RESUME / PENDING APPROVAL</span>}{member.contact ? <a className="text-link" href={`mailto:${member.contact}`}>Contact member <ArrowUpRight size={15} /></a> : null}{member.links?.map(link => <a className="text-link" href={link.startsWith("http") ? link : `https://${link}`} target="_blank" rel="noreferrer" key={link}>{link} <ArrowUpRight size={15} /></a>)}<a className="text-link" href="mailto:pandahat@uprm.edu">Request profile update <ArrowUpRight size={15} /></a></div>
+      <div className="member-endpoint-actions">{member.resume ? <a className="button button-primary" href={member.resume} target="_blank" rel="noreferrer"><SpecialText hoverOnly>Download resume</SpecialText> <ArrowUpRight size={16} /></a> : <span className="resume-pending mono"><SpecialText hoverOnly>RESUME / PENDING APPROVAL</SpecialText></span>}{member.contact ? <a className="text-link" href={`mailto:${member.contact}`}><SpecialText hoverOnly>Contact member</SpecialText> <ArrowUpRight size={15} /></a> : null}{member.links?.map(link => <a className="text-link" href={link.startsWith("http") ? link : `https://${link}`} target="_blank" rel="noreferrer" key={link}><SpecialText hoverOnly>{link}</SpecialText> <ArrowUpRight size={15} /></a>)}<a className="text-link" href="mailto:pandahat@uprm.edu"><SpecialText hoverOnly>Request profile update</SpecialText> <ArrowUpRight size={15} /></a></div>
     </article>
   </div>;
 }
@@ -417,7 +418,7 @@ function Team() {
         <SectionHeading label="04 / MEMBERS" title={content.team.title} />
         <p className="team-note"><SpecialText>{content.team.note}</SpecialText></p>
         <div className="rail-toolbar">
-          <span className="mono">{pinned ? "SCROLL DOWN TO MEET THE TEAM →" : "SCROLL TO EXPLORE →"}</span>
+          <span className="mono"><SpecialText hoverOnly>{pinned ? "SCROLL DOWN TO MEET THE TEAM →" : "SCROLL TO EXPLORE →"}</SpecialText></span>
           <div className="rail-controls">
             <button aria-label="Skip to first member" disabled={position <= 2} onClick={() => move(-1, true)}><ArrowLeft size={18} /></button>
             <button aria-label="Skip to last member" disabled={position >= travel - 2} onClick={() => move(1, true)}><ArrowRight size={18} /></button>
@@ -425,6 +426,7 @@ function Team() {
         </div>
         <div ref={rail} className="horizontal-rail members-track circular-members" role="region" aria-label="Member profiles" tabIndex={0}
           onPointerDown={event => {
+            if ((event.target as Element).closest(".special-text")) return;
             if (event.button !== 0) return;
             drag.current = { x: event.clientX, start: event.currentTarget.scrollLeft };
             event.currentTarget.setPointerCapture(event.pointerId);
@@ -453,17 +455,17 @@ function Team() {
 function CohortAndOnboarding() {
   return <>
     <div className="container cohort-summary">
-      <div className="cohort-heading"><p className="eyebrow">{content.team.fullTimeLabel}</p><p className="team-note">Seven full-time researchers anchor the active questions, mentoring, and project continuity.</p></div>
-      <div className="cohort-heading"><p className="eyebrow">{content.team.onboardingLabel}</p><p className="team-note">Fifteen new members move through a shared learning path from orientation to independent contribution.</p></div>
+      <div className="cohort-heading"><p className="eyebrow"><SpecialText hoverOnly>{content.team.fullTimeLabel}</SpecialText></p><p className="team-note"><SpecialText hoverOnly>Seven full-time researchers anchor the active questions, mentoring, and project continuity.</SpecialText></p></div>
+      <div className="cohort-heading"><p className="eyebrow"><SpecialText hoverOnly>{content.team.onboardingLabel}</SpecialText></p><p className="team-note"><SpecialText hoverOnly>Fifteen new members move through a shared learning path from orientation to independent contribution.</SpecialText></p></div>
     </div>
     <div className="container onboarding-section" id="onboarding">
-      <div className="onboarding-heading"><p className="eyebrow">LEARNING PATH / ONBOARDING</p><h2><SpecialText>Start curious. Leave capable.</SpecialText></h2></div>
-      <div className="onboarding-grid">{content.team.onboarding.map(step => <article key={step.step}><span className="mono">{step.step}</span><h3>{step.title}</h3><p>{step.description}</p></article>)}</div>
+      <div className="onboarding-heading"><p className="eyebrow"><SpecialText hoverOnly>LEARNING PATH / ONBOARDING</SpecialText></p><h2><SpecialText>Start curious. Leave capable.</SpecialText></h2></div>
+      <div className="onboarding-grid">{content.team.onboarding.map(step => <article key={step.step}><span className="mono"><SpecialText hoverOnly>{step.step}</SpecialText></span><h3><SpecialText hoverOnly>{step.title}</SpecialText></h3><p><SpecialText hoverOnly>{step.description}</SpecialText></p></article>)}</div>
     </div>
   </>;
 }
 function Advisors() {
-  return <section id="professors" className="container content-section advisors-section" aria-label="Research advisors"><SectionHeading label="06 / ADVISORS" title="Guidance behind the questions." /><p className="section-note"><SpecialText>Meet Dr. Nayda Santiago and Dr. Alcibiades Bustillo, the advisors guiding the research group.</SpecialText></p><div className="advisor-grid">{advisors.map(advisor => <article className="advisor-card" key={advisor.name}><ResponsiveImage sizes="(max-width: 767px) 90px, 150px" src={advisor.photo} alt={advisor.name} width={594} height={596} loading="lazy" /><div><p className="eyebrow">{advisor.role}</p><h3>{advisor.name}</h3><p>{advisor.focus}</p></div></article>)}</div></section>;
+  return <section id="professors" className="container content-section advisors-section" aria-label="Research advisors"><SectionHeading label="06 / ADVISORS" title="Guidance behind the questions." /><p className="section-note"><SpecialText>Meet Dr. Nayda Santiago and Dr. Alcibiades Bustillo, the advisors guiding the research group.</SpecialText></p><div className="advisor-grid">{advisors.map(advisor => <article className="advisor-card" key={advisor.name}><ResponsiveImage sizes="(max-width: 767px) 90px, 150px" src={advisor.photo} alt={advisor.name} width={594} height={596} loading="lazy" /><div><p className="eyebrow"><SpecialText hoverOnly>{advisor.role}</SpecialText></p><h3><SpecialText hoverOnly>{advisor.name}</SpecialText></h3><p><SpecialText hoverOnly>{advisor.focus}</SpecialText></p></div></article>)}</div></section>;
 }
 export default function App() {
   const [profileSlug, setProfileSlug] = useState(() => window.location.hash.startsWith("#member/") ? window.location.hash.slice(8) : "");
@@ -499,7 +501,7 @@ export default function App() {
   }, []);
   return (
     <MotionConfig reducedMotion="user">
-      <a className="skip-link" href="#main">Skip to content</a>
+      <a className="skip-link" href="#main"><SpecialText hoverOnly>Skip to content</SpecialText></a>
       <div id="top" />
       <main id="main" tabIndex={-1}>
         <Home />
@@ -508,11 +510,11 @@ export default function App() {
           <figure className="team-group-card">
             <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1352px) calc(100vw - 112px), 1240px" className="team-group-image" src={conferencePhotos[2].src} width={1600} height={1200} loading="lazy" decoding="async" alt={conferencePhotos[2].alt} />
             <figcaption>
-              <div><span className="eyebrow">THE PEOPLE BEHIND PANDAHAT</span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2><p>Spring IAP · May 2026 · Mayagüez</p></div>
+              <div><span className="eyebrow"><SpecialText hoverOnly>THE PEOPLE BEHIND PANDAHAT</SpecialText></span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2><p><SpecialText hoverOnly>Spring IAP · May 2026 · Mayagüez</SpecialText></p></div>
             </figcaption>
           </figure>
           <section className="conference-gallery" aria-labelledby="conference-title">
-            <div className="conference-heading"><span className="eyebrow">FROM THE CONFERENCE</span><h2 id="conference-title">Spring IAP 2026</h2><p>May 2026 · Mayagüez</p></div>
+            <div className="conference-heading"><span className="eyebrow"><SpecialText hoverOnly>FROM THE CONFERENCE</SpecialText></span><h2 id="conference-title"><SpecialText hoverOnly>Spring IAP 2026</SpecialText></h2><p><SpecialText hoverOnly>May 2026 · Mayagüez</SpecialText></p></div>
             <div className="conference-grid">{conferencePhotos.map((photo, index) => <a key={photo.src} href={photo.src} target="_blank" rel="noreferrer" aria-label={`Open conference photo ${index + 1}: ${photo.alt}`}><ResponsiveImage sizes="(max-width: 767px) calc((100vw - 50px) / 2), (max-width: 1352px) calc((100vw - 144px) / 3), 403px" src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" width={640} height={480} /></a>)}</div>
           </section>
         </div>

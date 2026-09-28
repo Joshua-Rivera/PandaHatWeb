@@ -1390,9 +1390,11 @@ h2 {
 
 
 .special-text-word { position: relative; display: inline-block; vertical-align: bottom; }
-.special-text-measure { visibility: hidden; }
-.special-text-decoded { position: absolute; inset: 0; overflow: hidden; white-space: nowrap; }
+.special-text-measure { color: transparent; }
+.special-text-measure::selection { color: var(--text); background: var(--surface); }
+.special-text-decoded { position: absolute; inset: 0; overflow: hidden; white-space: nowrap; pointer-events: none; user-select: none; }
 .special-text-accessible {
+  user-select: none;
   position: absolute;
   width: 1px;
   height: 1px;
@@ -1428,7 +1430,7 @@ h2 {
 .onboarding-grid article { min-height: 180px; padding: 20px 18px 18px 0; border-right: 1px solid var(--border); }
 .onboarding-grid article + article { padding-left: 18px; }
 .onboarding-grid article:last-child { border-right: 0; }
-.onboarding-grid span { color: var(--accent); }
+.onboarding-grid article > span { color: var(--accent); }
 .onboarding-grid h3 { font-size: 21px; margin: 35px 0 10px; }
 .onboarding-grid p { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 0; }
 .advisors-section { padding-top: 80px; }
@@ -1541,8 +1543,9 @@ h2 {
 
 
 .sponsor-logos { display: grid; gap: 24px; max-width: 1120px; margin: 36px auto 0; }
-.sponsor-logo-card { background: #fff; border-radius: 22px; padding: clamp(16px, 3vw, 40px); overflow: hidden; }
+.sponsor-logo-card { border-radius: 22px; padding: clamp(16px, 3vw, 40px); overflow: hidden; }
 .sponsor-logo-card img { display: block; width: 100%; height: auto; object-fit: contain; }
+.sponsor-academic { display: grid; grid-template-columns: 2fr 1fr 1fr; align-items: center; gap: clamp(16px, 3vw, 40px); }
 .sponsor-mit { width: min(100%, 580px); justify-self: center; }
 
 .header .navigation a.active::after { top: auto; bottom: 2px; left: 0; right: 0; width: auto; height: 2px; }
@@ -1553,6 +1556,10 @@ h2 {
 
 .poster-archive { max-width: 800px; margin: 28px auto 0; border-top: 1px solid var(--border); padding-top: 24px; }
 .poster-archive summary { cursor: pointer; font-size: 18px; }
-.poster-archive summary span { margin-left: 16px; color: var(--muted); font-size: 12px; }
+.poster-archive summary > .mono { margin-left: 16px; color: var(--muted); font-size: 12px; }
 .poster-archive summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 .featured-poster figcaption a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Keep member text reachable above the photo/card link for hover and selection. */
+.team-profile > p, .team-profile > h3 { position: relative; z-index: 3; user-select: text; cursor: text; }
+.team-profile > h3 a { color: inherit; text-decoration: none; }

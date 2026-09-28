@@ -3,6 +3,7 @@ import * as m from "motion/react-m";
 import { useEffect, useId, useRef, useState } from "react";
 import { useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import "./stack-spread.css";
+import { SpecialText } from "./special-text";
 
 type Card = {
   image: number;
@@ -96,12 +97,12 @@ export default function StackSpread() {
       <div className="stack-spread-stage">
         <h1 className="collage-accessible-title">PandaHat Adversarial</h1>
         <m.div className="stack-spread-copy" style={{ opacity: copyOpacity }} aria-hidden="true">
-          <span>Adversarial</span>
+          <span><SpecialText hoverOnly>Adversarial</SpecialText></span>
         </m.div>
         <svg className="stack-spread-art" viewBox={small ? "0 0 600 900" : "0 0 1200 740"} aria-hidden="true">
           {CARDS.map((card, index) => <PhotoCard key={card.image} card={card} index={index} progress={cardProgress} small={small} id={id} />)}
         </svg>
-        {!reduced && <m.div className="stack-spread-hint" style={{ opacity: hintOpacity }} aria-hidden="true">SCROLL TO EXPLORE<span>↓</span></m.div>}
+        {!reduced && <m.div className="stack-spread-hint" style={{ opacity: hintOpacity }} aria-hidden="true"><SpecialText hoverOnly>SCROLL TO EXPLORE</SpecialText><span className="stack-spread-arrow">↓</span></m.div>}
       </div>
     </section>
   );
