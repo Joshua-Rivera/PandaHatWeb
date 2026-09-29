@@ -1,6 +1,6 @@
 import * as m from "motion/react-m";
 import { ResponsiveImage } from "./ResponsiveImage";
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { MotionConfig, useReducedMotion } from "motion/react";
 import {
   ArrowUpRight,
@@ -215,13 +215,27 @@ function useSelectedYear() {
   return [year, select] as const;
 }
 type WipeDirection = "older" | "newer";
-const WIPE_OUT_MS = 380;
+const CURTAIN_COVER_MS = 550;
+// The curtain is a band whose two edges curve the same way, like "(_(": the middle of the wave leads. Both edges are the same
+// arc, so the band is equally wide at every height and covers the screen exactly at the midpoint.
+// Must match the band size in App.css: 160vw wide (30vw of curve on each side), 120vh tall.
+const CURTAIN_CURVE = 30 / 160;
+const CURTAIN_SHAPE = (() => {
+  const steps = 32;
+  const arc = Array.from({ length: steps + 1 }, (_, i) => {
+    const y = i / steps;
+    return { y: y * 100, x: (1 - Math.sqrt(1 - (2 * y - 1) ** 2)) * CURTAIN_CURVE * 100 };
+  });
+  const left = arc.map(({ x, y }) => `${x.toFixed(2)}% ${y.toFixed(2)}%`);
+  const right = [...arc].reverse().map(({ x, y }) => `${(100 - CURTAIN_CURVE * 100 + x).toFixed(2)}% ${y.toFixed(2)}%`);
+  return `polygon(${[...left, ...right].join(", ")})`;
+})();
 const yearIndex = (value: string) => years.findIndex(entry => entry.year === value);
-// Shows the selected year after the old content has wiped out, then wipes the new content in.
+// A black curtain sweeps over the page, the year swaps underneath, then the curtain sweeps off.
 function useYearWipe(year: string) {
   const reduced = useReducedMotion();
   const [shownYear, setShownYear] = useState(year);
-  const [wipingIn, setWipingIn] = useState<WipeDirection | null>(null);
+  const [revealing, setRevealing] = useState<WipeDirection | null>(null);
   const [switched, setSwitched] = useState(false);
   const changing = year !== shownYear;
   const direction: WipeDirection = yearIndex(year) > yearIndex(shownYear) ? "older" : "newer";
@@ -230,26 +244,22 @@ function useYearWipe(year: string) {
     const timer = setTimeout(() => {
       setShownYear(year);
       setSwitched(true);
-      setWipingIn(reduced ? null : direction);
-    }, reduced ? 0 : WIPE_OUT_MS);
+      setRevealing(reduced ? null : direction);
+    }, reduced ? 0 : CURTAIN_COVER_MS);
     return () => clearTimeout(timer);
   }, [changing, year, direction, reduced]);
-  const className = changing && !reduced ? `year-content wipe-out wipe-${direction}`
-    : wipingIn ? `year-content wipe-in wipe-${wipingIn}` : "year-content";
-  return { shownYear, switched, className, onAnimationEnd: () => { if (!changing) setWipingIn(null); } };
+  const phase = changing && !reduced ? `is-cover wipe-${direction}` : revealing ? `is-reveal wipe-${revealing}` : null;
+  return { shownYear, switched, phase, onRevealEnd: () => { if (!changing) setRevealing(null); } };
 }
 function YearContentRegion({ wipe, children }: { wipe: ReturnType<typeof useYearWipe>; children: ReactNode }) {
-  const region = useRef<HTMLDivElement>(null);
-  // Centre the curved wipe edge on the visible part of the region, however tall it is.
-  useLayoutEffect(() => {
-    const element = region.current;
-    if (!element || wipe.className === "year-content") return;
-    element.style.setProperty("--wipe-cy", `${window.innerHeight / 2 - element.getBoundingClientRect().top}px`);
-    element.style.setProperty("--wipe-ry", `${window.innerHeight * 0.75}px`);
-  }, [wipe.className]);
+  return <YearSwitched.Provider value={wipe.switched}>{children}</YearSwitched.Provider>;
+}
+// Full-screen black curtain: slides in to cover the page, the year swaps underneath, then it slides out.
+function YearCurtain({ wipe }: { wipe: ReturnType<typeof useYearWipe> }) {
+  if (!wipe.phase) return null;
   return (
-    <div ref={region} className={wipe.className} onAnimationEnd={event => { if (event.target === event.currentTarget) wipe.onAnimationEnd(); }}>
-      <YearSwitched.Provider value={wipe.switched}>{children}</YearSwitched.Provider>
+    <div className={`year-curtain ${wipe.phase}`} aria-hidden="true">
+      <div className="year-curtain-band" style={{ clipPath: CURTAIN_SHAPE }} onAnimationEnd={() => wipe.onRevealEnd()} />
     </div>
   );
 }
@@ -648,6 +658,7 @@ export default function App() {
         </YearContentRegion>
       </main>
       <Footer />
+      <YearCurtain wipe={wipe} />
       {activeMember && <MemberEndpoint member={activeMember} onClose={closeMemberEndpoint} />}
     </MotionConfig>
   );
