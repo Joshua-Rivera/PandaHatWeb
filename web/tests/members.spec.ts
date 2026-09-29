@@ -10,7 +10,7 @@ for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, hei
     const rail = page.getByRole("region", { name: "Member profiles" });
     await expect(section).toHaveClass(/is-pinned/);
     await expect(section.locator(".team-profile")).toHaveCount(22);
-    const roles = await section.locator(".profile-role").allTextContents();
+    const roles = await section.locator(".profile-role").evaluateAll(elements => elements.map(el => (el.querySelector(".special-text-accessible") ?? el).textContent));
     expect(roles.filter(role => role === "PM")).toHaveLength(1);
     expect(roles.filter(role => role === "Co-PM")).toHaveLength(1);
     expect(roles.filter(role => role === "TL · Team Leader")).toHaveLength(5);

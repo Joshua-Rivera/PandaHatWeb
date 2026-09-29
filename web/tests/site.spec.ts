@@ -57,7 +57,7 @@ test("section links, horizontal controls, keyboard, and legacy bookmarks", async
   await expect.poll(() => poster.evaluate(el => (el as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Members" }).click();
   await expect(page).toHaveURL(/\/#members$/);
-  await page.getByRole("button", { name: "Next member profiles" }).click();
+  await page.getByRole("button", { name: "Skip to last member" }).click();
   expect(await page.getByRole("region", { name: "Member profiles" }).evaluate(el => el.scrollLeft)).toBeGreaterThan(0);
   await page.goto("/research#topic-02");
   await expect(page).toHaveURL(/\/#research-posters$/);
@@ -104,14 +104,14 @@ test("research endpoints and cohort onboarding are discoverable", async ({ page 
 test("member cards open resume-ready profile endpoints", async ({ page }) => {
   await page.goto("/#members");
   await expect(page.locator(".team-profile")).toHaveCount(22);
-  await expect(page.getByText("Joshua Roman")).toBeAttached();
-  await expect(page.getByText("Kevin Beltran")).toBeAttached();
+  await expect(page.getByRole("heading", { name: "Joshua Roman", exact: true })).toBeAttached();
+  await expect(page.getByRole("heading", { name: "Kevin Beltran", exact: true })).toBeAttached();
   const profile = page.getByRole("link", { name: "Open profile for Joshua Rivera" });
   await expect(profile).toHaveAttribute("href", "#member/joshua-rivera");
   await profile.click();
   await expect(page).toHaveURL(/#member\/joshua-rivera$/);
   await expect(page.getByRole("dialog")).toContainText("Joshua Rivera");
-  await expect(page.getByText("RESUME / PENDING APPROVAL")).toBeAttached();
+  await expect(page.locator(".resume-pending")).toBeAttached();
     const positionBeforeClose = await page.evaluate(() => scrollY);
     await page.getByRole("button", { name: "Close member profile" }).click();
   await expect(page).toHaveURL(/#members$/);

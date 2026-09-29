@@ -1,6 +1,8 @@
 import * as m from "motion/react-m";
+import { useMobile, useMobileReducedMotion } from "./components/ui/use-mobile";
+import { useMobileGalleryScroll } from "./components/ui/use-mobile-gallery-scroll";
 import { ResponsiveImage } from "./ResponsiveImage";
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, memo, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { MotionConfig, useReducedMotion } from "motion/react";
 import {
   ArrowUpRight,
@@ -420,7 +422,14 @@ function ResearchPosters({ posters }: { posters: Poster[] }) {
   );
 }
 function Supporters({ sponsors }: { sponsors: Sponsor[] }) {
-  const logo = (sponsor: Sponsor) => <img key={sponsor.src} src={sponsor.src} alt={sponsor.alt} width={sponsor.width} height={sponsor.height} loading="lazy" decoding="async" />;
+  const logo = (sponsor: Sponsor) => {
+    const name = sponsor.src.match(/\/images\/sponsors\/(iap|uprm|cps-iot|mit-lincoln)-transparent\.webp$/)?.[1];
+    return <picture key={sponsor.src}>
+      {name && <source media="(max-width: 767px)" srcSet={[240, 480, 960].map(width => `/images/sponsors/mobile/${name}-${width}.webp ${width}w`).join(", ")}
+        sizes={name === "mit-lincoln" ? "(max-width: 640px) calc(100vw - 72px), 520px" : name === "iap" ? "calc(50vw - 52px)" : "calc(25vw - 26px)"} />}
+      <img src={sponsor.src} alt={sponsor.alt} width={sponsor.width} height={sponsor.height} loading="lazy" decoding="async" />
+    </picture>;
+  };
   const academic = sponsors.filter(sponsor => sponsor.group === "academic");
   const mit = sponsors.filter(sponsor => sponsor.group === "mit");
   return (
@@ -493,16 +502,24 @@ function Team({ data }: { data: YearContent }) {
     </section>
   );
 }
+const MobileMemberCards = memo(function MobileMemberCards({ members }: { members: TeamMember[] }) {
+  return members.map((member, index) => <TeamProfile key={member.name} member={member} index={index} />);
+});
+
 function MemberGallery({ members, note }: { members: TeamMember[]; note: string }) {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const mobile = useMobile();
+  const mobileReduced = useMobileReducedMotion();
+  const desktopReduced = useReducedMotion();
+  const reduced = mobile ? mobileReduced : desktopReduced;
   const [travel, setTravel] = useState(0);
   const [stageOverflow, setStageOverflow] = useState(0);
   const [position, setPosition] = useState(0);
   const pinned = !reduced && travel > 0;
-  useCircularGallery(rail, !reduced);
+  const edges = useMobileGalleryScroll(section, rail, mobile, pinned, travel, stageOverflow);
+  useCircularGallery(rail, !reduced, mobile);
   const drag = useRef<{ x: number; start: number } | null>(null);
 
   useEffect(() => {
@@ -524,7 +541,7 @@ function MemberGallery({ members, note }: { members: TeamMember[]; note: string 
 
   useEffect(() => {
     const element = rail.current;
-    if (!element) return;
+    if (!element || mobile) return;
     const update = () => {
       if (pinned && section.current) {
         element.scrollLeft = Math.max(0, Math.min(travel, -section.current.getBoundingClientRect().top - stageOverflow));
@@ -536,7 +553,7 @@ function MemberGallery({ members, note }: { members: TeamMember[]; note: string 
     element.addEventListener("scroll", update, { passive: true });
     update();
     return () => { window.removeEventListener("scroll", update); element.removeEventListener("scroll", update); };
-  }, [pinned, travel, stageOverflow]);
+  }, [pinned, travel, stageOverflow, mobile]);
 
   const move = (direction: number, skip = false) => {
     const element = rail.current;
@@ -559,8 +576,8 @@ function MemberGallery({ members, note }: { members: TeamMember[]; note: string 
         <div className="rail-toolbar">
           <span className="mono"><SpecialText hoverOnly>{pinned ? "SCROLL DOWN TO MEET THE TEAM →" : "SCROLL TO EXPLORE →"}</SpecialText></span>
           <div className="rail-controls">
-            <button aria-label="Skip to first member" disabled={position <= 2} onClick={() => move(-1, true)}><ArrowLeft size={18} /></button>
-            <button aria-label="Skip to last member" disabled={position >= travel - 2} onClick={() => move(1, true)}><ArrowRight size={18} /></button>
+            <button aria-label="Skip to first member" disabled={mobile ? edges.start : position <= 2} onClick={() => move(-1, true)}><ArrowLeft size={18} /></button>
+            <button aria-label="Skip to last member" disabled={mobile ? edges.end : position >= travel - 2} onClick={() => move(1, true)}><ArrowRight size={18} /></button>
           </div>
         </div>
         <div ref={rail} className="horizontal-rail members-track circular-members" role="region" aria-label="Member profiles" tabIndex={0}
@@ -584,7 +601,7 @@ function MemberGallery({ members, note }: { members: TeamMember[]; note: string 
               event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1);
             }
           }}>
-          {members.map((member, index) => <TeamProfile key={member.name} member={member} index={index} />)}
+          {mobile ? <MobileMemberCards members={members} /> : members.map((member, index) => <TeamProfile key={member.name} member={member} index={index} />)}
         </div>
       </div>
     </section>

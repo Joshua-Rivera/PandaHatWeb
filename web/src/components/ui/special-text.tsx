@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { useScroll, useMotionValueEvent, useReducedMotion } from "motion/react";
 
+import { useMobile, useMobileReducedMotion } from "./use-mobile";
+import { MobileScrollText } from "./mobile-text";
+
 const SYMBOLS = "_!X$0-+*#";
 
 /** Scroll and hover decoding over a stable, selectable copy of the original text. */
 export function SpecialText({ children, hoverOnly = false }: { children: string; hoverOnly?: boolean }) {
+  const mobile = useMobile();
+  const reduced = useMobileReducedMotion();
+  if (mobile) return hoverOnly || reduced
+    ? <span className="special-text mobile-plain-text">{children}</span>
+    : <MobileScrollText>{children}</MobileScrollText>;
   return hoverOnly ? <DecodeText>{children}</DecodeText> : <ScrollText>{children}</ScrollText>;
 }
 

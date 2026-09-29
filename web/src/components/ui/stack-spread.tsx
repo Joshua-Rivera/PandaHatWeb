@@ -4,6 +4,9 @@ import { useEffect, useId, useRef, useState } from "react";
 import { useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import "./stack-spread.css";
 import { SpecialText } from "./special-text";
+import cardData from "./collage-cards.json";
+import { useMobile } from "./use-mobile";
+import { MobileCollage } from "./mobile-collage";
 
 type Card = {
   image: number;
@@ -16,16 +19,7 @@ type Card = {
 };
 // Coordinates share one design space, so the lettering lines up across every card.
 // Conference thumbnails keep the animated composition lightweight.
-const CARDS: Card[] = [
-  { image: 1, w: 220, h: 155, x: 440, y: 270, angle: -18, end: [330, 110] },
-  { image: 8, w: 220, h: 210, x: 765, y: 255, angle: 20, end: [1000, 130] },
-  { image: 3, w: 225, h: 210, x: 345, y: 365, angle: -5, end: [130, 375] },
-  { image: 4, w: 300, h: 210, x: 580, y: 280, angle: -2, end: [680, 125] },
-  { image: 5, w: 240, h: 200, x: 825, y: 365, angle: 6, end: [1060, 390] },
-  { image: 6, w: 275, h: 175, x: 470, y: 445, angle: 6, end: [280, 620] },
-  { image: 7, w: 250, h: 165, x: 685, y: 435, angle: 3, end: [640, 635] },
-  { image: 2, w: 200, h: 140, x: 865, y: 475, angle: -7, end: [990, 625] },
-];
+const CARDS = cardData as Card[];
 const MOBILE_END = [[170, 100], [430, 100], [160, 270], [430, 270], [160, 630], [430, 630], [170, 805], [430, 805]];
 const originalTransform = (c: Card) => `translate(${c.x} ${c.y}) rotate(${c.angle})`;
 
@@ -77,6 +71,11 @@ function PhotoCard({ card, index, progress, small, id }: {
 }
 
 export default function StackSpread() {
+  const mobile = useMobile();
+  return mobile ? <MobileCollage /> : <DesktopStackSpread />;
+}
+
+function DesktopStackSpread() {
   const ref = useRef<HTMLElement>(null);
   const id = useId().replace(/:/g, "");
   const reduced = useReducedMotion();
