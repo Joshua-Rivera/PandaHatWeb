@@ -215,7 +215,6 @@ function useSelectedYear() {
   return [year, select] as const;
 }
 type WipeDirection = "older" | "newer";
-const CURTAIN_COVER_MS = 550;
 // The curtain is a band whose two edges curve the same way, like "(_(": the middle of the wave leads. Both edges are the same
 // arc, so the band is equally wide at every height and covers the screen exactly at the midpoint.
 // Must match the band size in App.css: 160vw wide (30vw of curve on each side), 120vh tall.
@@ -232,24 +231,34 @@ const CURTAIN_SHAPE = (() => {
 })();
 const yearIndex = (value: string) => years.findIndex(entry => entry.year === value);
 // A black curtain sweeps over the page, the year swaps underneath, then the curtain sweeps off.
+// Each phase advances only when its own animation finishes, so a busy main thread can't skip the reveal,
+// and a year picked mid-transition waits for the current wave to finish before starting the next one.
 function useYearWipe(year: string) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotion() ?? false;
   const [shownYear, setShownYear] = useState(year);
+  const [covering, setCovering] = useState<WipeDirection | null>(null);
   const [revealing, setRevealing] = useState<WipeDirection | null>(null);
   const [switched, setSwitched] = useState(false);
-  const changing = year !== shownYear;
-  const direction: WipeDirection = yearIndex(year) > yearIndex(shownYear) ? "older" : "newer";
-  useEffect(() => {
-    if (!changing) return;
-    const timer = setTimeout(() => {
+  const pending = year !== shownYear;
+  const direction: WipeDirection = covering ?? (yearIndex(year) > yearIndex(shownYear) ? "older" : "newer");
+  const phase = reduced ? null
+    : revealing ? `is-reveal wipe-${revealing}`
+    : covering || pending ? `is-cover wipe-${direction}` : null;
+  const onAnimationStart = (name: string) => {
+    if (name.startsWith("curtain-cover")) setCovering(direction);
+  };
+  const onAnimationEnd = (name: string) => {
+    if (name.startsWith("curtain-cover")) {
+      // The screen is fully covered: swap to the latest selected year, then reveal it.
       setShownYear(year);
-      setSwitched(true);
-      setRevealing(reduced ? null : direction);
-    }, reduced ? 0 : CURTAIN_COVER_MS);
-    return () => clearTimeout(timer);
-  }, [changing, year, direction, reduced]);
-  const phase = changing && !reduced ? `is-cover wipe-${direction}` : revealing ? `is-reveal wipe-${revealing}` : null;
-  return { shownYear, switched, phase, onRevealEnd: () => { if (!changing) setRevealing(null); } };
+      if (year !== shownYear) setSwitched(true);
+      setCovering(null);
+      setRevealing(direction);
+    } else if (name.startsWith("curtain-reveal")) {
+      setRevealing(null);
+    }
+  };
+  return { shownYear: reduced ? year : shownYear, switched: switched || (reduced && pending), phase, onAnimationStart, onAnimationEnd };
 }
 function YearContentRegion({ wipe, children }: { wipe: ReturnType<typeof useYearWipe>; children: ReactNode }) {
   return <YearSwitched.Provider value={wipe.switched}>{children}</YearSwitched.Provider>;
@@ -259,7 +268,9 @@ function YearCurtain({ wipe }: { wipe: ReturnType<typeof useYearWipe> }) {
   if (!wipe.phase) return null;
   return (
     <div className={`year-curtain ${wipe.phase}`} aria-hidden="true">
-      <div className="year-curtain-band" style={{ clipPath: CURTAIN_SHAPE }} onAnimationEnd={() => wipe.onRevealEnd()} />
+      <div className="year-curtain-band" style={{ clipPath: CURTAIN_SHAPE }}
+        onAnimationStart={event => wipe.onAnimationStart(event.animationName)}
+        onAnimationEnd={event => wipe.onAnimationEnd(event.animationName)} />
     </div>
   );
 }

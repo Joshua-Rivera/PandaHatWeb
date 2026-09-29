@@ -153,3 +153,24 @@ test("year switcher shows past research and persists in the URL", async ({ page 
   await expect(page.getByRole("radio", { name: "2026" })).toBeFocused();
   await expect(page).not.toHaveURL(/year=/);
 });
+
+test("year curtain always plays its full cover and reveal, even on a busy CPU", async ({ page }) => {
+  await page.goto("/#description");
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 6 });
+  await page.evaluate(() => {
+    const events: string[] = [];
+    (window as unknown as { curtainEvents: string[] }).curtainEvents = events;
+    for (const type of ["animationend", "animationcancel"]) {
+      document.addEventListener(type, event => {
+        const { animationName } = event as AnimationEvent;
+        if (animationName.startsWith("curtain")) events.push(`${type} ${animationName}`);
+      }, true);
+    }
+  });
+  await page.getByRole("radio", { name: "2025" }).click();
+  await expect(page.locator(".year-curtain")).toHaveCount(0, { timeout: 10_000 });
+  const events = await page.evaluate(() => (window as unknown as { curtainEvents: string[] }).curtainEvents);
+  expect(events).toEqual(["animationend curtain-cover", "animationend curtain-reveal"]);
+  await expect(page.locator("#problem-title")).toContainText("learn efficiently");
+});
