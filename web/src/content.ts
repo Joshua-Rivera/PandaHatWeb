@@ -25,9 +25,46 @@ export type TeamMember = {
   links?: string[];
   resume?: string;
 };
+export type Advisor = { name: string; role: string; focus: string; photo: string };
+export type Photo = { src: string; thumbnail: string; alt: string };
+export type Poster = {
+  label: string;
+  title: string;
+  preview: string;
+  full: string;
+  pdf?: string;
+  alt: string;
+  width: number;
+  height: number;
+  archived?: boolean;
+};
+export type Sponsor = { src: string; alt: string; width: number; height: number; group: "academic" | "mit" };
+export type YearContent = {
+  year: string;
+  // Optional: overrides the shared description for this year.
+  description?: { title?: string; paragraphs?: string[] };
+  semester: {
+    title: string;
+    problem: string[];
+    criteria: string[];
+    objectiveTitle: string;
+    objective: string;
+    experience: string;
+    questionsTitle: string;
+    questions: { group: string; title: string; question: string }[];
+  };
+  topics: ResearchTopic[];
+  team: { note: string; fullTimeLabel: string; fullTimeNote: string; onboardingLabel: string; onboardingNote: string };
+  members: TeamMember[];
+  conference: { title: string; subtitle: string; groupPhoto: Photo; photos: Photo[] } | null;
+  posters: Poster[];
+  advisors: Advisor[];
+  sponsors: Sponsor[];
+};
 export const content = {
   brand: "PandaHat",
   subbrand: "ADVERSARIAL",
+  descriptionTitle: "Understanding machine learning. Empowering students.",
   descriptionParagraphs: [
     "Machine Learning (ML) models are nowadays more accessible than ever in today’s technological landscape, bringing a new era of possibilities, opportunities, and difficulties. Nevertheless, these models are susceptible to cyber-attacks.",
     "Machine Learning models are vulnerable to Adversarial attacks, in which the algorithm of a model can be affected by an attacker with the desire to cause the model to behave contrary to expected, i.e. causing the model to misclassify a certain image when it correctly classified it previously.",
@@ -72,38 +109,13 @@ export const content = {
       },
     ],
   },
-  semester: {
-    title: "How resilient are digital watermarks?",
-    problem: [
-      "As the technology of generative artificial intelligence (AI) keeps developing, images, audio, and video produced by AI are becoming more and more difficult to tell apart from genuine media. When used by people with bad intentions, such capabilities can be used to carry out misinformation campaigns, damage public trust, and allow cyberbullying, fraud, identity deception, and other kinds of digital abuse. The problems involved show an increasing demand for reliable methods to verify the authenticity and integrity of digital media.",
-      "Digital watermarking is one of the more promising methods available for authenticating media. It achieves this by embedding invisible information into digital content, enabling detection of any unauthorized changes while preserving visual quality. Yet even though many watermarking algorithms have been proposed over the last few decades, their resistance to modern AI-based manipulations, image editing tools, and adversarial attacks has not been thoroughly assessed.",
-      "The research project will involve a systematic assessment of various digital watermarking techniques, covering both conventional signal-processing methods and more recent learning-based methods, across a wide range of realistic image manipulations and adversarial attacks. Students will implement the watermarking algorithms, test them, and compare them using standard image datasets and evaluation metrics.",
-    ],
-    criteria: [
-      "Resistance to common image manipulations and modifications produced by AI.",
-      "Imperceptibility of the embedded watermark.",
-      "Detection accuracy and reliability.",
-      "Computational efficiency.",
-      "Resilience to adversarial attacks.",
-    ],
-    objective: "The objective of the project is to conduct a thorough comparison of existing digital watermarking techniques for media authentication and to identify promising areas of research for developing more robust and secure watermarking systems.",
-    experience: "The students will gain practical experience in experimental research, algorithm implementation, scientific analysis, and research communication, and will have the opportunity to participate in conference presentations and publish their research.",
-    questions: [
-      { group: "GROUP A", title: "Robustness", question: "Does the watermark survive?" },
-      { group: "GROUP B", title: "Detection", question: "Does it affect the detector?" },
-      { group: "GROUP C", title: "Localization", question: "Where was the media altered?" },
-    ],
-  },
   team: {
     eyebrow: "THE PEOPLE BEHIND THE QUESTIONS",
     heading: "Different perspectives.\nShared curiosity.",
     intro:
       "A collaborative space for people who like to look a little closer. Bringing together interests in machine learning, security, and the stories hidden inside digital media.",
     title: "Meet the minds behind the work.",
-    note: "Our current cohort includes 7 full-time researchers and 15 new members moving through the learning path.",
     outro: "Good research starts\nwith a little curiosity.",
-    fullTimeLabel: "07 / FULL-TIME RESEARCHERS",
-    onboardingLabel: "15 / LEARNING PATH MEMBERS",
     onboarding: [
       { step: "01", title: "Orient", description: "Learn the research questions, tools, expectations, and shared vocabulary." },
       { step: "02", title: "Observe", description: "Read the work, reproduce a small result, and learn to document the path." },
@@ -117,7 +129,7 @@ export const content = {
     intro: "This page doesn’t exist. Let’s get you back to the research.",
   },
 };
-export const topics: ResearchTopic[] = [
+const topics2026: ResearchTopic[] = [
   {
     id: "01",
     slug: "digital-watermarking",
@@ -155,7 +167,7 @@ export const topics: ResearchTopic[] = [
     evidence: "Connect model output, provenance signals, and limitations into a traceable brief.",
   },
 ];
-export const advisors = [
+const advisors2026: Advisor[] = [
   { name: "Dr. Nayda Santiago", role: "Research advisor", focus: "Digital media, machine learning, and research direction", photo: "/images/professors/nayda-santiago.webp" },
   { name: "Dr. Alcibiades Bustillo", role: "Research advisor", focus: "Computer science mentorship and experimental context", photo: "/images/professors/alcibiades-bustillo.webp" },
 ];
@@ -191,7 +203,7 @@ const resumeProfiles: Record<string, Partial<TeamMember>> = {
   "Kiara Jimenez": { bio: "Software Engineering student building playable systems and data-structure-driven applications in Python, C++, and Java.", interests: "Software engineering, algorithms, game development, data structures", skills: ["Python", "Java", "C++", "Pygame", "GitHub", "PyCharm", "VS Code"], projects: ["Tetris game", "Minecraft-inspired interface", "Parking Reservation Management System"], education: "B.S. Software Engineering, UPRM", experience: [], contact: "kiara.jimenez2@uprm.edu", links: [] },
   "Daniel Muñoz": { photo: "/images/members/daniel-munoz.webp", bio: "Software Engineering student with experience in programming mentorship, electronics, robotics, automation, and student leadership.", interests: "Robotics, automation, electronics, web development, cybersecurity", skills: ["C++", "Python", "HTML", "CSS", "Arduino", "PLC systems", "Robotics"], projects: ["RBNI university trolley REST API", "FRAS school safety system"], education: "B.S. Software Engineering, UPRM · Expected 2030", experience: ["CIIC3015 · Mentor", "ColorStack UPRM · Representative", "SkillsUSA · Regional Vice President"], contact: "daniel.munoz13@upr.edu", links: ["linkedin.com/in/daniel-f-munoz"] },
 };
-export const members: TeamMember[] = [
+const members2026: TeamMember[] = [
   memberSlot("Jorge Luna", "PM", "JL", resumeProfiles["Jorge Luna"]),
   memberSlot("Joshua Rivera", "Co-PM", "JR", resumeProfiles["Joshua Rivera"]),
   memberSlot("Gian Miranda", "TL · Team Leader", "GM", resumeProfiles["Gian Miranda"]),
@@ -231,7 +243,7 @@ export const metadata: Record<string, { title: string; description: string }> =
     },
   };
 
-export const conferencePhotos = [
+const conferencePhotos2026: Photo[] = [
   "Team member speaking during the presentation",
   "Research presentation at the lectern",
   "PandaHat team together at the conference",
@@ -250,3 +262,131 @@ export const conferencePhotos = [
   thumbnail: `/images/conference/spring-iap-2026-${String(index + 1).padStart(2, "0")}-thumb.webp`,
   alt: `${description} · Spring IAP, May 2026, Mayagüez`,
 }));
+
+const sponsors2026: Sponsor[] = [
+  { src: "/images/sponsors/iap-transparent.webp", alt: "IAP", width: 1774, height: 887, group: "academic" },
+  { src: "/images/sponsors/uprm-transparent.webp", alt: "Universidad de Puerto Rico Recinto Universitario de Mayagüez", width: 1254, height: 1254, group: "academic" },
+  { src: "/images/sponsors/cps-iot-transparent.webp", alt: "CPS IoT Laboratory", width: 1173, height: 1341, group: "academic" },
+  { src: "/images/sponsors/mit-lincoln-transparent.webp", alt: "MIT Lincoln Laboratory", width: 1942, height: 809, group: "mit" },
+];
+
+// Newest year first. The first entry is the default view; add past years below it.
+export const years: YearContent[] = [
+  {
+    year: "2026",
+    semester: {
+      title: "How resilient are digital watermarks?",
+      problem: [
+        "As the technology of generative artificial intelligence (AI) keeps developing, images, audio, and video produced by AI are becoming more and more difficult to tell apart from genuine media. When used by people with bad intentions, such capabilities can be used to carry out misinformation campaigns, damage public trust, and allow cyberbullying, fraud, identity deception, and other kinds of digital abuse. The problems involved show an increasing demand for reliable methods to verify the authenticity and integrity of digital media.",
+        "Digital watermarking is one of the more promising methods available for authenticating media. It achieves this by embedding invisible information into digital content, enabling detection of any unauthorized changes while preserving visual quality. Yet even though many watermarking algorithms have been proposed over the last few decades, their resistance to modern AI-based manipulations, image editing tools, and adversarial attacks has not been thoroughly assessed.",
+        "The research project will involve a systematic assessment of various digital watermarking techniques, covering both conventional signal-processing methods and more recent learning-based methods, across a wide range of realistic image manipulations and adversarial attacks. Students will implement the watermarking algorithms, test them, and compare them using standard image datasets and evaluation metrics.",
+      ],
+      criteria: [
+        "Resistance to common image manipulations and modifications produced by AI.",
+        "Imperceptibility of the embedded watermark.",
+        "Detection accuracy and reliability.",
+        "Computational efficiency.",
+        "Resilience to adversarial attacks.",
+      ],
+      objectiveTitle: "Compare techniques. Build stronger defenses.",
+      objective: "The objective of the project is to conduct a thorough comparison of existing digital watermarking techniques for media authentication and to identify promising areas of research for developing more robust and secure watermarking systems.",
+      experience: "The students will gain practical experience in experimental research, algorithm implementation, scientific analysis, and research communication, and will have the opportunity to participate in conference presentations and publish their research.",
+      questionsTitle: "Three main research questions",
+      questions: [
+        { group: "GROUP A", title: "Robustness", question: "Does the watermark survive?" },
+        { group: "GROUP B", title: "Detection", question: "Does it affect the detector?" },
+        { group: "GROUP C", title: "Localization", question: "Where was the media altered?" },
+      ],
+    },
+    topics: topics2026,
+    team: {
+      note: "Our current cohort includes 7 full-time researchers and 15 new members moving through the learning path.",
+      fullTimeLabel: "07 / FULL-TIME RESEARCHERS",
+      fullTimeNote: "Seven full-time researchers anchor the active questions, mentoring, and project continuity.",
+      onboardingLabel: "15 / LEARNING PATH MEMBERS",
+      onboardingNote: "Fifteen new members move through a shared learning path from orientation to independent contribution.",
+    },
+    members: members2026,
+    conference: { title: "Spring IAP 2026", subtitle: "May 2026 · Mayagüez", groupPhoto: conferencePhotos2026[2], photos: conferencePhotos2026 },
+    posters: [
+      {
+        label: "CURRENT RESEARCH / FALL 2026",
+        title: "Digital Watermarking for Deepfake Detection, Authentication, and Localization",
+        preview: "/images/posters/pandahat-fall-2026-preview.webp",
+        full: "/images/posters/pandahat-fall-2026.webp",
+        pdf: "/images/posters/pandahat-fall-2026.pdf",
+        alt: "Fall 2026 PandaHat poster: Digital Watermarking for Deepfake Detection, Authentication, and Localization. Research on watermark robustness, face-swap resilience, and manipulation localization.",
+        width: 2400,
+        height: 3600,
+      },
+      {
+        label: "ARCHIVE / 2023",
+        title: "Recreating Adversarial Attacks in Multimodal Architecture",
+        preview: "/images/posters/pandahat-2023-preview.webp",
+        full: "/images/posters/pandahat-2023.webp",
+        alt: "2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline.",
+        width: 1666,
+        height: 2500,
+        archived: true,
+      },
+    ],
+    advisors: advisors2026,
+    sponsors: sponsors2026,
+  },
+  {
+    // Placeholder content: replace the "to be added" text once the 2025 material is confirmed.
+    year: "2025",
+    semester: {
+      title: "Can large models learn efficiently?",
+      problem: [
+        "Problem statement to be added. This cycle studied Low-Rank Adaptation (LoRA) and the energy efficiency of machine learning training and fine-tuning.",
+      ],
+      criteria: ["Evaluation criteria to be added."],
+      objectiveTitle: "Adapt smarter. Spend less energy.",
+      objective: "Objective to be added.",
+      experience: "Student experience to be added.",
+      questionsTitle: "Main research questions",
+      questions: [
+        { group: "GROUP A", title: "LoRA", question: "Research question to be added." },
+        { group: "GROUP B", title: "Energy efficiency", question: "Research question to be added." },
+      ],
+    },
+    topics: [
+      {
+        id: "01",
+        slug: "lora-fine-tuning",
+        title: "LoRA fine-tuning",
+        subtitle: "Details to be added.",
+        description: "Description to be added.",
+        tags: ["LORA", "FINE-TUNING"],
+        question: "Research question to be added.",
+        methods: ["Methods to be added"],
+        evidence: "Evidence to be added.",
+      },
+      {
+        id: "02",
+        slug: "energy-efficient-ml",
+        title: "Energy-efficient ML",
+        subtitle: "Details to be added.",
+        description: "Description to be added.",
+        tags: ["ENERGY", "EFFICIENCY"],
+        question: "Research question to be added.",
+        methods: ["Methods to be added"],
+        evidence: "Evidence to be added.",
+      },
+    ],
+    team: {
+      note: "The 2025 roster is being added.",
+      fullTimeLabel: "FULL-TIME RESEARCHERS",
+      fullTimeNote: "Details to be added.",
+      onboardingLabel: "LEARNING PATH MEMBERS",
+      onboardingNote: "Details to be added.",
+    },
+    members: [],
+    conference: null,
+    posters: [],
+    advisors: advisors2026,
+    sponsors: sponsors2026,
+  },
+];
+export const latestYear = years[0].year;

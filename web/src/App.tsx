@@ -1,6 +1,6 @@
 import * as m from "motion/react-m";
 import { ResponsiveImage } from "./ResponsiveImage";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { MotionConfig, useReducedMotion } from "motion/react";
 import {
   ArrowUpRight,
@@ -12,11 +12,14 @@ import {
 } from "lucide-react";
 import {
   content,
-  members,
-  topics,
-  advisors,
-  conferencePhotos,
+  years,
+  latestYear,
+  type Advisor,
+  type Poster,
+  type ResearchTopic,
+  type Sponsor,
   type TeamMember,
+  type YearContent,
 } from "./content";
 import { PandaMark } from "./Graphics";
 import "./App.css";
@@ -50,7 +53,6 @@ function Header() {
   const header = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const sections = SECTIONS.map(([path]) => ({ path, element: document.querySelector(path) }));
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -58,7 +60,9 @@ function Header() {
       const threshold = (header.current?.getBoundingClientRect().bottom ?? 90) + 24;
       const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
       let active = "";
-      for (const { path, element } of sections) {
+      // Query each time: switching research years remounts the sections.
+      for (const [path] of SECTIONS) {
+        const element = document.querySelector(path);
         if (!element) continue;
         // Anchor scrolling stops at scroll-padding + scroll-margin, which can
         // be below the header. Include that landing position and pixel rounding.
@@ -144,6 +148,8 @@ function Footer() {
     </footer>
   );
 }
+// Content remounted by a year switch is revealed by the wipe, so it skips the scroll fade-in.
+const YearSwitched = createContext(false);
 function Reveal({
   children,
   className = "",
@@ -154,10 +160,11 @@ function Reveal({
   delay?: number;
 }) {
   const reduced = useReducedMotion();
+  const switched = useContext(YearSwitched);
   return (
     <m.div
       className={className}
-      initial={reduced ? false : { opacity: 0, y: 18 }}
+      initial={reduced || switched ? false : { opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : delay }}
@@ -185,33 +192,132 @@ function SectionHeading({
     </div>
   );
 }
-function Home() {
+const readYear = () => {
+  const requested = new URLSearchParams(window.location.search).get("year");
+  return years.some(entry => entry.year === requested) ? requested! : latestYear;
+};
+function useSelectedYear() {
+  const [year, setYear] = useState(readYear);
+  useEffect(() => {
+    const sync = () => setYear(readYear());
+    addEventListener("popstate", sync);
+    return () => removeEventListener("popstate", sync);
+  }, []);
+  const select = (next: string) => {
+    const params = new URLSearchParams(window.location.search);
+    // The latest year is the default, so keep its URL clean.
+    if (next === latestYear) params.delete("year");
+    else params.set("year", next);
+    const query = params.toString();
+    history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
+    setYear(next);
+  };
+  return [year, select] as const;
+}
+type WipeDirection = "older" | "newer";
+const WIPE_OUT_MS = 380;
+const yearIndex = (value: string) => years.findIndex(entry => entry.year === value);
+// Shows the selected year after the old content has wiped out, then wipes the new content in.
+function useYearWipe(year: string) {
+  const reduced = useReducedMotion();
+  const [shownYear, setShownYear] = useState(year);
+  const [wipingIn, setWipingIn] = useState<WipeDirection | null>(null);
+  const [switched, setSwitched] = useState(false);
+  const changing = year !== shownYear;
+  const direction: WipeDirection = yearIndex(year) > yearIndex(shownYear) ? "older" : "newer";
+  useEffect(() => {
+    if (!changing) return;
+    const timer = setTimeout(() => {
+      setShownYear(year);
+      setSwitched(true);
+      setWipingIn(reduced ? null : direction);
+    }, reduced ? 0 : WIPE_OUT_MS);
+    return () => clearTimeout(timer);
+  }, [changing, year, direction, reduced]);
+  const className = changing && !reduced ? `year-content wipe-out wipe-${direction}`
+    : wipingIn ? `year-content wipe-in wipe-${wipingIn}` : "year-content";
+  return { shownYear, switched, className, onAnimationEnd: () => { if (!changing) setWipingIn(null); } };
+}
+function YearContentRegion({ wipe, children }: { wipe: ReturnType<typeof useYearWipe>; children: ReactNode }) {
+  const region = useRef<HTMLDivElement>(null);
+  // Centre the curved wipe edge on the visible part of the region, however tall it is.
+  useLayoutEffect(() => {
+    const element = region.current;
+    if (!element || wipe.className === "year-content") return;
+    element.style.setProperty("--wipe-cy", `${window.innerHeight / 2 - element.getBoundingClientRect().top}px`);
+    element.style.setProperty("--wipe-ry", `${window.innerHeight * 0.75}px`);
+  }, [wipe.className]);
+  return (
+    <div ref={region} className={wipe.className} onAnimationEnd={event => { if (event.target === event.currentTarget) wipe.onAnimationEnd(); }}>
+      <YearSwitched.Provider value={wipe.switched}>{children}</YearSwitched.Provider>
+    </div>
+  );
+}
+function YearSwitcher({ year, onSelect }: { year: string; onSelect: (year: string) => void }) {
+  const buttons = useRef<(HTMLButtonElement | null)[]>([]);
+  return (
+    <div className="year-switcher">
+      <span className="eyebrow" id="year-switcher-label"><SpecialText hoverOnly>RESEARCH YEAR</SpecialText></span>
+      <div className="year-options" role="radiogroup" aria-labelledby="year-switcher-label"
+        onKeyDown={event => {
+          const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+          if (!step) return;
+          event.preventDefault();
+          const index = years.findIndex(entry => entry.year === year);
+          const next = (index + step + years.length) % years.length;
+          onSelect(years[next].year);
+          buttons.current[next]?.focus();
+        }}>
+        {years.map((entry, index) => (
+          <button
+            key={entry.year}
+            ref={element => { buttons.current[index] = element; }}
+            type="button"
+            role="radio"
+            aria-checked={entry.year === year}
+            tabIndex={entry.year === year ? 0 : -1}
+            className={entry.year === year ? "is-active" : undefined}
+            onClick={() => onSelect(entry.year)}
+          >
+            {entry.year}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+function Home({ data, selectedYear, onSelectYear, wipe }: { data: YearContent; selectedYear: string; onSelectYear: (year: string) => void; wipe: ReturnType<typeof useYearWipe> }) {
   return (
     <>
       <StackSpread />
       <Header />
       <section id="description" className="container content-section" aria-labelledby="description-title">
+        <YearSwitcher year={selectedYear} onSelect={onSelectYear} />
+        <YearContentRegion key={data.year} wipe={wipe}>
         <Reveal className="about-grid">
           <p className="eyebrow"><SpecialText hoverOnly>01 / DESCRIPTION</SpecialText></p>
           <div>
-            <h2 id="description-title"><SpecialText>Understanding machine learning. Empowering students.</SpecialText></h2>
-            {content.descriptionParagraphs.map(paragraph => (
+            <h2 id="description-title"><SpecialText>{data.description?.title ?? content.descriptionTitle}</SpecialText></h2>
+            {(data.description?.paragraphs ?? content.descriptionParagraphs).map(paragraph => (
               <p className="body-copy" key={paragraph}><SpecialText>{paragraph}</SpecialText></p>
             ))}
           </div>
         </Reveal>
+        </YearContentRegion>
       </section>
+      <YearContentRegion key={data.year} wipe={wipe}>
       <section id="problem-statement" className="container content-section" aria-labelledby="problem-title">
         <Reveal className="about-grid">
           <p className="eyebrow"><SpecialText hoverOnly>02 / PROBLEM STATEMENT</SpecialText></p>
           <div>
-            <h2 id="problem-title"><SpecialText>{content.semester.title}</SpecialText></h2>
-            {content.semester.problem.map(paragraph => (
+            {data.year !== latestYear && <p className="eyebrow year-archive-note"><SpecialText hoverOnly>{`VIEWING ${data.year} ARCHIVE`}</SpecialText></p>}
+            <h2 id="problem-title"><SpecialText>{data.semester.title}</SpecialText></h2>
+            {data.semester.problem.map(paragraph => (
               <p className="body-copy" key={paragraph}><SpecialText>{paragraph}</SpecialText></p>
             ))}
             <h3 className="evaluation-title"><SpecialText hoverOnly>Performance will be assessed in terms of:</SpecialText></h3>
             <ul className="evaluation-criteria">
-              {content.semester.criteria.map(criterion => <li key={criterion}><SpecialText>{criterion}</SpecialText></li>)}
+              {data.semester.criteria.map(criterion => <li key={criterion}><SpecialText>{criterion}</SpecialText></li>)}
             </ul>
           </div>
         </Reveal>
@@ -219,13 +325,13 @@ function Home() {
       <section id="objective" className="container content-section" aria-labelledby="objective-title">
         <Reveal>
           <p className="eyebrow"><SpecialText hoverOnly>03 / OBJECTIVE</SpecialText></p>
-          <h2 id="objective-title"><SpecialText>Compare techniques. Build stronger defenses.</SpecialText></h2>
-          <p className="body-copy objective-copy"><SpecialText>{content.semester.objective}</SpecialText></p>
-          <p className="body-copy objective-copy"><SpecialText>{content.semester.experience}</SpecialText></p>
+          <h2 id="objective-title"><SpecialText>{data.semester.objectiveTitle}</SpecialText></h2>
+          <p className="body-copy objective-copy"><SpecialText>{data.semester.objective}</SpecialText></p>
+          <p className="body-copy objective-copy"><SpecialText>{data.semester.experience}</SpecialText></p>
         </Reveal>
-        <h3 className="research-questions-title"><SpecialText hoverOnly>Three main research questions</SpecialText></h3>
+        <h3 className="research-questions-title"><SpecialText hoverOnly>{data.semester.questionsTitle}</SpecialText></h3>
         <div className="research-questions">
-          {content.semester.questions.map(question => (
+          {data.semester.questions.map(question => (
             <article className="research-question" key={question.group}>
               <span className="eyebrow"><SpecialText hoverOnly>{question.group}</SpecialText></span>
               <h3><SpecialText>{question.title}</SpecialText></h3>
@@ -234,11 +340,12 @@ function Home() {
           ))}
         </div>
       </section>
-      <ResearchEndpoints />
+      <ResearchEndpoints topics={data.topics} />
+      </YearContentRegion>
     </>
   );
 }
-function ResearchEndpoints() {
+function ResearchEndpoints({ topics }: { topics: ResearchTopic[] }) {
   return (
     <section id="research-endpoints" className="container content-section endpoint-section" aria-labelledby="endpoints-title">
       <SectionHeading label="04 / RESEARCH" title="Follow a question to its evidence." />
@@ -264,41 +371,43 @@ function ResearchEndpoints() {
     </section>
   );
 }
-function ResearchPosters() {
+function PosterFigure({ poster }: { poster: Poster }) {
+  return (
+    <figure className={poster.archived ? "archived-poster" : "featured-poster"}>
+      <a href={poster.full} target="_blank" rel="noreferrer" aria-label={`Open the ${poster.title} poster at full size`}>
+        <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src={poster.preview} width={poster.width} height={poster.height} loading="lazy" alt={poster.alt} />
+      </a>
+      <figcaption><span className="eyebrow"><SpecialText hoverOnly>{poster.label}</SpecialText></span><h3><SpecialText hoverOnly>{poster.title}</SpecialText></h3><p><SpecialText hoverOnly>{poster.pdf ? "Select the poster to view it at full size, or" : "Select the poster to view it at full size."}</SpecialText>{poster.pdf && <> <a href={poster.pdf} target="_blank" rel="noreferrer"><SpecialText hoverOnly>open the original PDF</SpecialText></a><SpecialText hoverOnly>.</SpecialText></>}</p></figcaption>
+    </figure>
+  );
+}
+function ResearchPosters({ posters }: { posters: Poster[] }) {
+  const featured = posters.filter(poster => !poster.archived);
+  const archived = posters.filter(poster => poster.archived);
   return (
     <section id="research-posters" className="container content-section" aria-label="Research posters">
       <SectionHeading label="05 / RESEARCH POSTERS" title="Our research, at a glance." />
-      <figure className="featured-poster">
-        <a href="/images/posters/pandahat-fall-2026.webp" target="_blank" rel="noreferrer" aria-label="Open the Fall 2026 PandaHat research poster at full size">
-          <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-fall-2026-preview.webp" width={2400} height={3600} loading="lazy" alt="Fall 2026 PandaHat poster: Digital Watermarking for Deepfake Detection, Authentication, and Localization. Research on watermark robustness, face-swap resilience, and manipulation localization." />
-        </a>
-        <figcaption><span className="eyebrow"><SpecialText hoverOnly>CURRENT RESEARCH / FALL 2026</SpecialText></span><h3><SpecialText hoverOnly>Digital Watermarking for Deepfake Detection, Authentication, and Localization</SpecialText></h3><p><SpecialText hoverOnly>Select the poster to view it at full size, or</SpecialText> <a href="/images/posters/pandahat-fall-2026.pdf" target="_blank" rel="noreferrer"><SpecialText hoverOnly>open the original PDF</SpecialText></a><SpecialText hoverOnly>.</SpecialText></p></figcaption>
-      </figure>
-      <details className="poster-archive">
-        <summary><SpecialText hoverOnly>Poster archive</SpecialText> <span className="mono"><SpecialText hoverOnly>2023</SpecialText></span></summary>
-        <figure className="archived-poster">
-          <a href="/images/posters/pandahat-2023.webp" target="_blank" rel="noreferrer" aria-label="Open the 2023 PandaHat research poster at full size">
-            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 912px) calc(100vw - 112px), 800px" src="/images/posters/pandahat-2023-preview.webp" width={1666} height={2500} loading="lazy" alt="2023 PandaHat poster: Recreating Adversarial Attacks in Multimodal Architecture. Sections include introduction, problem and hypothesis, objectives, methodology, results, and timeline." />
-          </a>
-          <figcaption><span className="eyebrow"><SpecialText hoverOnly>ARCHIVE / 2023</SpecialText></span><h3><SpecialText hoverOnly>Recreating Adversarial Attacks in Multimodal Architecture</SpecialText></h3><p><SpecialText hoverOnly>Select the poster to view it at full size.</SpecialText></p></figcaption>
-        </figure>
-      </details>
+      {posters.length === 0 && <p className="section-note"><SpecialText>Poster coming soon.</SpecialText></p>}
+      {featured.map(poster => <PosterFigure key={poster.full} poster={poster} />)}
+      {archived.length > 0 && (
+        <details className="poster-archive">
+          <summary><SpecialText hoverOnly>Poster archive</SpecialText> <span className="mono"><SpecialText hoverOnly>{archived.map(poster => poster.label.replace(/^ARCHIVE \/ /, "")).join(" · ")}</SpecialText></span></summary>
+          {archived.map(poster => <PosterFigure key={poster.full} poster={poster} />)}
+        </details>
+      )}
     </section>
   );
 }
-function Supporters() {
+function Supporters({ sponsors }: { sponsors: Sponsor[] }) {
+  const logo = (sponsor: Sponsor) => <img key={sponsor.src} src={sponsor.src} alt={sponsor.alt} width={sponsor.width} height={sponsor.height} loading="lazy" decoding="async" />;
+  const academic = sponsors.filter(sponsor => sponsor.group === "academic");
+  const mit = sponsors.filter(sponsor => sponsor.group === "mit");
   return (
     <section id="sponsors" className="container content-section" aria-label="Sponsors">
         <SectionHeading label="07 / SPONSORS" title="Supporting the next question." />
         <div className="sponsor-logos">
-          <div className="sponsor-logo-card sponsor-academic">
-            <img src="/images/sponsors/iap-transparent.webp" alt="IAP" width={1774} height={887} loading="lazy" decoding="async" />
-            <img src="/images/sponsors/uprm-transparent.webp" alt="Universidad de Puerto Rico Recinto Universitario de Mayagüez" width={1254} height={1254} loading="lazy" decoding="async" />
-            <img src="/images/sponsors/cps-iot-transparent.webp" alt="CPS IoT Laboratory" width={1173} height={1341} loading="lazy" decoding="async" />
-          </div>
-          <div className="sponsor-logo-card sponsor-mit">
-            <img src="/images/sponsors/mit-lincoln-transparent.webp" alt="MIT Lincoln Laboratory" width={1942} height={809} loading="lazy" decoding="async" />
-          </div>
+          {academic.length > 0 && <div className="sponsor-logo-card sponsor-academic">{academic.map(logo)}</div>}
+          {mit.length > 0 && <div className="sponsor-logo-card sponsor-mit">{mit.map(logo)}</div>}
         </div>
     </section>
   );
@@ -354,7 +463,16 @@ function MemberEndpoint({ member, onClose }: { member: TeamMember; onClose: () =
     </article>
   </div>;
 }
-function Team() {
+function Team({ data }: { data: YearContent }) {
+  if (data.members.length) return <MemberGallery members={data.members} note={data.team.note} />;
+  return (
+    <section id="members" className="container content-section" aria-label="Members">
+      <SectionHeading label="04 / MEMBERS" title={content.team.title} />
+      <p className="team-note"><SpecialText>{data.team.note}</SpecialText></p>
+    </section>
+  );
+}
+function MemberGallery({ members, note }: { members: TeamMember[]; note: string }) {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
@@ -416,7 +534,7 @@ function Team() {
       style={pinned ? { height: `calc(100vh + ${stageOverflow + travel}px)` } : undefined}>
       <div ref={stage} className="members-stage container" style={pinned ? { top: -stageOverflow } : undefined}>
         <SectionHeading label="04 / MEMBERS" title={content.team.title} />
-        <p className="team-note"><SpecialText>{content.team.note}</SpecialText></p>
+        <p className="team-note"><SpecialText>{note}</SpecialText></p>
         <div className="rail-toolbar">
           <span className="mono"><SpecialText hoverOnly>{pinned ? "SCROLL DOWN TO MEET THE TEAM →" : "SCROLL TO EXPLORE →"}</SpecialText></span>
           <div className="rail-controls">
@@ -452,11 +570,11 @@ function Team() {
     </>
   );
 }
-function CohortAndOnboarding() {
+function CohortAndOnboarding({ team }: { team: YearContent["team"] }) {
   return <>
     <div className="container cohort-summary">
-      <div className="cohort-heading"><p className="eyebrow"><SpecialText hoverOnly>{content.team.fullTimeLabel}</SpecialText></p><p className="team-note"><SpecialText hoverOnly>Seven full-time researchers anchor the active questions, mentoring, and project continuity.</SpecialText></p></div>
-      <div className="cohort-heading"><p className="eyebrow"><SpecialText hoverOnly>{content.team.onboardingLabel}</SpecialText></p><p className="team-note"><SpecialText hoverOnly>Fifteen new members move through a shared learning path from orientation to independent contribution.</SpecialText></p></div>
+      <div className="cohort-heading"><p className="eyebrow"><SpecialText hoverOnly>{team.fullTimeLabel}</SpecialText></p><p className="team-note"><SpecialText hoverOnly>{team.fullTimeNote}</SpecialText></p></div>
+      <div className="cohort-heading"><p className="eyebrow"><SpecialText hoverOnly>{team.onboardingLabel}</SpecialText></p><p className="team-note"><SpecialText hoverOnly>{team.onboardingNote}</SpecialText></p></div>
     </div>
     <div className="container onboarding-section" id="onboarding">
       <div className="onboarding-heading"><p className="eyebrow"><SpecialText hoverOnly>LEARNING PATH / ONBOARDING</SpecialText></p><h2><SpecialText>Start curious. Leave capable.</SpecialText></h2></div>
@@ -464,10 +582,14 @@ function CohortAndOnboarding() {
     </div>
   </>;
 }
-function Advisors() {
-  return <section id="professors" className="container content-section advisors-section" aria-label="Research advisors"><SectionHeading label="06 / ADVISORS" title="Guidance behind the questions." /><p className="section-note"><SpecialText>Meet Dr. Nayda Santiago and Dr. Alcibiades Bustillo, the advisors guiding the research group.</SpecialText></p><div className="advisor-grid">{advisors.map(advisor => <article className="advisor-card" key={advisor.name}><ResponsiveImage sizes="(max-width: 767px) 90px, 150px" src={advisor.photo} alt={advisor.name} width={594} height={596} loading="lazy" /><div><p className="eyebrow"><SpecialText hoverOnly>{advisor.role}</SpecialText></p><h3><SpecialText hoverOnly>{advisor.name}</SpecialText></h3><p><SpecialText hoverOnly>{advisor.focus}</SpecialText></p></div></article>)}</div></section>;
+function Advisors({ advisors }: { advisors: Advisor[] }) {
+  return <section id="professors" className="container content-section advisors-section" aria-label="Research advisors"><SectionHeading label="06 / ADVISORS" title="Guidance behind the questions." /><p className="section-note"><SpecialText>{`Meet ${new Intl.ListFormat("en", { type: "conjunction" }).format(advisors.map(advisor => advisor.name))}, the advisors guiding the research group.`}</SpecialText></p><div className="advisor-grid">{advisors.map(advisor => <article className="advisor-card" key={advisor.name}><ResponsiveImage sizes="(max-width: 767px) 90px, 150px" src={advisor.photo} alt={advisor.name} width={594} height={596} loading="lazy" /><div><p className="eyebrow"><SpecialText hoverOnly>{advisor.role}</SpecialText></p><h3><SpecialText hoverOnly>{advisor.name}</SpecialText></h3><p><SpecialText hoverOnly>{advisor.focus}</SpecialText></p></div></article>)}</div></section>;
 }
 export default function App() {
+  const [year, selectYear] = useSelectedYear();
+  const wipe = useYearWipe(year);
+  const data = years.find(entry => entry.year === wipe.shownYear) ?? years[0];
+  const { members, conference } = data;
   const [profileSlug, setProfileSlug] = useState(() => window.location.hash.startsWith("#member/") ? window.location.hash.slice(8) : "");
   const memberReturnScrollY = useRef(0);
   const activeMember = members.find(member => member.slug === profileSlug);
@@ -504,24 +626,26 @@ export default function App() {
       <a className="skip-link" href="#main"><SpecialText hoverOnly>Skip to content</SpecialText></a>
       <div id="top" />
       <main id="main" tabIndex={-1}>
-        <Home />
-        <Team />
-        <div className="container team-group-section">
+        <Home data={data} selectedYear={year} onSelectYear={selectYear} wipe={wipe} />
+        <YearContentRegion key={data.year} wipe={wipe}>
+        <Team data={data} />
+        {conference && <div className="container team-group-section">
           <figure className="team-group-card">
-            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1352px) calc(100vw - 112px), 1240px" className="team-group-image" src={conferencePhotos[2].src} width={1600} height={1200} loading="lazy" decoding="async" alt={conferencePhotos[2].alt} />
+            <ResponsiveImage sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1352px) calc(100vw - 112px), 1240px" className="team-group-image" src={conference.groupPhoto.src} width={1600} height={1200} loading="lazy" decoding="async" alt={conference.groupPhoto.alt} />
             <figcaption>
-              <div><span className="eyebrow"><SpecialText hoverOnly>THE PEOPLE BEHIND PANDAHAT</SpecialText></span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2><p><SpecialText hoverOnly>Spring IAP · May 2026 · Mayagüez</SpecialText></p></div>
+              <div><span className="eyebrow"><SpecialText hoverOnly>THE PEOPLE BEHIND PANDAHAT</SpecialText></span><h2><SpecialText>One team. Shared curiosity.</SpecialText></h2><p><SpecialText hoverOnly>{`${conference.title.replace(/ \d{4}$/, "")} · ${conference.subtitle}`}</SpecialText></p></div>
             </figcaption>
           </figure>
           <section className="conference-gallery" aria-labelledby="conference-title">
-            <div className="conference-heading"><span className="eyebrow"><SpecialText hoverOnly>FROM THE CONFERENCE</SpecialText></span><h2 id="conference-title"><SpecialText hoverOnly>Spring IAP 2026</SpecialText></h2><p><SpecialText hoverOnly>May 2026 · Mayagüez</SpecialText></p></div>
-            <div className="conference-grid">{conferencePhotos.map((photo, index) => <a key={photo.src} href={photo.src} target="_blank" rel="noreferrer" aria-label={`Open conference photo ${index + 1}: ${photo.alt}`}><ResponsiveImage sizes="(max-width: 767px) calc((100vw - 50px) / 2), (max-width: 1352px) calc((100vw - 144px) / 3), 403px" src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" width={640} height={480} /></a>)}</div>
+            <div className="conference-heading"><span className="eyebrow"><SpecialText hoverOnly>FROM THE CONFERENCE</SpecialText></span><h2 id="conference-title"><SpecialText hoverOnly>{conference.title}</SpecialText></h2><p><SpecialText hoverOnly>{conference.subtitle}</SpecialText></p></div>
+            <div className="conference-grid">{conference.photos.map((photo, index) => <a key={photo.src} href={photo.src} target="_blank" rel="noreferrer" aria-label={`Open conference photo ${index + 1}: ${photo.alt}`}><ResponsiveImage sizes="(max-width: 767px) calc((100vw - 50px) / 2), (max-width: 1352px) calc((100vw - 144px) / 3), 403px" src={photo.thumbnail} alt={photo.alt} loading="lazy" decoding="async" width={640} height={480} /></a>)}</div>
           </section>
-        </div>
-        <CohortAndOnboarding />
-        <ResearchPosters />
-        <Advisors />
-        <Supporters />
+        </div>}
+        <CohortAndOnboarding team={data.team} />
+        <ResearchPosters posters={data.posters} />
+        <Advisors advisors={data.advisors} />
+        <Supporters sponsors={data.sponsors} />
+        </YearContentRegion>
       </main>
       <Footer />
       {activeMember && <MemberEndpoint member={activeMember} onClose={closeMemberEndpoint} />}

@@ -18,6 +18,12 @@ Install the browser once with `npx playwright install chromium`, then run `npm r
 
 Unconfirmed member bios and research descriptions remain placeholders. Visuals are illustrative, not detector outputs. There is no backend or data collection. Supplied member profiles include contact and external profile links. Fonts load from Google Fonts with system fallbacks.
 
+## Research years
+
+The "Research year" switcher at the top of the Description section changes everything year-specific: problem statement, objective, research questions and topics, members, conference photos, posters, advisors and sponsors. Brand, description and onboarding copy are shared. The selected year is kept in the URL as `?year=2025`; the newest year is the default and has no query parameter.
+
+To add a year, add an entry to `years` in `src/content.ts` (newest first). Each entry follows the `YearContent` type. Use `members: []`, `conference: null` or `posters: []` for content that isn't ready yet; those sections show a placeholder note or are hidden. Put new images under `public/images/...`. The 2025 entry is currently placeholder text for the LoRA and energy-efficiency research.
+
 ## Current research structure
 
 - Three hash-addressable research endpoints cover digital watermarking, deepfake analysis, and media authenticity.
