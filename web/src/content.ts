@@ -39,6 +39,7 @@ export type Poster = {
   archived?: boolean;
 };
 export type Sponsor = { src: string; alt: string; width: number; height: number; group: "academic" | "mit" };
+type OnboardingStep = { step: string; title: string; description: string };
 export type YearContent = {
   year: string;
   // Optional: overrides the shared description for this year.
@@ -54,7 +55,7 @@ export type YearContent = {
     questions: { group: string; title: string; question: string }[];
   };
   topics: ResearchTopic[];
-  team: { note: string; fullTimeLabel: string; fullTimeNote: string; onboardingLabel: string; onboardingNote: string };
+  team: { note: string; fullTimeLabel: string; fullTimeNote: string; onboardingLabel: string; onboardingNote: string; onboarding?: OnboardingStep[] };
   members: TeamMember[];
   conference: { title: string; subtitle: string; groupPhoto: Photo; photos: Photo[] } | null;
   posters: Poster[];
@@ -227,6 +228,29 @@ const members2026: TeamMember[] = [
   memberSlot("Daniel Muñoz", "Learning path member", "DM", resumeProfiles["Daniel Muñoz"]),
   memberSlot("Kevin Beltran", "Learning path member", "KB", { photo: "/images/members/kevin-beltran.webp" }),
 ];
+// Names/order: presentation slide 1. Roles: user confirmed the first three as PMs,
+// with the remaining nine as members. Do not reuse later 2026 resume details.
+const members2025: TeamMember[] = [
+  ["Edwin Almodovar", "EA"],
+  ["Jan Rivera", "JR"],
+  ["Angel Fernández", "AF"],
+  ["Gian Miranda", "GM"],
+  ["Diego Rios", "DR"],
+  ["Angel Perez", "AP"],
+  ["Jorge Luna", "JL"],
+  ["Joshua Rivera", "JR"],
+  ["Joshua Román", "JR"],
+  ["Emmanuel Lopez", "EL"],
+  ["Daniel Reyes", "DR"],
+  ["Revel Velazquez", "RV"],
+].map(([name, initials], index) => memberSlot(name, index < 3 ? "PM" : "Member", initials, {
+  photo: members2026.find(member => member.slug === memberSlug(name))?.photo,
+  bio: "Listed as a student in the 2025 research presentation. Individual biography not provided.",
+  interests: "Individual research interests not provided in the presentation.",
+  skills: ["Individual skills and tools not provided in the presentation."],
+  projects: ["Individual project assignments not provided in the presentation."],
+  education: "Education details not provided in the presentation.",
+}));
 export const metadata: Record<string, { title: string; description: string }> =
   {
     "/": {
@@ -334,21 +358,27 @@ export const years: YearContent[] = [
     sponsors: sponsors2026,
   },
   {
-    // Placeholder content: replace the "to be added" text once the 2025 material is confirmed.
+    // Source: supplied presentation; slide mapping and unresolved details in docs/2025-content-sources.md.
     year: "2025",
     semester: {
-      title: "Can large models learn efficiently?",
+      title: "Can LoRA reduce training energy while preserving accuracy and robustness?",
       problem: [
-        "Problem statement to be added. This cycle studied Low-Rank Adaptation (LoRA) and the energy efficiency of machine learning training and fine-tuning.",
+        "Deep learning models are increasingly used in real-world applications, but improving their robustness through adversarial training can increase training cost. The research examined whether Low-Rank Adaptation could reduce energy consumption while maintaining model performance.",
+        "LoRA freezes the original model weights and trains low-rank adapter matrices instead of updating every weight. The project compared full fine-tuning with adapters applied to the last layers, depth layers, and all layers. Robustness needed to be evaluated separately because lower training energy does not guarantee reliable predictions under attack.",
       ],
-      criteria: ["Evaluation criteria to be added."],
-      objectiveTitle: "Adapt smarter. Spend less energy.",
-      objective: "Objective to be added.",
-      experience: "Student experience to be added.",
-      questionsTitle: "Main research questions",
+      criteria: [
+        "Model accuracy, precision, recall, and F1-score relative to full fine-tuning.",
+        "Total training energy consumption and CO₂-equivalent emissions per epoch.",
+        "Adversarial robustness: FGSM accuracy in the fine-tuning experiments, with PGD also included in the research objectives and student learning path.",
+        "The stated success criterion: roughly the same predictive performance as full fine-tuning, with less energy consumption.",
+      ],
+      objectiveTitle: "Compare fine-tuning. Measure energy and robustness.",
+      objective: "Compare full fine-tuning and LoRA fine-tuning, measure energy use, CO₂-equivalent emissions, and model performance, and evaluate reliability under FGSM and PGD adversarial attacks.",
+      experience: "Students learned core machine learning concepts, built a vegetation classification model, implemented adversarial techniques, and developed training pipelines in PyTorch. The learning-path results reported clean-model accuracy of 0.871 and average F1-score of 0.834; data poisoning reduced them to 0.365 and 0.248, while the PGD attack model scored 0.000 on both metrics. Students identified understanding deep learning architectures, debugging pipelines, and balancing robustness, performance, and efficiency as challenges.",
+      questionsTitle: "Research question and evaluation objectives",
       questions: [
-        { group: "GROUP A", title: "LoRA", question: "Research question to be added." },
-        { group: "GROUP B", title: "Energy efficiency", question: "Research question to be added." },
+        { group: "RESEARCH QUESTION", title: "LoRA", question: "Can LoRA reduce training energy consumption while preserving accuracy and robustness?" },
+        { group: "EVALUATION OBJECTIVES", title: "Energy efficiency", question: "Compare full fine-tuning and LoRA using energy consumption, CO₂-equivalent emissions, predictive performance, and adversarial reliability." },
       ],
     },
     topics: [
@@ -356,36 +386,55 @@ export const years: YearContent[] = [
         id: "01",
         slug: "lora-fine-tuning",
         title: "LoRA fine-tuning",
-        subtitle: "Details to be added.",
-        description: "Description to be added.",
+        subtitle: "Train adapters. Evaluate robustness.",
+        description: "Compare full fine-tuning with LoRA Last Layers, LoRA Depth Layers, and LoRA All on ConvNeXt-L using the Recyclable and Household Waste Classification Dataset. LoRA freezes the main weights and trains low-rank matrices. The FGSM results show that the energy-efficient standard-training configuration did not achieve the highest adversarial accuracy.",
         tags: ["LORA", "FINE-TUNING"],
-        question: "Research question to be added.",
-        methods: ["Methods to be added"],
-        evidence: "Evidence to be added.",
+        question: "Can LoRA reduce training energy consumption while preserving accuracy and robustness?",
+        methods: [
+          "Full fine-tuning versus last-layer, depth-layer, and all-layer LoRA adapters",
+          "ConvNeXt-L on the Recyclable and Household Waste Classification Dataset",
+          "Fixed training settings on Windows 11 with an RTX 5080",
+          "FGSM evaluation, with accuracy and energy reported for adversarial training",
+        ],
+        evidence: "Slide 11 reports highest FGSM accuracy and total adversarial-training energy: full fine-tuning, 73.47% and 406 Wh; LoRA Last Layers, 70.6% and 453 Wh; LoRA Depth Layers, 72.70% and 456 Wh; LoRA All, 72.53% and 538 Wh. The respective CO₂eq emissions per epoch were 20.99 g, 25.64 g, 25.81 g, and 30.46 g. Full fine-tuning had the highest FGSM accuracy and the lowest energy consumption in this table. The presentation identifies improving LoRA robustness and testing other architectures, datasets, and hardware as future work.",
       },
       {
         id: "02",
         slug: "energy-efficient-ml",
         title: "Energy-efficient ML",
-        subtitle: "Details to be added.",
-        description: "Description to be added.",
+        subtitle: "Measure the cost of training.",
+        description: "Measure training energy and CO₂-equivalent emissions alongside model performance. In the standard-training results, LoRA Last Layers used the least energy while reaching accuracy close to full fine-tuning. This reduction did not extend to the adversarial-training results, where every LoRA configuration used more energy than full fine-tuning.",
         tags: ["ENERGY", "EFFICIENCY"],
-        question: "Research question to be added.",
-        methods: ["Methods to be added"],
-        evidence: "Evidence to be added.",
+        question: "Can LoRA reduce training energy consumption while preserving accuracy and robustness?",
+        methods: [
+          "CodeCarbon tracking of energy consumption and CO₂-equivalent emissions",
+          "Standard and adversarial training compared separately",
+          "Highest accuracy, total energy in Wh, and CO₂eq in grams per epoch",
+          "All configurations trained on the same computer with fixed settings",
+        ],
+        evidence: "Slide 10 reports standard-training results as highest accuracy, total energy, and CO₂eq per epoch: full fine-tuning, 89.6%, 394 Wh, and 13.36 g; LoRA Last Layers, 88.7%, 148 Wh, and 5.02 g; LoRA Depth Layers, 84.6%, 330 Wh, and 11.19 g; LoRA All, 86.6%, 398 Wh, and 13.49 g. LoRA Last Layers had the lowest standard-training energy consumption. Future work includes model optimization and compression beyond LoRA, as well as testing other architectures, real-world datasets, and hardware.",
       },
     ],
     team: {
-      note: "The 2025 roster is being added.",
-      fullTimeLabel: "FULL-TIME RESEARCHERS",
-      fullTimeNote: "Details to be added.",
-      onboardingLabel: "LEARNING PATH MEMBERS",
-      onboardingNote: "Details to be added.",
+      note: "The 2025 team includes 12 students: three project managers and nine members.",
+      fullTimeLabel: "03 / PROJECT MANAGERS",
+      fullTimeNote: "Edwin Almodovar, Jan Rivera, and Angel Fernández served as project managers.",
+      onboardingLabel: "09 / MEMBERS",
+      onboardingNote: "The other nine students listed in the presentation were team members.",
+      onboarding: [
+        { step: "01", title: "Prepare data", description: "Pre-process the dataset." },
+        { step: "02", title: "Build SVM & MLP", description: "Develop support vector machine and multilayer perceptron models." },
+        { step: "03", title: "Develop a CNN", description: "Develop a convolutional neural network." },
+        { step: "04–05", title: "Optimize and test", description: "Apply data augmentation and CNN optimization, then explore adversarial attacks and defenses." },
+      ],
     },
-    members: [],
+    members: members2025,
     conference: null,
     posters: [],
-    advisors: advisors2026,
+    advisors: [
+      { name: "Dr. Nayda Santiago", role: "Research advisor", focus: "Electrical and Computer Engineering (ECE)", photo: "/images/professors/nayda-santiago.webp" },
+      { name: "Dr. Alcibiades Bustillo", role: "Research advisor", focus: "Mathematics Department", photo: "/images/professors/alcibiades-bustillo.webp" },
+    ],
     sponsors: sponsors2026,
   },
 ];

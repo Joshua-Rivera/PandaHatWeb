@@ -20,9 +20,9 @@ Unconfirmed member bios and research descriptions remain placeholders. Visuals a
 
 ## Research years
 
-The "Research year" switcher at the top of the Description section changes everything year-specific: problem statement, objective, research questions and topics, members, conference photos, posters, advisors and sponsors. Brand, description and onboarding copy are shared. The selected year is kept in the URL as `?year=2025`; the newest year is the default and has no query parameter.
+The "Research year" switcher at the top of the Description section changes everything year-specific: problem statement, objective, research questions and topics, members, conference photos, posters, advisors and sponsors. The Description section is the general group introduction and is shared by 2025 and 2026. Onboarding copy uses shared defaults unless a year provides an override. The selected year is kept in the URL as `?year=2025`; the newest year is the default and has no query parameter.
 
-To add a year, add an entry to `years` in `src/content.ts` (newest first). Each entry follows the `YearContent` type. Use `members: []`, `conference: null` or `posters: []` for content that isn't ready yet; those sections show a placeholder note or are hidden. Put new images under `public/images/...`. The 2025 entry is currently placeholder text for the LoRA and energy-efficiency research.
+To add a year, add an entry to `years` in `src/content.ts` (newest first). Each entry follows the `YearContent` type. Use `members: []`, `conference: null` or `posters: []` for content that isn't ready yet; those sections show a placeholder note or are hidden. Put new images under `public/images/...`. The 2025 entry is sourced from the supplied LoRA research presentation; see [source mapping and remaining gaps](docs/2025-content-sources.md).
 
 ## Current research structure
 

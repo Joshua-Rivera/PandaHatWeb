@@ -139,14 +139,14 @@ test("year switcher shows past research and persists in the URL", async ({ page 
 
   await switcher.getByRole("radio", { name: "2025" }).click();
   await expect(page).toHaveURL(/\?year=2025/);
-  await expect(page.locator("#problem-title")).toContainText("learn efficiently");
+  await expect(page.locator("#problem-title")).toContainText("preserving accuracy and robustness");
   await expect(page.locator("#research-topic-lora-fine-tuning")).toBeAttached();
   await expect(page.locator("#research-topic-digital-watermarking")).toHaveCount(0);
   await expect(page.locator(".conference-gallery")).toHaveCount(0);
 
   await page.reload();
   await expect(page.getByRole("radiogroup", { name: "Research year" }).getByRole("radio", { name: "2025" })).toHaveAttribute("aria-checked", "true");
-  await expect(page.locator("#problem-title")).toContainText("learn efficiently");
+  await expect(page.locator("#problem-title")).toContainText("preserving accuracy and robustness");
 
   await page.getByRole("radio", { name: "2025" }).focus();
   await page.keyboard.press("ArrowLeft");
@@ -172,5 +172,5 @@ test("year curtain always plays its full cover and reveal, even on a busy CPU", 
   await expect(page.locator(".year-curtain")).toHaveCount(0, { timeout: 10_000 });
   const events = await page.evaluate(() => (window as unknown as { curtainEvents: string[] }).curtainEvents);
   expect(events).toEqual(["animationend curtain-cover", "animationend curtain-reveal"]);
-  await expect(page.locator("#problem-title")).toContainText("learn efficiently");
+  await expect(page.locator("#problem-title")).toContainText("preserving accuracy and robustness");
 });

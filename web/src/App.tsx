@@ -616,7 +616,7 @@ function CohortAndOnboarding({ team }: { team: YearContent["team"] }) {
     </div>
     <div className="container onboarding-section" id="onboarding">
       <div className="onboarding-heading"><p className="eyebrow"><SpecialText hoverOnly>LEARNING PATH / ONBOARDING</SpecialText></p><h2><SpecialText>Start curious. Leave capable.</SpecialText></h2></div>
-      <div className="onboarding-grid">{content.team.onboarding.map(step => <article key={step.step}><span className="mono"><SpecialText hoverOnly>{step.step}</SpecialText></span><h3><SpecialText hoverOnly>{step.title}</SpecialText></h3><p><SpecialText hoverOnly>{step.description}</SpecialText></p></article>)}</div>
+      <div className="onboarding-grid">{(team.onboarding ?? content.team.onboarding).map(step => <article key={step.step}><span className="mono"><SpecialText hoverOnly>{step.step}</SpecialText></span><h3><SpecialText hoverOnly>{step.title}</SpecialText></h3><p><SpecialText hoverOnly>{step.description}</SpecialText></p></article>)}</div>
     </div>
   </>;
 }
