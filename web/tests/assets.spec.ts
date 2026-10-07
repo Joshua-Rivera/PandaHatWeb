@@ -21,6 +21,7 @@ for (const width of [375, 1440]) {
     await expect.poll(() => popup.locator("img").evaluate(el => (el as HTMLImageElement).naturalWidth)).toBe(2400);
     await popup.close();
 
+    await page.goto("/?year=2025");
     for (const img of await page.locator(".conference-grid img, .team-group-image, .sponsor-logo-card img, .advisor-card img").all()) {
       await img.scrollIntoViewIfNeeded();
       await expect.poll(() => img.evaluate(el => (el as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);

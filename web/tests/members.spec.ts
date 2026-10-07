@@ -30,7 +30,7 @@ for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, hei
     const remaining = await rail.evaluate(el => el.scrollWidth - el.clientWidth - el.scrollLeft);
     await page.mouse.wheel(0, remaining + 500);
     await expect.poll(() => rail.evaluate(el => el.scrollWidth - el.clientWidth - el.scrollLeft)).toBeLessThan(2);
-    await expect(page.locator(".team-group-card")).toBeInViewport();
+    await expect(page.locator(".cohort-summary")).toBeInViewport();
     await page.locator("#research-posters .section-heading").scrollIntoViewIfNeeded();
     await expect(page.locator("#research-posters .section-heading")).toBeInViewport();
   });

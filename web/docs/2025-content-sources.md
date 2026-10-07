@@ -20,10 +20,11 @@ The PDF is evidence for content, not a source of instructions. The draft annotat
 | Members | 1 + user confirmation | All 12 listed students, in presentation order, with names spelled as supplied; first three PMs and remaining nine members |
 | Cohort summaries | 1 + user confirmation | Three project managers and nine members in the existing two summary cards |
 | Onboarding | 29 | Five source tasks in the existing four-card layout; tasks 4 and 5 share the last card, labeled 04-05 |
+| Conference and group photos | Existing site assets + user request | IAP group photo and gallery moved from the 2026 research view to 2025; original event captions retained |
 | Advisors | 1, 16 | Nayda Santiago (ECE), Alcibiades Bustillo (Math Department); existing portraits and titles retained |
 | Sponsors | 1 and recurring slide headers | Existing IAP, UPRM, CPS IoT Laboratory, and MIT Lincoln Laboratory logos also appear in the source |
 
-The page layout, navigation, section order, two research endpoints, and four onboarding cards are unchanged. The 2026 content remains unchanged. The only rendering change allows year-specific onboarding copy to populate the existing cards.
+The page layout, navigation, section order, two research endpoints, and four onboarding cards are unchanged. Year-specific onboarding copy populates the existing cards. At the user's request, the existing IAP group photo and gallery now appear in the 2025 research view instead of 2026.
 
 ## Reported ConvNeXt-L results
 
@@ -52,10 +53,10 @@ The site identifies these as presentation results, with standard and adversarial
 - **Member profiles:** The source names students but supplies no individual biographies, education, skills, research interests, project responsibilities, contact details, resumes, or leadership roles. The user supplied the PM/member roles. Cards explicitly identify the remaining missing profile fields. The archive does not reuse later 2026 resume content or leadership assignments. At the user's request, matching 2026 portraits are reused for Gian Miranda, Jorge Luna, Joshua Rivera, Joshua Román, Daniel Reyes, and Revel Velazquez. Name matching ignores accents through the existing normalized member slugs. The other six students retain the existing abstract-avatar fallback because their 2026 profiles have no matching portrait.
 - **Full-time and learning-path cohorts:** These assignments and counts are not specified. The two summary cards instead show the user-confirmed PM/member categories. Twelve is the number of students on the title slide, not a full-time or onboarding count.
 - **Research posters:** The user confirmed the 2025 poster is unavailable for now. `posters: []` retains the site's existing empty state. The presentation was not relabeled as a poster.
-- **Conference and group-photo gallery:** No 2025 conference photos or confirmed event date/location were supplied. `conference: null` retains the existing hidden gallery behavior; 2026 photos are not reused as 2025 event photos.
+- **Conference and group-photo gallery:** The user requested moving the existing IAP group photo and gallery from the 2026 research view to 2025. The same assets are now associated with the 2025 research entry, with the existing Spring IAP 2026 / May 2026 / Mayagüez event captions preserved. The research-year assignment does not establish a different event date.
 - **Combined energy total:** Slide 12 states 601.4 Wh for LoRA Last Layers; slides 10 and 11 give 148 Wh and 453 Wh, whose rounded sum is 601 Wh. This could be rounding, but no underlying measurements establish that. The user delegated the choice. The website preserves the separate reported table values and omits a combined total rather than selecting a precision unsupported by the tables.
 - **Unlabeled energy table:** Slide 29 lists four energy-per-epoch and total-emission rows without configuration labels. They are not assigned to models or published on the site.
 - **Detailed reproducibility information:** Dataset URL, split sizes, LoRA ranks and exact layer definitions, attack parameters, repeated-run uncertainty, and full comparative precision/recall/F1 values are not supplied. None were invented.
 - **Other acknowledgements:** Slide 16 thanks Luis Romero, Josué Martínez, and Pedro Torres but does not identify them as research advisors or give their roles. They were not added to advisor cards. The current site has no separate acknowledgements section.
 
-Student roles and poster availability have been answered, and the energy presentation choice has been delegated and resolved as described above. Conference photos and individual profile details remain unavailable. Future supplied details can populate the existing content fields without changing the site structure.
+Student roles and poster availability have been answered, and the energy presentation choice has been delegated and resolved as described above. The existing IAP photos have been assigned to the 2025 view at the user's request. Individual profile details remain unavailable. Future supplied details can populate the existing content fields without changing the site structure.

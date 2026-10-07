@@ -331,7 +331,7 @@ export const years: YearContent[] = [
       onboardingNote: "Fifteen new members move through a shared learning path from orientation to independent contribution.",
     },
     members: members2026,
-    conference: { title: "Spring IAP 2026", subtitle: "May 2026 · Mayagüez", groupPhoto: conferencePhotos2026[2], photos: conferencePhotos2026 },
+    conference: null,
     posters: [
       {
         label: "CURRENT RESEARCH / FALL 2026",
@@ -429,7 +429,7 @@ export const years: YearContent[] = [
       ],
     },
     members: members2025,
-    conference: null,
+    conference: { title: "Spring IAP 2026", subtitle: "May 2026 · Mayagüez", groupPhoto: conferencePhotos2026[2], photos: conferencePhotos2026 },
     posters: [],
     advisors: [
       { name: "Dr. Nayda Santiago", role: "Research advisor", focus: "Electrical and Computer Engineering (ECE)", photo: "/images/professors/nayda-santiago.webp" },
