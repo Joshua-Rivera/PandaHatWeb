@@ -2,6 +2,7 @@
   font-family: "DM Sans", sans-serif;
   color: var(--text);
   background: var(--bg);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,6 +22,25 @@
 body {
   margin: 0;
   min-width: 320px;
+  background: var(--bg);
+}
+.mobile-toolbar-background {
+  display: none;
+}
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) {
+    /* Safari samples fixed viewport edges for its toolbar tint. Keep this
+       opaque and above the year curtain (z-index: 90), even between wipes. */
+    .mobile-toolbar-background {
+      display: block;
+      position: fixed;
+      inset: auto 0 0;
+      height: max(12px, env(safe-area-inset-bottom, 0px));
+      background: var(--bg);
+      z-index: 91;
+      pointer-events: none;
+    }
+  }
 }
 a {
   color: inherit;

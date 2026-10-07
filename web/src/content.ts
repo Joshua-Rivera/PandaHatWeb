@@ -229,7 +229,7 @@ const members2026: TeamMember[] = [
   memberSlot("Kevin Beltran", "Learning path member", "KB", { photo: "/images/members/kevin-beltran.webp" }),
 ];
 // Names/order: presentation slide 1. Roles: user confirmed the first three as PMs,
-// with the remaining nine as members. Do not reuse later 2026 resume details.
+// with the remaining nine as members. Matching students share their 2026 profiles.
 const members2025: TeamMember[] = [
   ["Edwin Almodovar", "EA"],
   ["Jan Rivera", "JR"],
@@ -243,14 +243,21 @@ const members2025: TeamMember[] = [
   ["Emmanuel Lopez", "EL"],
   ["Daniel Reyes", "DR"],
   ["Revel Velazquez", "RV"],
-].map(([name, initials], index) => memberSlot(name, index < 3 ? "PM" : "Member", initials, {
-  photo: members2026.find(member => member.slug === memberSlug(name))?.photo,
-  bio: "Listed as a student in the 2025 research presentation. Individual biography not provided.",
-  interests: "Individual research interests not provided in the presentation.",
-  skills: ["Individual skills and tools not provided in the presentation."],
-  projects: ["Individual project assignments not provided in the presentation."],
-  education: "Education details not provided in the presentation.",
-}));
+].map(([name, initials], index) => {
+  const role = index < 3 ? "PM" : "Member";
+  const profile = members2026.find(member => member.slug === memberSlug(name));
+  return memberSlot(name, role, initials, profile ? {
+    ...profile,
+    // Keep the archive's spelling and role while sharing profile details and links.
+    name, role, initials,
+  } : {
+    bio: "Listed as a student in the 2025 research presentation. Individual biography not provided.",
+    interests: "Individual research interests not provided in the presentation.",
+    skills: ["Individual skills and tools not provided in the presentation."],
+    projects: ["Individual project assignments not provided in the presentation."],
+    education: "Education details not provided in the presentation.",
+  });
+});
 export const metadata: Record<string, { title: string; description: string }> =
   {
     "/": {
