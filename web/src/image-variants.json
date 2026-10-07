@@ -502,17 +502,17 @@
   },
   "/images/members/emmanuel-lopez.webp": {
     "width": 720,
-    "height": 960,
+    "height": 903,
     "variants": [
       {
         "src": "/images/members/emmanuel-lopez-small.webp",
         "width": 320,
-        "height": 427
+        "height": 401
       },
       {
         "src": "/images/members/emmanuel-lopez.webp",
         "width": 720,
-        "height": 960
+        "height": 903
       }
     ]
   },
