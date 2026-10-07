@@ -233,7 +233,7 @@ const members2026: TeamMember[] = [
 const members2025: TeamMember[] = [
   ["Edwin Almodovar", "EA"],
   ["Jan Rivera", "JR"],
-  ["Angel Fernández", "AF"],
+  ["Angel Fernández", "AF", "/images/members/angel-fernandez.webp"],
   ["Gian Miranda", "GM"],
   ["Diego Rios", "DR"],
   ["Angel Perez", "AP"],
@@ -243,7 +243,7 @@ const members2025: TeamMember[] = [
   ["Emmanuel Lopez", "EL"],
   ["Daniel Reyes", "DR"],
   ["Revel Velazquez", "RV"],
-].map(([name, initials], index) => {
+].map(([name, initials, photo], index) => {
   const role = index < 3 ? "PM" : "Member";
   const profile = members2026.find(member => member.slug === memberSlug(name));
   return memberSlot(name, role, initials, profile ? {
@@ -251,6 +251,7 @@ const members2025: TeamMember[] = [
     // Keep the archive's spelling and role while sharing profile details and links.
     name, role, initials,
   } : {
+    photo,
     bio: "Listed as a student in the 2025 research presentation. Individual biography not provided.",
     interests: "Individual research interests not provided in the presentation.",
     skills: ["Individual skills and tools not provided in the presentation."],

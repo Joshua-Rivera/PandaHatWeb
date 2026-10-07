@@ -520,5 +520,21 @@
         "height": 1440
       }
     ]
+  },
+  "/images/members/angel-fernandez.webp": {
+    "width": 720,
+    "height": 540,
+    "variants": [
+      {
+        "src": "/images/members/angel-fernandez-small.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/images/members/angel-fernandez.webp",
+        "width": 720,
+        "height": 540
+      }
+    ]
   }
 }
