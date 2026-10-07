@@ -131,6 +131,20 @@ test("member cards open resume-ready profile endpoints", async ({ page }) => {
   await expect(page).toHaveURL(/#members$/);
 });
 
+for (const year of ["2026", "2025"]) {
+  test(`profile close button stays clickable at tablet width in ${year}`, async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const query = year === "2025" ? "?year=2025" : "";
+    const slug = year === "2025" ? "angel-fernandez" : "joshua-rivera";
+    await page.goto(`/${query}#member/${slug}`);
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Close member profile" }).click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(page).toHaveURL(/#members$/);
+  });
+}
+
 test("year switcher shows past research and persists in the URL", async ({ page }) => {
   await page.goto("/");
   const switcher = page.getByRole("radiogroup", { name: "Research year" });
