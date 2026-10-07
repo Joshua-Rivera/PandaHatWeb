@@ -71,63 +71,14 @@ export const content = {
     "Machine Learning models are vulnerable to Adversarial attacks, in which the algorithm of a model can be affected by an attacker with the desire to cause the model to behave contrary to expected, i.e. causing the model to misclassify a certain image when it correctly classified it previously.",
     "The goal of Pandahat Adversarial is to teach and empower students in the complexities of Machine Learning, as a response to the dynamically changing technological landscape. Additionally, our objective is for these students to use that empowerment and knowledge in ML to actively participate in the construction and understanding of adversarial attacks within complicated models and data, in addition to enabling them to fight against adversarial attacks by developing, or improving existing defenses.",
   ],
-  home: {
-    eyebrow: "AT THE INTERSECTION OF AI & TRUST",
-    heading: ["Seeing isn’t", "believing.", "Not anymore."],
-    description:
-      "Exploring trust in synthetic media. We study the signals that distinguish what’s real, what’s generated, and what’s hidden in between.",
-    aboutTitle:
-      "When anything can be generated,\nhow do we know what to trust?",
-    about:
-      "PandaHat Adversarial is a space for asking difficult questions about AI-generated media. We explore how digital watermarks and deepfake analysis can help us understand the origins of the images we see.",
-    focusTitle: "Looking beneath the surface.",
-  },
-  research: {
-    eyebrow: "OUR RESEARCH",
-    heading: "A closer look.\nA better question.",
-    intro:
-      "Investigating the boundary between authentic and synthetic. This semester, we’re exploring the traces AI leaves behind—and how those traces hold up under pressure.",
-    aboutTitle: "Understanding media.\nQuestioning its origins.",
-    about:
-      "Our research brings together curiosity about machine learning, image processing, and digital provenance. We’re interested in how media can carry evidence of its origin, and how that evidence changes when an image is edited or generated.",
-    focusTitle: "Three lenses. One question of trust.",
-    methodologyTitle: "Curiosity, with a method.",
-    steps: [
-      {
-        title: "Investigate",
-        description:
-          "Start with the literature, examine assumptions, and shape a question worth asking.",
-      },
-      {
-        title: "Experiment",
-        description:
-          "Build small, reproducible experiments to explore signals and their limitations.",
-      },
-      {
-        title: "Evaluate",
-        description:
-          "Compare observations, document uncertainty, and use what we learn to ask better questions.",
-      },
-    ],
-  },
   team: {
-    eyebrow: "THE PEOPLE BEHIND THE QUESTIONS",
-    heading: "Different perspectives.\nShared curiosity.",
-    intro:
-      "A collaborative space for people who like to look a little closer. Bringing together interests in machine learning, security, and the stories hidden inside digital media.",
     title: "Meet the minds behind the work.",
-    outro: "Good research starts\nwith a little curiosity.",
     onboarding: [
       { step: "01", title: "Orient", description: "Learn the research questions, tools, expectations, and shared vocabulary." },
       { step: "02", title: "Observe", description: "Read the work, reproduce a small result, and learn to document the path." },
       { step: "03", title: "Contribute", description: "Join a focused track with a mentor and make a visible first contribution." },
       { step: "04", title: "Lead", description: "Shape a question, communicate evidence, and help the next member start." },
     ],
-  },
-  notFound: {
-    eyebrow: "404 / SIGNAL NOT FOUND",
-    heading: "A little off the grid.",
-    intro: "This page doesn’t exist. Let’s get you back to the research.",
   },
 };
 const topics2026: ResearchTopic[] = [
@@ -259,21 +210,6 @@ const members2025: TeamMember[] = [
     education: "Education details not provided in the presentation.",
   });
 });
-export const metadata: Record<string, { title: string; description: string }> =
-  {
-    "/": {
-      title: "PandaHat Adversarial — Exploring trust in synthetic media",
-      description: content.home.description,
-    },
-    "/research": {
-      title: "Research — PandaHat Adversarial",
-      description: content.research.intro,
-    },
-    "/team": {
-      title: "Team — PandaHat Adversarial",
-      description: content.team.intro,
-    },
-  };
 
 const conferencePhotos2026: Photo[] = [
   "Team member speaking during the presentation",
