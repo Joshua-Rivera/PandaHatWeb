@@ -182,7 +182,7 @@ const members2026: TeamMember[] = [
 // Names/order: presentation slide 1. Roles: user confirmed the first three as PMs,
 // with the remaining nine as members. Matching students share their 2026 profiles.
 const members2025: TeamMember[] = [
-  ["Edwin Almodovar", "EA"],
+  ["Edwin Almodovar", "EA", "/images/members/edwin-almodovar.webp"],
   ["Jan Rivera", "JR"],
   ["Angel Fernández", "AF", "/images/members/angel-fernandez.webp"],
   ["Gian Miranda", "GM"],
