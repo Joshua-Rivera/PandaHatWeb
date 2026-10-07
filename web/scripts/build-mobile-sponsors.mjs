@@ -1,7 +1,7 @@
 // Generate mobile-only responsive sources; keep original desktop logos untouched.
-import { chromium } from 'playwright';
+import { chromium } from '@playwright/test';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
-const root = new URL('../web/public/images/sponsors/', import.meta.url);
+const root = new URL('../public/images/sponsors/', import.meta.url);
 await mkdir(new URL('mobile/', root), { recursive: true });
 const browser = await chromium.launch();
 try {

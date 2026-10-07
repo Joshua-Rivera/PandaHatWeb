@@ -1,5 +1,7 @@
 # Conference collage
 
-The homepage now uses WebP thumbnails from `../conference/`: user-supplied photos of Spring IAP, May 2026, Mayagüez. All 13 photos are available in the conference gallery.
+The homepage uses WebP thumbnails from `web/public/images/conference/` on desktop and baked layers from `web/public/images/collage-mobile/` on mobile. All 13 Spring IAP photos remain available in the 2025 conference gallery, with their May 2026 event captions preserved.
 
-The retired stock placeholders are preserved under `assets/image-originals/collage/`, outside the deployment output.
+Run `npm run images:collage` from `web/` to rebuild the mobile layers. The desktop and mobile components use the shared `src/components/ui/collage-cards.json` coordinates; the mobile lettering has its own spacing adjustment in the generator.
+
+Retired stock placeholders and legacy source-quality images are preserved in the recovery archive documented in `cleanup-execution.md`, outside deployment output.

@@ -9,14 +9,15 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test:e2e": "playwright test",
-    "check": "npm run lint && npm run build && npm run test:e2e"
+    "check": "npm run lint && npm run build && npm run test:e2e",
+    "images:collage": "node scripts/build-mobile-collage.mjs",
+    "images:sponsors": "node scripts/build-mobile-sponsors.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.46.0",
     "motion": "^13.4.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.4"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -28,5 +29,6 @@
     "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
-  }
+  },
+  "packageManager": "npm@11.16.0"
 }

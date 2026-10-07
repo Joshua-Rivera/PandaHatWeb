@@ -1,6 +1,6 @@
 # PandaHat Adversarial
 
-A responsive, static research portfolio built with React, TypeScript, Vite, React Router, and Motion. A single-page layout brings together research, member profiles, posters, advisors, and sponsors in a dark research-studio aesthetic.
+A responsive, static research portfolio built with React, TypeScript, Vite and Motion. A single-page layout brings together research, member profiles, posters, advisors, and sponsors with responsive desktop and mobile layouts.
 
 ## Development
 
@@ -14,9 +14,9 @@ Install the browser once with `npx playwright install chromium`, then run `npm r
 
 - `src/content.ts`: typed research topics, confirmed team cohort structure, advisor profiles, and site metadata. Replace only the remaining member placeholders when the roster is finalized.
 - `src/index.css`: typography and color tokens; `src/App.css`: responsive component styling.
-- `src/Graphics.tsx`: original SVG illustrations and temporary branding.
+- `src/Graphics.tsx`: the shared PandaHat logo component.
 
-Unconfirmed member bios and research descriptions remain placeholders. Visuals are illustrative, not detector outputs. There is no backend or data collection. Supplied member profiles include contact and external profile links. Fonts load from Google Fonts with system fallbacks.
+Unconfirmed member bios and research descriptions remain placeholders. Visuals are illustrative, not detector outputs. There is no backend or data collection. Supplied member profiles include contact and external profile links. Desktop fonts load from Google Fonts with system fallbacks; mobile uses local variable fonts.
 
 ## Research years
 
@@ -27,7 +27,7 @@ To add a year, add an entry to `years` in `src/content.ts` (newest first). Each 
 ## Current research structure
 
 - Three hash-addressable research endpoints cover digital watermarking, deepfake analysis, and media authenticity.
-- The team view distinguishes 7 full-time researchers from 16 new members in the learning-path onboarding process.
+- The team view distinguishes 7 full-time researchers from 15 new members in the learning-path onboarding process.
 - Advisors are listed as Dr. Nayda Santiago and Dr. Alcibiades Bustillo.
 - Member cards open hash endpoints such as `#member/joshua-rivera` with resume-derived education, experience, skills, projects, and approved public links. Resume PDFs are optional and are not loaded until a member-approved path is added to that profile.
 
@@ -39,8 +39,14 @@ See [deployment preparation](DEPLOYMENT.md) for build settings, routing, automat
 
 Served raster images use WebP with generated width descriptors and responsive `sizes`. The Spring IAP group photo and conference gallery are displayed in the 2025 research view at the user's request. Existing event captions remain Spring IAP, May 2026, Mayagüez. Mobile collage images are capped at 320 pixels wide; gallery thumbnails at 640 pixels on the long edge. Larger conference photos remain capped at 1600 pixels on the long edge and open on click. The group photo has intermediate responsive versions.
 
-The poster uses quality-85 WebP at its original 1666 × 2500 resolution, with 480- and 960-pixel-wide page previews. Sponsor logos remain lossless and are sized for their display areas; the MIT logo is capped at 1000 pixels wide. Portraits have smaller versions for profile dialogs and phones. Originals stay in `assets/image-originals/`, outside the deployment output.
+The current poster uses a 2400 × 3600 WebP, with 480- and 960-pixel-wide page previews. The hidden 2023 poster and its responsive images remain preserved. Desktop sponsor logos retain their original exports; mobile uses separate 240-, 480-, and 960-pixel WebP sources. Portraits have smaller versions for profile dialogs and phones. Originals stay in `assets/image-originals/`, outside the deployment output.
 
-To regenerate images and `src/image-variants.json`, install Pillow in a Python environment and run `python scripts/optimize-images.py` from the repository root. Use `ResponsiveImage` with an accurate `sizes` value for new responsive image placements. New source files also require references in the relevant content/component.
+Install Pillow in your Python environment and run `python3 scripts/optimize-images.py` from the repository root to generate missing images. The optimizer merges existing `src/image-variants.json` records and preserves existing WebP files. Supply `--overwrite` only when intentionally regenerating available originals. If there are no supported originals, it exits without modifying the manifest. Narrow portraits produce one responsive variant. Retired sponsor exports are skipped.
+
+From `web/`, run `npm run images:collage` or `npm run images:sponsors` to regenerate mobile assets using the declared `@playwright/test` dependency. Install Chromium first with `npx playwright install chromium`. These scripts no longer require a root dependency installation.
+
+Run `python3 -m unittest discover -s scripts -p 'test_*.py'` from the repository root for the optimizer's preservation and responsive-variant checks. Pillow is required. Use `ResponsiveImage` with an accurate `sizes` value for new responsive image placements. New source files also require references in the relevant content/component.
+
+npm is the project package manager, matching CI and deployment instructions. Keep `web/package-lock.json` and use `npm ci` for reproducible installs. Legacy drafts and originals were archived before cleanup; see [cleanup execution](docs/cleanup-execution.md) for recovery details.
 
 Animation components use `motion/react-m` and strict `LazyMotion` with `domAnimation`. Features load synchronously to preserve first-render and scroll animation behavior while excluding unused drag/layout features.
