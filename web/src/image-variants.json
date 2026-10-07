@@ -531,5 +531,21 @@
         "height": 1440
       }
     ]
+  },
+  "/images/members/kiara-jimenez.webp": {
+    "width": 720,
+    "height": 1163,
+    "variants": [
+      {
+        "src": "/images/members/kiara-jimenez-small.webp",
+        "width": 320,
+        "height": 517
+      },
+      {
+        "src": "/images/members/kiara-jimenez.webp",
+        "width": 720,
+        "height": 1163
+      }
+    ]
   }
 }
