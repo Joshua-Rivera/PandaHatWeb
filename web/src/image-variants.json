@@ -499,5 +499,21 @@
         "height": 540
       }
     ]
+  },
+  "/images/members/emmanuel-lopez.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/emmanuel-lopez-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/emmanuel-lopez.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
   }
 }
