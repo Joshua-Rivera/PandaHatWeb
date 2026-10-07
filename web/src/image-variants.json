@@ -329,38 +329,6 @@
       }
     ]
   },
-  "/images/sponsors/academic-partners.webp": {
-    "width": 1120,
-    "height": 290,
-    "variants": [
-      {
-        "src": "/images/sponsors/academic-partners-480.webp",
-        "width": 480,
-        "height": 124
-      },
-      {
-        "src": "/images/sponsors/academic-partners.webp",
-        "width": 1120,
-        "height": 290
-      }
-    ]
-  },
-  "/images/sponsors/mit-lincoln-laboratory-clean.webp": {
-    "width": 1000,
-    "height": 442,
-    "variants": [
-      {
-        "src": "/images/sponsors/mit-lincoln-laboratory-clean-480.webp",
-        "width": 480,
-        "height": 212
-      },
-      {
-        "src": "/images/sponsors/mit-lincoln-laboratory-clean.webp",
-        "width": 1000,
-        "height": 442
-      }
-    ]
-  },
   "/images/members/sorimerlin-santos.webp": {
     "width": 720,
     "height": 1260,
