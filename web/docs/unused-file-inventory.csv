@@ -1,0 +1,169 @@
+file,bytes,classification,recommended_action,evidence
+.github/workflows/ci.yml,1103,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+.gitignore,312,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+.nvmrc,3,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+README.md,429,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+assets/image-originals/posters/IAP_2026_GroupB_Poster_Draft.pptx,245021,keep original,Preserve supplied presentation,Original editable source outside deployment output
+drafts/README.md,1325,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/app.js,6989,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/index.html,7148,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/motion.css,5728,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/motion.html,5060,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/motion.js,1262,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/styles.css,16854,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/versions/README.md,628,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/versions/editorial.html,7155,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/versions/terminal.css,1591,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+drafts/versions/terminal.html,7211,optional archive,Archive complete drafts directory before removal,Standalone design studies with no current web build/runtime consumers
+package-lock.json,90,delete candidate,Delete empty root lockfile; keep web/package-lock.json,No root package.json; empty packages object; CI installs from web
+scripts/build-mobile-collage.mjs,2717,keep maintenance,Preserve; repair dependency resolution and original-image safeguards before housekeeping,Generators needed for asset maintenance even though not part of build scripts
+scripts/build-mobile-sponsors.mjs,1341,keep maintenance,Preserve; repair dependency resolution and original-image safeguards before housekeeping,Generators needed for asset maintenance even though not part of build scripts
+scripts/optimize-images.py,3545,keep maintenance,Preserve; repair dependency resolution and original-image safeguards before housekeeping,Generators needed for asset maintenance even though not part of build scripts
+web/.gitignore,314,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/.oxlintrc.json,245,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/DEPLOYMENT.md,2952,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/README.md,4562,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/docs/2025-content-sources.md,7593,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/index.html,2095,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/package-lock.json,49189,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/package.json,797,edit after package-manager decision,Keep package manifest; remove unused react-router-dom with chosen package manager,Build/test package; react-router-dom has no current source imports
+web/playwright.config.ts,491,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/pnpm-lock.yaml,30060,defer package-manager decision,Retain until clean package-manager standardization,Current local install uses pnpm 11.17.0; CI uses npm
+web/public/fonts/DM-Sans-OFL.txt,4482,keep license,Retain with local fonts,License accompanying redistributed font
+web/public/fonts/Space-Grotesk-OFL.txt,4495,keep license,Retain with local fonts,License accompanying redistributed font
+web/public/fonts/dm-sans-latin.woff2,36980,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/fonts/space-grotesk-latin.woff2,22320,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-1.webp,15000,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-2.webp,19448,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-3.webp,29160,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-4.webp,22392,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-5.webp,20366,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-6.webp,22842,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-7.webp,18860,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage-mobile/card-8.webp,16262,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/collage/README.md,313,move documentation,"Preserve useful text in docs, then remove public copy",No runtime use; copied into build public output
+web/public/images/conference/spring-iap-2026-01-small.webp,15096,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-01-thumb.webp,26376,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-01.webp,87178,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-02-small.webp,10236,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-02-thumb.webp,28578,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-02.webp,97916,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-03-960.webp,88346,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-03-small.webp,13476,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-03-thumb.webp,44620,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-03.webp,179108,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-04-small.webp,17588,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-04-thumb.webp,31106,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-04.webp,97796,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-05-small.webp,17224,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-05-thumb.webp,30778,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-05.webp,100360,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-06-small.webp,17618,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-06-thumb.webp,31560,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-06.webp,100268,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-07-small.webp,15648,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-07-thumb.webp,27484,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-07.webp,92984,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-08-small.webp,16470,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-08-thumb.webp,29926,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-08.webp,96774,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-09-small.webp,16584,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-09-thumb.webp,30344,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-09.webp,107318,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-10-small.webp,11656,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-10-thumb.webp,31504,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-10.webp,108478,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-11-small.webp,13328,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-11-thumb.webp,44304,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-11.webp,195366,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-12-small.webp,16548,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-12-thumb.webp,30192,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-12.webp,111232,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-13-small.webp,11726,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-13-thumb.webp,33268,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/conference/spring-iap-2026-13.webp,130166,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/adriana-vega-small.webp,23836,conditional duplicate,"Rewrite srcSet record/generator first, then delete small duplicate","Same SHA-256, dimensions and bytes as adriana-vega.webp"
+web/public/images/members/adriana-vega.webp,23836,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/aliek-betancourt-small.webp,8612,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/aliek-betancourt.webp,45894,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/angel-fernandez-small.webp,11514,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/angel-fernandez.webp,28454,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/daniel-munoz-small.webp,12102,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/daniel-munoz.webp,34528,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/daniel-reyes-small.webp,23066,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/daniel-reyes.webp,64290,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/gian-miranda-small.webp,8648,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/gian-miranda.webp,27528,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/jorge-luna-small.webp,44668,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/jorge-luna.webp,163790,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/joshua-rivera-small.webp,6792,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/joshua-rivera.webp,19310,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/joshua-roman-small.webp,5628,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/joshua-roman.webp,17514,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/josue-lopez-small.webp,5174,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/josue-lopez.webp,14382,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/kevin-beltran-small.webp,9062,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/kevin-beltran.webp,57524,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/revel-velazquez-small.webp,15680,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/revel-velazquez.webp,61042,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/sorimerlin-santos-small.webp,6628,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/members/sorimerlin-santos.webp,15584,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/pandahat-logo.webp,8658,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/posters/pandahat-2023-480.webp,80758,keep historical,Preserve intentionally hidden 2023 poster,"Referenced archived poster, filtered from current rendering"
+web/public/images/posters/pandahat-2023-preview.webp,228220,keep historical,Preserve intentionally hidden 2023 poster,"Referenced archived poster, filtered from current rendering"
+web/public/images/posters/pandahat-2023.webp,477946,keep historical,Preserve intentionally hidden 2023 poster,"Referenced archived poster, filtered from current rendering"
+web/public/images/posters/pandahat-fall-2026-480.webp,75708,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/posters/pandahat-fall-2026-preview.webp,214758,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/posters/pandahat-fall-2026.pdf,1002002,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/posters/pandahat-fall-2026.webp,806058,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/professors/alcibiades-bustillo-small.webp,4004,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/professors/alcibiades-bustillo.webp,6970,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/professors/nayda-santiago-small.webp,3790,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/professors/nayda-santiago.webp,6352,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/academic-partners-480.webp,35496,delete candidate,Remove with unused sponsor manifest records,"Absent from current content, runtime roots, HTML, tests and generator consumers"
+web/public/images/sponsors/academic-partners.webp,104844,delete candidate,Remove with unused sponsor manifest records,"Absent from current content, runtime roots, HTML, tests and generator consumers"
+web/public/images/sponsors/cps-iot-transparent.webp,360196,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/iap-transparent.webp,498108,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mit-lincoln-laboratory-clean-480.webp,52324,delete candidate,Remove with unused sponsor manifest records,"Absent from current content, runtime roots, HTML, tests and generator consumers"
+web/public/images/sponsors/mit-lincoln-laboratory-clean.webp,156824,delete candidate,Remove with unused sponsor manifest records,"Absent from current content, runtime roots, HTML, tests and generator consumers"
+web/public/images/sponsors/mit-lincoln-transparent.webp,363056,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/cps-iot-240.webp,19180,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/cps-iot-480.webp,50258,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/cps-iot-960.webp,128152,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/iap-240.webp,8700,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/iap-480.webp,21888,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/iap-960.webp,52058,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/mit-lincoln-240.webp,10930,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/mit-lincoln-480.webp,27254,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/mit-lincoln-960.webp,67424,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/uprm-240.webp,25804,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/uprm-480.webp,70818,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/mobile/uprm-960.webp,178694,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/public/images/sponsors/uprm-transparent.webp,1057850,keep,Retain,Current content/component/HTML asset or responsive/dynamic variant
+web/src/App.css,44876,edit only,Trim stale selectors in reviewed batches; keep live/shared/dynamic rules,Reachable from web/src/main.tsx through the import graph
+web/src/App.tsx,37947,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/Graphics.tsx,4335,edit only,Keep PandaMark; remove unused SignalArt/TopicGraphic exports,Reachable from web/src/main.tsx through the import graph
+web/src/ResponsiveImage.tsx,681,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/collage-cards.json,1107,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/mobile-collage.tsx,4453,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/mobile-text.tsx,3770,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/special-text.tsx,4220,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/stack-spread.css,3155,edit only,Remove unused home-introduction rules; keep desktop/mobile collage styles,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/stack-spread.tsx,5974,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/use-circular-gallery.ts,2945,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/use-mobile-gallery-scroll.ts,1859,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/components/ui/use-mobile.ts,768,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/content.ts,41978,edit only,Keep live content/profiles; remove unused metadata and obsolete page copy,Reachable from web/src/main.tsx through the import graph
+web/src/image-variants.json,12164,edit only,Remove two unused sponsor records; consolidate Adriana duplicate only with reference updates,Reachable from web/src/main.tsx through the import graph
+web/src/index.css,2772,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/src/main.tsx,342,keep,Retain,Reachable from web/src/main.tsx through the import graph
+web/tests/assets.spec.ts,2087,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tests/collage.spec.ts,2158,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tests/members.spec.ts,2565,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tests/mobile-performance.spec.ts,4925,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tests/site.spec.ts,10670,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tests/special-text.spec.ts,5779,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tsconfig.app.json,655,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tsconfig.json,119,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/tsconfig.node.json,558,keep,Retain,"Build, tooling, tests, documentation, or original source material"
+web/vite.config.ts,161,keep,Retain,"Build, tooling, tests, documentation, or original source material"
