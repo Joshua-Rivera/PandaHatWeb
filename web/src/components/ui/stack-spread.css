@@ -55,20 +55,9 @@
 }
 .stack-spread.is-reduced { height: 100svh; }
 .stack-spread.is-reduced .stack-spread-stage { position: relative; }
-.home-introduction {
-  padding-block: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  border-bottom: 1px solid var(--border);
-}
-.home-introduction p { max-width: 580px; color: var(--muted); font-size: 14px; line-height: 1.8; }
-.home-introduction .hero-actions { margin-top: 0; flex-shrink: 0; }
 @media (max-width: 767px) {
   .stack-spread { height: 220svh; }
   .stack-spread-copy { font-size: 10vw; }
-  .home-introduction { flex-direction: column; align-items: flex-start; gap: 20px; }
   .stack-spread-hint { bottom: 25px; font-size: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
