@@ -374,7 +374,18 @@ export const years: YearContent[] = [
     },
     members: members2025,
     conference: { title: "Spring IAP 2026", subtitle: "May 2026 · Mayagüez", groupPhoto: conferencePhotos2026[2], photos: conferencePhotos2026 },
-    posters: [],
+    posters: [
+      {
+        label: "RESEARCH / 2025",
+        title: "Evaluating LoRA in Convolutional Neural Networks",
+        preview: "/images/posters/pandahat-2025-preview.webp",
+        full: "/images/posters/pandahat-2025.webp",
+        pdf: "/images/posters/pandahat-2025.pdf",
+        alt: "2025 PandaHat poster: Evaluating LoRA in Convolutional Neural Networks. Research objectives and methodology for comparing training energy, accuracy, and adversarial robustness.",
+        width: 2400,
+        height: 3600,
+      },
+    ],
     advisors: [
       { name: "Dr. Nayda Santiago", role: "Research advisor", focus: "Electrical and Computer Engineering (ECE)", photo: "/images/professors/nayda-santiago.webp" },
       { name: "Dr. Alcibiades Bustillo", role: "Research advisor", focus: "Mathematics Department", photo: "/images/professors/alcibiades-bustillo.webp" },
