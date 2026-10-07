@@ -346,7 +346,7 @@ function Home({ data, selectedYear, onSelectYear, wipe }: { data: YearContent; s
         </Reveal>
       </section>
       <section id="objective" className="container content-section" aria-labelledby="objective-title">
-        <Reveal>
+        <Reveal className="objective-intro">
           <p className="eyebrow"><SpecialText hoverOnly>03 / OBJECTIVE</SpecialText></p>
           <h2 id="objective-title"><SpecialText>{data.semester.objectiveTitle}</SpecialText></h2>
           <p className="body-copy objective-copy"><SpecialText>{data.semester.objective}</SpecialText></p>

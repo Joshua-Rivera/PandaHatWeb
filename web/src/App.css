@@ -1206,8 +1206,10 @@ h2 {
 
 .content-section { padding-block: 80px; border-bottom: 1px solid var(--border); scroll-margin-top: 24px; }
 .content-section > .section-heading { margin-bottom: 22px; }
+#objective { text-align: left; }
+.objective-intro { max-width: 800px; margin-inline: auto; }
 #objective h2 { margin-top: 20px; }
-.objective-copy { max-width: 740px; margin-bottom: 40px; }
+.objective-copy { max-width: 800px; margin-bottom: 40px; }
 .section-note { color: var(--muted); line-height: 1.8; max-width: 720px; margin-bottom: 30px; font-size: 14px; }
 .poster-rail .horizontal-rail > * { flex-basis: min(76%, 410px); }
 .poster-card { border: 1px solid var(--border); background: var(--surface); }
@@ -1500,14 +1502,19 @@ h2 {
 .evaluation-criteria { padding-left: 22px; color: var(--muted); font-size: 15px; line-height: 1.85; }
 .evaluation-criteria li { padding: 5px 0 5px 6px; }
 .evaluation-criteria li::marker { color: var(--accent); }
-.research-questions-title { font-size: 24px; margin: 48px 0 24px; }
-.research-questions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.research-questions-title { font-size: 24px; max-width: 800px; margin: 48px auto 24px; }
+.research-questions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; max-width: 800px; margin-inline: auto; }
 .research-question { border-radius: 20px; padding: 32px; background: #e0e9e8; border: 1px solid #b8cdca; }
 .research-question:nth-child(2) { background: #eee8d9; border-color: #d7c9a9; }
 .research-question:nth-child(3) { background: #e7e3ed; border-color: #cbc1d8; }
 .research-question h3 { font-size: 26px; margin: 28px 0 14px; }
 .research-question p { font-size: 19px; line-height: 1.5; }
 @media (max-width: 767px) { .research-questions { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 768px) {
+  #objective .research-questions:has(> :last-child:nth-child(2)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 .members-track .profile-role,
 .members-track .team-profile h3 { text-align: center; }
