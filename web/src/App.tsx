@@ -406,18 +406,11 @@ function PosterFigure({ poster }: { poster: Poster }) {
 }
 function ResearchPosters({ posters }: { posters: Poster[] }) {
   const featured = posters.filter(poster => !poster.archived);
-  const archived = posters.filter(poster => poster.archived);
   return (
     <section id="research-posters" className="container content-section" aria-label="Research posters">
       <SectionHeading label="05 / RESEARCH POSTERS" title="Our research, at a glance." />
-      {posters.length === 0 && <p className="section-note"><SpecialText>Poster coming soon.</SpecialText></p>}
+      {featured.length === 0 && <p className="section-note"><SpecialText>Poster coming soon.</SpecialText></p>}
       {featured.map(poster => <PosterFigure key={poster.full} poster={poster} />)}
-      {archived.length > 0 && (
-        <details className="poster-archive">
-          <summary><SpecialText hoverOnly>Poster archive</SpecialText> <span className="mono"><SpecialText hoverOnly>{archived.map(poster => poster.label.replace(/^ARCHIVE \/ /, "")).join(" · ")}</SpecialText></span></summary>
-          {archived.map(poster => <PosterFigure key={poster.full} poster={poster} />)}
-        </details>
-      )}
     </section>
   );
 }
