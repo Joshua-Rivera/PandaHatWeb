@@ -1,5 +1,7 @@
 # PandaHat cleanup audit and deletion plan
 
+Execution: the user authorized this plan and the cleanup was performed on `codex/cleanup-unused-files`. See [execution results and recovery details](cleanup-execution.md). The audit below records the pre-cleanup state.
+
 Audited October 7, 2026, against commit `08ec5f2`. This is a plan: no application code, assets, dependencies, or existing documents were deleted or changed during this audit. The new report and inventory are the only repository additions.
 
 The audit covered all **168 tracked files**, including **17 source files**, **111 public files**, six test files, three maintenance scripts, 11 design drafts, configuration, documentation, and the original presentation. Ignored build output and dependency directories were also inspected.

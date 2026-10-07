@@ -1,0 +1,145 @@
+{
+  "cases": [
+    {
+      "engine": "webkit",
+      "width": 320,
+      "year": "2026"
+    },
+    {
+      "engine": "webkit",
+      "width": 320,
+      "year": "2025"
+    },
+    {
+      "engine": "webkit",
+      "width": 375,
+      "year": "2026"
+    },
+    {
+      "engine": "webkit",
+      "width": 375,
+      "year": "2025"
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "year": "2026"
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "year": "2025"
+    },
+    {
+      "engine": "webkit",
+      "width": 767,
+      "year": "2026"
+    },
+    {
+      "engine": "webkit",
+      "width": 767,
+      "year": "2025"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "year": "2026"
+    },
+    {
+      "engine": "webkit",
+      "width": 768,
+      "year": "2025"
+    },
+    {
+      "engine": "webkit",
+      "width": 1024,
+      "year": "2026"
+    },
+    {
+      "engine": "webkit",
+      "width": 1024,
+      "year": "2025"
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "year": "2026"
+    },
+    {
+      "engine": "webkit",
+      "width": 1440,
+      "year": "2025"
+    },
+    {
+      "engine": "chromium",
+      "width": 320,
+      "year": "2026"
+    },
+    {
+      "engine": "chromium",
+      "width": 320,
+      "year": "2025"
+    },
+    {
+      "engine": "chromium",
+      "width": 375,
+      "year": "2026"
+    },
+    {
+      "engine": "chromium",
+      "width": 375,
+      "year": "2025"
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "year": "2026"
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "year": "2025"
+    },
+    {
+      "engine": "chromium",
+      "width": 767,
+      "year": "2026"
+    },
+    {
+      "engine": "chromium",
+      "width": 767,
+      "year": "2025"
+    },
+    {
+      "engine": "chromium",
+      "width": 768,
+      "year": "2026"
+    },
+    {
+      "engine": "chromium",
+      "width": 768,
+      "year": "2025"
+    },
+    {
+      "engine": "chromium",
+      "width": 1024,
+      "year": "2026"
+    },
+    {
+      "engine": "chromium",
+      "width": 1024,
+      "year": "2025"
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "year": "2026"
+    },
+    {
+      "engine": "chromium",
+      "width": 1440,
+      "year": "2025"
+    }
+  ],
+  "passed": true
+}
