@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { alignMemberGallery, centerMemberCard } from "./helpers/member-gallery";
 
 for (const width of [375, 1440]) {
   test(`active navigation follows anchor destinations and scrolling at ${width}px`, async ({ page }) => {
@@ -101,35 +102,45 @@ test("research endpoints and cohort onboarding are discoverable", async ({ page 
   await expect(page.getByRole("heading", { name: "Dr. Alcibiades Bustillo" })).toBeAttached();
 });
 
-test("member cards open resume-ready profile endpoints", async ({ page }) => {
-  await page.goto("/#members");
-  await expect(page.locator(".team-profile")).toHaveCount(22);
-  await expect(page.getByRole("heading", { name: "Joshua Roman", exact: true })).toBeAttached();
-  await expect(page.getByRole("heading", { name: "Kevin Beltran", exact: true })).toBeAttached();
-  const profile = page.getByRole("link", { name: "Open profile for Joshua Rivera" });
-  await expect(profile).toHaveAttribute("href", "#member/joshua-rivera");
-  await profile.click();
-  await expect(page).toHaveURL(/#member\/joshua-rivera$/);
-  await expect(page.getByRole("dialog")).toContainText("Joshua Rivera");
-  await expect(page.locator(".resume-pending")).toBeAttached();
+for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, height: 900 }, { width: 1440, height: 600 }]) {
+  test(`member cards open resume-ready profile endpoints at ${width}x${height}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/#members");
+    await alignMemberGallery(page);
+    await expect(page.locator(".team-profile")).toHaveCount(22);
+    await expect(page.getByRole("heading", { name: "Joshua Roman", exact: true })).toBeAttached();
+    await expect(page.getByRole("heading", { name: "Kevin Beltran", exact: true })).toBeAttached();
+    const profile = page.getByRole("link", { name: "Open profile for Joshua Rivera" });
+    await expect(profile).toHaveAttribute("href", "#member/joshua-rivera");
+    await centerMemberCard(page, "Joshua Rivera");
+    await profile.click();
+    await expect(page).toHaveURL(/#member\/joshua-rivera$/);
+    await expect(page.getByRole("dialog")).toContainText("Joshua Rivera");
+    const resume = page.getByRole("link", { name: "View resume" });
+    await expect(resume).toHaveAttribute("href", "https://drive.google.com/file/d/1tVtHiaYTPtr_e8YYqL5A3iRR9C6LtAhQ/view?usp=drive_link");
+    await expect(resume).toHaveAttribute("target", "_blank");
+    await expect(page.locator(".resume-pending")).toHaveCount(0);
     const positionBeforeClose = await page.evaluate(() => scrollY);
     await page.getByRole("button", { name: "Close member profile" }).click();
-  await expect(page).toHaveURL(/#members$/);
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(page).toHaveURL(/#members$/);
+    await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect.poll(() => page.evaluate(previous => Math.abs(scrollY - previous), positionBeforeClose)).toBeLessThan(120);
-  await page.locator(".profile-card-link").filter({ hasText: "Joshua Roman" }).click();
-  await expect(page).toHaveURL(/#member\/joshua-roman$/);
-  await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
-  await expect(page.getByRole("dialog")).toContainText("Parking Lot Reservation System");
-  await page.getByRole("button", { name: "Close member profile" }).click();
-  await page.getByRole("link", { name: "Open profile for Joshua Roman" }).click();
-  await expect(page).toHaveURL(/#member\/joshua-roman$/);
-  await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
-  await expect(page.getByRole("button", { name: "Close member profile" })).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(page).toHaveURL(/#members$/);
-});
+    await centerMemberCard(page, "Joshua Roman");
+    await page.locator(".profile-card-link").filter({ hasText: "Joshua Roman" }).click();
+    await expect(page).toHaveURL(/#member\/joshua-roman$/);
+    await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
+    await expect(page.getByRole("dialog")).toContainText("Parking Lot Reservation System");
+    await page.getByRole("button", { name: "Close member profile" }).click();
+    await page.getByRole("link", { name: "Open profile for Joshua Roman" }).click();
+    await expect(page).toHaveURL(/#member\/joshua-roman$/);
+    await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
+    await expect(page.getByRole("button", { name: "Close member profile" })).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(page).toHaveURL(/#members$/);
+  });
+}
 
 for (const year of ["2026", "2025"]) {
   test(`profile close button stays clickable at tablet width in ${year}`, async ({ page }) => {

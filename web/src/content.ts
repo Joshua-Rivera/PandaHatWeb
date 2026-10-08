@@ -124,8 +124,27 @@ const advisors2026: Advisor[] = [
   { name: "Dr. Alcibiades Bustillo", role: "Research advisor", focus: "Computer science mentorship and experimental context", photo: "/images/professors/alcibiades-bustillo.webp" },
 ];
 const memberSlug = (name: string) => name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+// Members update the existing Drive file via Manage versions to keep these links stable.
+const resumeLinks: Record<string, string> = {
+  "aliek-betancourt": "https://drive.google.com/file/d/1NozvgPpWC8KIdLY2gKBLb5SnH2OlV7WQ/view?usp=drive_link",
+  "daniel-reyes": "https://drive.google.com/file/d/19RhFLEYe9-hXX6F9e7hE0gaSwoL7lj0G/view?usp=drive_link",
+  "emmanuel-lopez": "https://drive.google.com/file/d/17aoFzLUu1mOb9Th9D3_LQkArUdqLseUi/view?usp=drive_link",
+  "gian-miranda": "https://drive.google.com/file/d/13LHY51VDSJJPmNZFtykMZBMrg7Cn_w4K/view?usp=drive_link",
+  "hector-lopez": "https://drive.google.com/file/d/18edU9GA4iv9OfQgR6iGotpovu4CZeONT/view?usp=drive_link",
+  "joshua-rivera": "https://drive.google.com/file/d/1tVtHiaYTPtr_e8YYqL5A3iRR9C6LtAhQ/view?usp=drive_link",
+  "joshua-roman": "https://drive.google.com/file/d/12E5ayGLA03ITmejbhPnpPPBswEuJCvPF/view?usp=drive_link",
+  "josue-lopez": "https://drive.google.com/file/d/1EX6OLLd8Y4-zsTUF8pV90LvwuC_nXGmR/view?usp=drive_link",
+  "kelvin-soto": "https://drive.google.com/file/d/1BEcF-XZwSgjGmMnHPE3XNEhudD_uySjl/view?usp=drive_link",
+  "kevin-beltran": "https://drive.google.com/file/d/1khPrx83sOU5V3lUxqeykb5ktSRLKOhEI/view?usp=drive_link",
+  "jerremy-aponte": "https://drive.google.com/file/d/1VwcVUhjyPAosdexPubjjQtIPgI5nHPkq/view?usp=drive_link",
+  "adriana-vega": "https://drive.google.com/file/d/1B56CY_y90QoNEtqtXBeOj-3E5KHz0nzc/view?usp=drive_link",
+  "ian-figueroa": "https://drive.google.com/file/d/1CwZ5Qu1yecZXzllzhVDBT7aX086B9tpD/view?usp=drive_link",
+  "revel-velazquez": "https://drive.google.com/file/d/1gVm4UKMyU7_To6D6FTHNIH1pP1F44ESD/view?usp=drive_link",
+  "sorimerlin-santos": "https://drive.google.com/file/d/1lT629JMqDG9GdeTDpffOoVrKD2apfdeG/view?usp=drive_link",
+};
 const memberSlot = (name: string, role: string, initials: string, profile: Partial<TeamMember> = {}): TeamMember => ({
   slug: memberSlug(name), name, role, initials,
+  resume: resumeLinks[memberSlug(name)],
   bio: "Biography to be added.",
   interests: "Research interests to be confirmed",
   skills: ["Research methods", "Documentation"],
