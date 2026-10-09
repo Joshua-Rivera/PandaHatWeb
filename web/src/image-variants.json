@@ -563,5 +563,21 @@
         "height": 728
       }
     ]
+  },
+  "/images/members/jan-rivera.webp": {
+    "width": 720,
+    "height": 960,
+    "variants": [
+      {
+        "src": "/images/members/jan-rivera-small.webp",
+        "width": 320,
+        "height": 427
+      },
+      {
+        "src": "/images/members/jan-rivera.webp",
+        "width": 720,
+        "height": 960
+      }
+    ]
   }
 }

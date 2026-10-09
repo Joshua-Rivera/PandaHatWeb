@@ -202,7 +202,7 @@ const members2026: TeamMember[] = [
 // with the remaining nine as members. Matching students share their 2026 profiles.
 const members2025: TeamMember[] = [
   ["Edwin Almodovar", "EA", "/images/members/edwin-almodovar.webp"],
-  ["Jan Rivera", "JR"],
+  ["Jan Rivera", "JR", "/images/members/jan-rivera.webp"],
   ["Angel Fernández", "AF", "/images/members/angel-fernandez.webp"],
   ["Gian Miranda", "GM"],
   ["Diego Rios", "DR"],
