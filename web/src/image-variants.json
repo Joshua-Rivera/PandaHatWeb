@@ -550,17 +550,17 @@
   },
   "/images/members/edwin-almodovar.webp": {
     "width": 720,
-    "height": 728,
+    "height": 660,
     "variants": [
       {
         "src": "/images/members/edwin-almodovar-small.webp",
         "width": 320,
-        "height": 323
+        "height": 293
       },
       {
         "src": "/images/members/edwin-almodovar.webp",
         "width": 720,
-        "height": 728
+        "height": 660
       }
     ]
   },
