@@ -669,5 +669,21 @@
         "height": 808
       }
     ]
+  },
+  "/images/members/frances-sola.webp": {
+    "width": 720,
+    "height": 924,
+    "variants": [
+      {
+        "src": "/images/members/frances-sola-small.webp",
+        "width": 320,
+        "height": 411
+      },
+      {
+        "src": "/images/members/frances-sola.webp",
+        "width": 720,
+        "height": 924
+      }
+    ]
   }
 }
