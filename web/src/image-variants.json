@@ -637,5 +637,21 @@
         "height": 1280
       }
     ]
+  },
+  "/images/members/jayden-sanchez.webp": {
+    "width": 720,
+    "height": 701,
+    "variants": [
+      {
+        "src": "/images/members/jayden-sanchez-small.webp",
+        "width": 320,
+        "height": 312
+      },
+      {
+        "src": "/images/members/jayden-sanchez.webp",
+        "width": 720,
+        "height": 701
+      }
+    ]
   }
 }
