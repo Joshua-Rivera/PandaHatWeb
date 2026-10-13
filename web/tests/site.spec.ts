@@ -161,7 +161,9 @@ test("year switcher shows past research and persists in the URL", async ({ page 
   const switcher = page.getByRole("radiogroup", { name: "Research year" });
   await expect(switcher.getByRole("radio", { name: "2026" })).toHaveAttribute("aria-checked", "true");
   await expect(page.locator("#problem-title")).toContainText("digital watermarks");
-  await expect(page.locator(".conference-gallery")).toHaveCount(0);
+  await expect(page.locator(".conference-gallery")).toHaveCount(1);
+  await expect(page.locator(".conference-grid a")).toHaveCount(2);
+  await expect(page.locator(".team-group-image")).toHaveAttribute("src", "/images/conference/iap-2026-02.webp");
 
   await switcher.getByRole("radio", { name: "2025" }).click();
   await expect(page).toHaveURL(/\?year=2025/);
@@ -179,7 +181,8 @@ test("year switcher shows past research and persists in the URL", async ({ page 
   await page.keyboard.press("ArrowLeft");
   await expect(page.getByRole("radio", { name: "2026" })).toBeFocused();
   await expect(page).not.toHaveURL(/year=/);
-  await expect(page.locator(".conference-gallery")).toHaveCount(0);
+  await expect(page.locator(".conference-gallery")).toHaveCount(1);
+  await expect(page.locator(".conference-grid a")).toHaveCount(2);
 });
 
 test("year curtain always plays its full cover and reveal, even on a busy CPU", async ({ page }) => {

@@ -579,5 +579,63 @@
         "height": 960
       }
     ]
+  },
+  "/images/conference/iap-2026-01-thumb.webp": {
+    "width": 640,
+    "height": 512,
+    "variants": [
+      {
+        "src": "/images/conference/iap-2026-01-small.webp",
+        "width": 320,
+        "height": 256
+      },
+      {
+        "src": "/images/conference/iap-2026-01-thumb.webp",
+        "width": 640,
+        "height": 512
+      }
+    ]
+  },
+  "/images/conference/iap-2026-02-thumb.webp": {
+    "width": 640,
+    "height": 512,
+    "variants": [
+      {
+        "src": "/images/conference/iap-2026-02-small.webp",
+        "width": 320,
+        "height": 256
+      },
+      {
+        "src": "/images/conference/iap-2026-02-thumb.webp",
+        "width": 640,
+        "height": 512
+      }
+    ]
+  },
+  "/images/conference/iap-2026-02.webp": {
+    "width": 1600,
+    "height": 1280,
+    "variants": [
+      {
+        "src": "/images/conference/iap-2026-02-small.webp",
+        "width": 320,
+        "height": 256
+      },
+      {
+        "src": "/images/conference/iap-2026-02-thumb.webp",
+        "width": 640,
+        "height": 512
+      },
+      {
+        "src": "/images/conference/iap-2026-02-960.webp",
+        "width": 960,
+        "height": 768
+      },
+      {
+        "src": "/images/conference/iap-2026-02.webp",
+        "width": 1600,
+        "height": 1280
+      }
+    ]
   }
 }

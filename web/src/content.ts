@@ -250,6 +250,15 @@ const conferencePhotos2026: Photo[] = [
   alt: `${description} · Spring IAP, May 2026, Mayagüez`,
 }));
 
+const iapPhotos2026: Photo[] = [
+  "PandaHat team discussing research with a conference attendee",
+  "PandaHat team together at the IAP poster session",
+].map((description, index) => ({
+  src: `/images/conference/iap-2026-${String(index + 1).padStart(2, "0")}.webp`,
+  thumbnail: `/images/conference/iap-2026-${String(index + 1).padStart(2, "0")}-thumb.webp`,
+  alt: `${description} · IAP 2026`,
+}));
+
 const sponsors2026: Sponsor[] = [
   { src: "/images/sponsors/iap-transparent.webp", alt: "IAP", width: 1774, height: 887, group: "academic" },
   { src: "/images/sponsors/uprm-transparent.webp", alt: "Universidad de Puerto Rico Recinto Universitario de Mayagüez", width: 1254, height: 1254, group: "academic" },
@@ -294,7 +303,7 @@ export const years: YearContent[] = [
       onboardingNote: "Fifteen new members move through a shared learning path from orientation to independent contribution.",
     },
     members: members2026,
-    conference: null,
+    conference: { title: "IAP 2026", subtitle: "Mayagüez", groupPhoto: iapPhotos2026[1], photos: iapPhotos2026 },
     posters: [
       {
         label: "CURRENT RESEARCH / FALL 2026",

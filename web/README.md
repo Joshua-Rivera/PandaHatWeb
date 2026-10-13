@@ -37,7 +37,7 @@ See [deployment preparation](DEPLOYMENT.md) for build settings, routing, automat
 
 ## Images
 
-Served raster images use WebP with generated width descriptors and responsive `sizes`. The Spring IAP group photo and conference gallery are displayed in the 2025 research view at the user's request. Existing event captions remain Spring IAP, May 2026, Mayagüez. Mobile collage images are capped at 320 pixels wide; gallery thumbnails at 640 pixels on the long edge. Larger conference photos remain capped at 1600 pixels on the long edge and open on click. The group photo has intermediate responsive versions.
+Served raster images use WebP with generated width descriptors and responsive `sizes`. The 2026 research view has its own IAP gallery with two supplied poster-session photos and a group photo. The Spring IAP group photo and conference gallery are displayed in the 2025 research view at the user's request. Existing event captions remain Spring IAP, May 2026, Mayagüez. Mobile collage images are capped at 320 pixels wide; gallery thumbnails at 640 pixels on the long edge. Larger conference photos remain capped at 1600 pixels on the long edge and open on click. The group photos have intermediate responsive versions.
 
 The current poster uses a 2400 × 3600 WebP, with 480- and 960-pixel-wide page previews. The hidden 2023 poster and its responsive images remain preserved. Desktop sponsor logos retain their original exports; mobile uses separate 240-, 480-, and 960-pixel WebP sources. Portraits have smaller versions for profile dialogs and phones. Originals stay in `assets/image-originals/`, outside the deployment output.
 
