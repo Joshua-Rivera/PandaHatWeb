@@ -653,5 +653,21 @@
         "height": 701
       }
     ]
+  },
+  "/images/members/kelvin-soto.webp": {
+    "width": 720,
+    "height": 808,
+    "variants": [
+      {
+        "src": "/images/members/kelvin-soto-small.webp",
+        "width": 320,
+        "height": 359
+      },
+      {
+        "src": "/images/members/kelvin-soto.webp",
+        "width": 720,
+        "height": 808
+      }
+    ]
   }
 }
