@@ -3,6 +3,7 @@ import * as m from "motion/react-m";
 import { useEffect, useId, useRef, useState } from "react";
 import { useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import "./stack-spread.css";
+import { LetterGlitch } from "./letter-glitch";
 
 type Card = {
   image: number;
@@ -94,6 +95,7 @@ export default function StackSpread() {
   return (
     <section ref={ref} className={`stack-spread${reduced ? " is-reduced" : ""}`} aria-label="PandaHat introduction">
       <div className="stack-spread-stage">
+        <LetterGlitch />
         <h1 className="collage-accessible-title">PandaHat Adversarial</h1>
         <m.div className="stack-spread-copy" style={{ opacity: copyOpacity }} aria-hidden="true">
           <span>Adversarial</span>

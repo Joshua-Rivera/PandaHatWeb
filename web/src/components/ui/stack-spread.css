@@ -75,3 +75,11 @@
   .stack-spread { height: 100svh; }
   .stack-spread-stage { position: relative; }
 }
+.letter-glitch {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #6f7571;
+  pointer-events: none;
+}
