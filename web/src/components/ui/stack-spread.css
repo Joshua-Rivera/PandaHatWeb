@@ -42,7 +42,7 @@
   font: 10px var(--mono);
   letter-spacing: 3px;
 }
-.stack-spread-hint span { font-size: 22px; }
+.stack-spread-hint > .stack-spread-arrow { font-size: 22px; }
 .collage-accessible-title {
   position: absolute;
   width: 1px;
@@ -55,20 +55,9 @@
 }
 .stack-spread.is-reduced { height: 100svh; }
 .stack-spread.is-reduced .stack-spread-stage { position: relative; }
-.home-introduction {
-  padding-block: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  border-bottom: 1px solid var(--border);
-}
-.home-introduction p { max-width: 580px; color: var(--muted); font-size: 14px; line-height: 1.8; }
-.home-introduction .hero-actions { margin-top: 0; flex-shrink: 0; }
 @media (max-width: 767px) {
   .stack-spread { height: 220svh; }
   .stack-spread-copy { font-size: 10vw; }
-  .home-introduction { flex-direction: column; align-items: flex-start; gap: 20px; }
   .stack-spread-hint { bottom: 25px; font-size: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -83,3 +72,23 @@
   color: #6f7571;
   pointer-events: none;
 }
+
+.stack-spread-copy .special-text { pointer-events: auto; }
+
+/* Mobile-only raster layers retain the SVG's 600 × 900 composition. */
+.mobile-collage { view-timeline-name: --mobile-collage; view-timeline-axis: block; view-timeline-inset: 0; }
+.mobile-collage-art { position: absolute; width: min(100%, 66.666667svh); aspect-ratio: 2 / 3; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.mobile-collage-art img { position: absolute; top: 0; left: 0; max-width: none; transform-origin: center; }
+.mobile-collage[data-native-scroll="true"] .mobile-collage-art img,
+.mobile-collage[data-native-scroll="true"] .stack-spread-copy,
+.mobile-collage[data-native-scroll="true"] .stack-spread-hint {
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-timeline: --mobile-collage;
+  animation-range: contain 0% contain 100%;
+}
+.mobile-collage[data-native-scroll="true"] .stack-spread-copy { animation-name: mobile-collage-copy; }
+.mobile-collage[data-native-scroll="true"] .stack-spread-hint { animation-name: mobile-collage-hint; }
+@keyframes mobile-collage-copy { 0%, 54.2% { opacity: 0; } 77.3%, 100% { opacity: 1; } }
+@keyframes mobile-collage-hint { 0%, 8% { opacity: 1; } 17.24%, 100% { opacity: 0; } }

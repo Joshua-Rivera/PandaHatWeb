@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 :root {
   font-family: "DM Sans", sans-serif;
   color: var(--text);
   background: var(--bg);
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -22,6 +22,25 @@
 body {
   margin: 0;
   min-width: 320px;
+  background: var(--bg);
+}
+.mobile-toolbar-background {
+  display: none;
+}
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) {
+    /* Safari samples fixed viewport edges for its toolbar tint. Keep this
+       opaque and above the year curtain (z-index: 90), even between wipes. */
+    .mobile-toolbar-background {
+      display: block;
+      position: fixed;
+      inset: auto 0 0;
+      height: max(12px, env(safe-area-inset-bottom, 0px));
+      background: var(--bg);
+      z-index: 91;
+      pointer-events: none;
+    }
+  }
 }
 a {
   color: inherit;
@@ -101,4 +120,11 @@ html::-webkit-scrollbar {
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Mobile uses local variable fonts; desktop keeps the existing Google Fonts. */
+@font-face { font-family: "DM Sans Mobile"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/dm-sans-latin.woff2") format("woff2"); }
+@font-face { font-family: "Space Grotesk Mobile"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/space-grotesk-latin.woff2") format("woff2"); }
+@media (max-width: 767px) {
+  :root { font-family: "DM Sans Mobile", sans-serif; --heading: "Space Grotesk Mobile", sans-serif; }
 }

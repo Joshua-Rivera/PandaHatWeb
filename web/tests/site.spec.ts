@@ -1,5 +1,28 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { alignMemberGallery, centerMemberCard } from "./helpers/member-gallery";
+
+for (const width of [375, 1440]) {
+  test(`active navigation follows anchor destinations and scrolling at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    await page.goto("/#problem-statement");
+    const nav = page.getByRole("navigation", { name: "Main navigation", includeHidden: true });
+    await expect(nav.locator('a[href="#problem-statement"]')).toHaveAttribute("aria-current", "location");
+    for (const id of ["objective", "research-endpoints", "members", "research-posters", "professors", "sponsors", "problem-statement", "description"]) {
+      if (width < 1000) await page.getByRole("button", { name: "Open navigation" }).click();
+      const link = nav.locator(`a[href="#${id}"]`);
+      await link.click();
+      await expect(link).toHaveAttribute("aria-current", "location");
+      await expect(link).toHaveClass("active");
+      await expect.poll(() => page.locator(`#${id}`).evaluate(el => Math.abs(el.getBoundingClientRect().top - (100 + parseFloat(getComputedStyle(el).scrollMarginTop))))).toBeLessThan(2);
+      await expect(nav.locator('[aria-current="location"]')).toHaveCount(1);
+    }
+    await page.evaluate(() => document.getElementById("objective")!.scrollIntoView({ behavior: "instant" }));
+    await expect(nav.locator('a[href="#objective"]')).toHaveAttribute("aria-current", "location");
+  });
+}
 
 for (const width of [375, 768, 1024, 1440]) {
   test(`single page layout and accessibility at ${width}px`, async ({ page }) => {
@@ -35,7 +58,7 @@ test("section links, horizontal controls, keyboard, and legacy bookmarks", async
   await expect.poll(() => poster.evaluate(el => (el as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Members" }).click();
   await expect(page).toHaveURL(/\/#members$/);
-  await page.getByRole("button", { name: "Next member profiles" }).click();
+  await page.getByRole("button", { name: "Skip to last member" }).click();
   expect(await page.getByRole("region", { name: "Member profiles" }).evaluate(el => el.scrollLeft)).toBeGreaterThan(0);
   await page.goto("/research#topic-02");
   await expect(page).toHaveURL(/\/#research-posters$/);
@@ -79,32 +102,106 @@ test("research endpoints and cohort onboarding are discoverable", async ({ page 
   await expect(page.getByRole("heading", { name: "Dr. Alcibiades Bustillo" })).toBeAttached();
 });
 
-test("member cards open resume-ready profile endpoints", async ({ page }) => {
-  await page.goto("/#members");
-  await expect(page.locator(".team-profile")).toHaveCount(22);
-  await expect(page.getByText("Joshua Roman")).toBeAttached();
-  await expect(page.getByText("Kevin Beltran")).toBeAttached();
-  const profile = page.getByRole("link", { name: "Open profile for Joshua Rivera" });
-  await expect(profile).toHaveAttribute("href", "#member/joshua-rivera");
-  await profile.click();
-  await expect(page).toHaveURL(/#member\/joshua-rivera$/);
-  await expect(page.getByRole("dialog")).toContainText("Joshua Rivera");
-  await expect(page.getByText("RESUME / PENDING APPROVAL")).toBeAttached();
+for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, height: 900 }, { width: 1440, height: 600 }]) {
+  test(`member cards open resume-ready profile endpoints at ${width}x${height}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto("/#members");
+    await alignMemberGallery(page);
+    await expect(page.locator(".team-profile")).toHaveCount(22);
+    await expect(page.getByRole("heading", { name: "Joshua Roman", exact: true })).toBeAttached();
+    await expect(page.getByRole("heading", { name: "Kevin Beltran", exact: true })).toBeAttached();
+    const profile = page.getByRole("link", { name: "Open profile for Joshua Rivera" });
+    await expect(profile).toHaveAttribute("href", "#member/joshua-rivera");
+    await centerMemberCard(page, "Joshua Rivera");
+    await profile.click();
+    await expect(page).toHaveURL(/#member\/joshua-rivera$/);
+    await expect(page.getByRole("dialog")).toContainText("Joshua Rivera");
+    const resume = page.getByRole("link", { name: "View resume" });
+    await expect(resume).toHaveAttribute("href", "https://drive.google.com/file/d/1tVtHiaYTPtr_e8YYqL5A3iRR9C6LtAhQ/view?usp=drive_link");
+    await expect(resume).toHaveAttribute("target", "_blank");
+    await expect(page.locator(".resume-pending")).toHaveCount(0);
     const positionBeforeClose = await page.evaluate(() => scrollY);
     await page.getByRole("button", { name: "Close member profile" }).click();
-  await expect(page).toHaveURL(/#members$/);
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(page).toHaveURL(/#members$/);
+    await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect.poll(() => page.evaluate(previous => Math.abs(scrollY - previous), positionBeforeClose)).toBeLessThan(120);
-  await page.locator(".profile-card-link").filter({ hasText: "Joshua Roman" }).click();
-  await expect(page).toHaveURL(/#member\/joshua-roman$/);
-  await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
-  await expect(page.getByRole("dialog")).toContainText("Parking Lot Reservation System");
-  await page.getByRole("button", { name: "Close member profile" }).click();
-  await page.getByRole("link", { name: "Open profile for Joshua Roman" }).click();
-  await expect(page).toHaveURL(/#member\/joshua-roman$/);
-  await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
-  await expect(page.getByRole("button", { name: "Close member profile" })).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(page).toHaveURL(/#members$/);
+    await centerMemberCard(page, "Joshua Roman");
+    await page.locator(".profile-card-link").filter({ hasText: "Joshua Roman" }).click();
+    await expect(page).toHaveURL(/#member\/joshua-roman$/);
+    await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
+    await expect(page.getByRole("dialog")).toContainText("Parking Lot Reservation System");
+    await page.getByRole("button", { name: "Close member profile" }).click();
+    await page.getByRole("link", { name: "Open profile for Joshua Roman" }).click();
+    await expect(page).toHaveURL(/#member\/joshua-roman$/);
+    await expect(page.getByRole("dialog")).toContainText("Joshua Roman");
+    await expect(page.getByRole("button", { name: "Close member profile" })).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(page).toHaveURL(/#members$/);
+  });
+}
+
+for (const year of ["2026", "2025"]) {
+  test(`profile close button stays clickable at tablet width in ${year}`, async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const query = year === "2025" ? "?year=2025" : "";
+    const slug = year === "2025" ? "angel-fernandez" : "joshua-rivera";
+    await page.goto(`/${query}#member/${slug}`);
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button", { name: "Close member profile" }).click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(page).toHaveURL(/#members$/);
+  });
+}
+
+test("year switcher shows past research and persists in the URL", async ({ page }) => {
+  await page.goto("/");
+  const switcher = page.getByRole("radiogroup", { name: "Research year" });
+  await expect(switcher.getByRole("radio", { name: "2026" })).toHaveAttribute("aria-checked", "true");
+  await expect(page.locator("#problem-title")).toContainText("digital watermarks");
+  await expect(page.locator(".conference-gallery")).toHaveCount(1);
+  await expect(page.locator(".conference-grid a")).toHaveCount(2);
+  await expect(page.locator(".team-group-image")).toHaveAttribute("src", "/images/conference/iap-2026-02.webp");
+
+  await switcher.getByRole("radio", { name: "2025" }).click();
+  await expect(page).toHaveURL(/\?year=2025/);
+  await expect(page.locator("#problem-title")).toContainText("preserving accuracy and robustness");
+  await expect(page.locator("#research-topic-lora-fine-tuning")).toBeAttached();
+  await expect(page.locator("#research-topic-digital-watermarking")).toHaveCount(0);
+  await expect(page.locator(".conference-gallery")).toHaveCount(1);
+  await expect(page.locator(".team-group-image")).toHaveCount(1);
+
+  await page.reload();
+  await expect(page.getByRole("radiogroup", { name: "Research year" }).getByRole("radio", { name: "2025" })).toHaveAttribute("aria-checked", "true");
+  await expect(page.locator("#problem-title")).toContainText("preserving accuracy and robustness");
+
+  await page.getByRole("radio", { name: "2025" }).focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(page.getByRole("radio", { name: "2026" })).toBeFocused();
+  await expect(page).not.toHaveURL(/year=/);
+  await expect(page.locator(".conference-gallery")).toHaveCount(1);
+  await expect(page.locator(".conference-grid a")).toHaveCount(2);
+});
+
+test("year curtain always plays its full cover and reveal, even on a busy CPU", async ({ page }) => {
+  await page.goto("/#description");
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 6 });
+  await page.evaluate(() => {
+    const events: string[] = [];
+    (window as unknown as { curtainEvents: string[] }).curtainEvents = events;
+    for (const type of ["animationend", "animationcancel"]) {
+      document.addEventListener(type, event => {
+        const { animationName } = event as AnimationEvent;
+        if (animationName.startsWith("curtain")) events.push(`${type} ${animationName}`);
+      }, true);
+    }
+  });
+  await page.getByRole("radio", { name: "2025" }).click();
+  await expect(page.locator(".year-curtain")).toHaveCount(0, { timeout: 10_000 });
+  const events = await page.evaluate(() => (window as unknown as { curtainEvents: string[] }).curtainEvents);
+  expect(events).toEqual(["animationend curtain-cover", "animationend curtain-reveal"]);
+  await expect(page.locator("#problem-title")).toContainText("preserving accuracy and robustness");
 });
