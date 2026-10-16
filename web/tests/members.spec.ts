@@ -9,6 +9,8 @@ for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, hei
     const section = page.locator("#members");
     const rail = page.getByRole("region", { name: "Member profiles" });
     await expect(section).toHaveClass(/is-pinned/);
+    // Anchor links leave room for the header; start the wheel math from the pin point.
+    await section.evaluate(el => scrollTo({ top: el.getBoundingClientRect().top + scrollY, behavior: "instant" }));
     await expect(section.locator(".team-profile")).toHaveCount(22);
     const roles = await section.locator(".profile-role").evaluateAll(elements => elements.map(el => (el.querySelector(".special-text-accessible") ?? el).textContent));
     expect(roles.filter(role => role === "PM")).toHaveLength(1);
@@ -30,7 +32,8 @@ for (const { width, height } of [{ width: 375, height: 900 }, { width: 1440, hei
     const remaining = await rail.evaluate(el => el.scrollWidth - el.clientWidth - el.scrollLeft);
     await page.mouse.wheel(0, remaining + 500);
     await expect.poll(() => rail.evaluate(el => el.scrollWidth - el.clientWidth - el.scrollLeft)).toBeLessThan(2);
-    await expect(page.locator(".cohort-summary")).toBeInViewport();
+    // Releasing the pin hands off to whatever section follows the gallery.
+    await expect(page.locator("#members + *")).toBeInViewport();
     await page.locator("#research-posters .section-heading").scrollIntoViewIfNeeded();
     await expect(page.locator("#research-posters .section-heading")).toBeInViewport();
   });

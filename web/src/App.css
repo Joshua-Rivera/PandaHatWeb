@@ -824,6 +824,17 @@ h2 {
 }
 .featured-poster figcaption a { text-decoration: underline; text-underline-offset: 3px; }
 
+/* Photo hover lift */
+.conference-grid a, .featured-poster a, .archived-poster a, .research-question { transition: transform .28s ease, box-shadow .28s ease; }
+.conference-grid img, .featured-poster img, .archived-poster img { transition: transform .5s ease; }
+@media (hover: hover) {
+  .conference-grid a:hover, .featured-poster a:hover, .archived-poster a:hover, .research-question:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgb(23 27 25 / 12%); }
+  .conference-grid a:hover img, .featured-poster a:hover img, .archived-poster a:hover img { transform: scale(1.04); }
+  .featured-poster a, .archived-poster a { display: block; overflow: hidden; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .conference-grid a, .featured-poster a, .archived-poster a, .research-question, .conference-grid img, .featured-poster img, .archived-poster img { transition: none; transform: none !important; }
+}
 /* Keep member text reachable above the photo/card link for hover and selection. */
 .team-profile > p, .team-profile > h3 { position: relative; z-index: 3; user-select: text; cursor: text; }
 .team-profile > h3 a { color: inherit; text-decoration: none; }
