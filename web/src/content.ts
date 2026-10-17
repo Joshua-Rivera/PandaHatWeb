@@ -126,6 +126,12 @@ const advisors2026: Advisor[] = [
 const memberSlug = (name: string) => name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 // Members update the existing Drive file via Manage versions to keep these links stable.
 const resumeLinks: Record<string, string> = {
+  "frances-sola": "https://drive.google.com/file/d/1rBWU3u7MwYKxNhWtNUkPS3TrmiRcSj8d/view?usp=sharing",
+  "ian-banks": "https://drive.google.com/file/d/1rj8L5nGlFbLzt1avdd9riIqgUu5QjQtB/view?usp=sharing",
+  "jayden-sanchez": "https://drive.google.com/file/d/1sJ4GnbkW_EUYhDRw2nDGrLOFpvGdunK3/view?usp=sharing",
+  "fernando-velez": "https://drive.google.com/file/d/1eeTJQzrX6Ki3UN1gPThEgAzlpx1q_eKo/view?usp=sharing",
+  "jorge-luna": "https://drive.google.com/file/d/1EoZ7UMTB4dhpvy0tYIjEX0n2WRH3jkgz/view?usp=sharing",
+  "kiara-jimenez": "https://drive.google.com/file/d/1mYzjvxdsau3ZROk_zKizck4j3SHWLKBo/view?usp=sharing",
   "aliek-betancourt": "https://drive.google.com/file/d/1NozvgPpWC8KIdLY2gKBLb5SnH2OlV7WQ/view?usp=drive_link",
   "daniel-reyes": "https://drive.google.com/file/d/19RhFLEYe9-hXX6F9e7hE0gaSwoL7lj0G/view?usp=drive_link",
   "emmanuel-lopez": "https://drive.google.com/file/d/17aoFzLUu1mOb9Th9D3_LQkArUdqLseUi/view?usp=drive_link",
