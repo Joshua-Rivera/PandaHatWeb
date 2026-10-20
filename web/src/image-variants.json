@@ -701,5 +701,21 @@
         "height": 711
       }
     ]
+  },
+  "/images/members/fernando-velez.webp": {
+    "width": 720,
+    "height": 721,
+    "variants": [
+      {
+        "src": "/images/members/fernando-velez-small.webp",
+        "width": 320,
+        "height": 320
+      },
+      {
+        "src": "/images/members/fernando-velez.webp",
+        "width": 720,
+        "height": 721
+      }
+    ]
   }
 }
