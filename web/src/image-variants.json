@@ -685,5 +685,21 @@
         "height": 924
       }
     ]
+  },
+  "/images/members/jerremy-aponte.webp": {
+    "width": 720,
+    "height": 711,
+    "variants": [
+      {
+        "src": "/images/members/jerremy-aponte-small.webp",
+        "width": 320,
+        "height": 316
+      },
+      {
+        "src": "/images/members/jerremy-aponte.webp",
+        "width": 720,
+        "height": 711
+      }
+    ]
   }
 }
