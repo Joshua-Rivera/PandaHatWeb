@@ -717,5 +717,21 @@
         "height": 721
       }
     ]
+  },
+  "/images/members/hector-lopez.webp": {
+    "width": 720,
+    "height": 1161,
+    "variants": [
+      {
+        "src": "/images/members/hector-lopez-small.webp",
+        "width": 320,
+        "height": 516
+      },
+      {
+        "src": "/images/members/hector-lopez.webp",
+        "width": 720,
+        "height": 1161
+      }
+    ]
   }
 }
